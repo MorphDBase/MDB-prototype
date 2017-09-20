@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
+    <style>
+        .focused {background-color: yellow}
+    </style>
+</head>
+<body>
+
+
+
+
+<form>
+    <label for="MDB_DATASCHEME_0000000781">mail:</label>
+    <input id="MDB_DATASCHEME_0000000781" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000783">password:</label>
+    <input id="MDB_DATASCHEME_0000000783" type="text" size="40">
+    <br>
+</form>
+
+<input onclick="login(this.id)" id="MDB_DATASCHEME_0000000780" value="Log in" type="button">
+
+<br>
+<br>
+<br>
+<input onclick="logout(this.id)" id="MDB_DATASCHEME_0000000947" value="Log out" type="button">
+<br>
+<br>
+<br>
+<input onclick="show_register()" value="show register" type="button">
+<br>
+<br>
+<br>
+<br>
+<br>
+<input onclick="register(this.id)" id="MDB_DATASCHEME_0000000942" value="sign up back to login button item" type="button">
+<br>
+
+<form>
+    <label for="MDB_DATASCHEME_0000000692">first name:</label>
+    <input id="MDB_DATASCHEME_0000000692" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000691">last name:</label>
+    <input id="MDB_DATASCHEME_0000000691" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000690">username:</label>
+    <input id="MDB_DATASCHEME_0000000690" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000689">affiliation:</label>
+    <input id="MDB_DATASCHEME_0000000689" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000688">mail:</label>
+    <input id="MDB_DATASCHEME_0000000688" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000687">confirm mail:</label>
+    <input id="MDB_DATASCHEME_0000000687" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000686">password:</label>
+    <input id="MDB_DATASCHEME_0000000686" type="text" size="40">
+    <br>
+    <label for="MDB_DATASCHEME_0000000787">comment:</label>
+    <input id="MDB_DATASCHEME_0000000787" type="text" size="40">
+    <br>
+</form>
+
+<input onclick="register(this.id)" id="MDB_DATASCHEME_0000000684" value="Sign up" type="button">
+
+
+<h3>output</h3>
+<br>
+<label for="uuidURI">uuidURI:</label>
+<input id="uuidURI" type="text" size="40">
+<br>
+<label for="sidURI">sidURI:</label>
+<input id="sidURI" type="text" size="70">
+
+
+
+<script>
+
+    // Strip the first slash
+    var patharray = location.pathname.split(/\//);
+
+    // create new WebSocket Object
+    var socket = new WebSocket("ws://" + location.host + "/" + patharray[1] + "/echo");
+
+
+    socket.onopen = function() {
+
+        socket.send(JSON.stringify(
+                {
+                    'type': "generate_doc",
+                    'localID' : "GUI_COMPONENT_0000000175",
+                    'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                })
+        );
+
+    }
+    angular.element(document).ready(function () {
+
+        var formElem = angular.element(document.querySelector('form'));
+        angular.forEach(formElem.children(), function (node) {
+            var elem = angular.element(node);
+
+            node.addEventListener('focus', function () {
+
+                //document.getElementById(elem.attr('id')).value = 'focus in: ' + elem.attr('id');
+
+                elem.addClass('focused');
+
+            }, true);
+
+            node.addEventListener('blur', function () {
+
+                //document.getElementById(elem.attr('id')).value = 'focus out: ' + elem.attr('id');
+
+                elem.removeClass('focused');
+
+                socket.send(JSON.stringify(
+                                {
+                                    'type' : "check_input",
+                                    'localID' : elem.attr('id'),
+                                    'value': document.getElementById(elem.attr('id')).value,
+                                    'localIDs' :
+                                            [
+                                                {'localID' : "MDB_DATASCHEME_0000000692", 'value' : document.getElementById("MDB_DATASCHEME_0000000692").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000691", 'value' : document.getElementById("MDB_DATASCHEME_0000000691").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000690", 'value' : document.getElementById("MDB_DATASCHEME_0000000690").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000689", 'value' : document.getElementById("MDB_DATASCHEME_0000000689").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000688", 'value' : document.getElementById("MDB_DATASCHEME_0000000688").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000687", 'value' : document.getElementById("MDB_DATASCHEME_0000000687").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000686", 'value' : document.getElementById("MDB_DATASCHEME_0000000686").value},
+                                                {'localID' : "MDB_DATASCHEME_0000000787", 'value' : document.getElementById("MDB_DATASCHEME_0000000787").value}
+                                            ],
+                                    'html_form': "GUI_COMPONENT_0000000143",
+                                    'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                                })
+                );
+
+            }, true);
+        });
+
+    });
+    function show_register() {
+
+        socket.send(JSON.stringify(
+                {
+                    'type': "generate_doc",
+                    'localID' : "GUI_COMPONENT_0000000143",
+                    'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                })
+        );
+
+    }
+
+    function register(button_id) {
+
+        socket.send(JSON.stringify(
+                {	'type' : "check_input",
+                    'localID' : button_id,
+                    'localIDs' :
+                            [
+                                {'localID' : "MDB_DATASCHEME_0000000692", 'value' : document.getElementById("MDB_DATASCHEME_0000000692").value},
+                                {'localID' : "MDB_DATASCHEME_0000000691", 'value' : document.getElementById("MDB_DATASCHEME_0000000691").value},
+                                {'localID' : "MDB_DATASCHEME_0000000690", 'value' : document.getElementById("MDB_DATASCHEME_0000000690").value},
+                                {'localID' : "MDB_DATASCHEME_0000000689", 'value' : document.getElementById("MDB_DATASCHEME_0000000689").value},
+                                {'localID' : "MDB_DATASCHEME_0000000688", 'value' : document.getElementById("MDB_DATASCHEME_0000000688").value},
+                                {'localID' : "MDB_DATASCHEME_0000000687", 'value' : document.getElementById("MDB_DATASCHEME_0000000687").value},
+                                {'localID' : "MDB_DATASCHEME_0000000686", 'value' : document.getElementById("MDB_DATASCHEME_0000000686").value},
+                                {'localID' : "MDB_DATASCHEME_0000000787", 'value' : document.getElementById("MDB_DATASCHEME_0000000787").value}
+                            ],
+                    'mdbueid': "456789ef",
+                    'html_form': "GUI_COMPONENT_0000000143",
+                    'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                })
+        );
+
+    }
+
+
+    function login(button_id) {
+
+        socket.send(JSON.stringify(
+                        {	'type' : "check_input",
+                            'localID' : button_id,
+                            'localIDs' :
+                                    [
+                                        {'localID' : "MDB_DATASCHEME_0000000781", 'value' : document.getElementById("MDB_DATASCHEME_0000000781").value},
+                                        {'localID' : "MDB_DATASCHEME_0000000783", 'value' : document.getElementById("MDB_DATASCHEME_0000000783").value}
+                                    ],
+                            'mdbueid': "456789ef",
+                            'html_form': "GUI_COMPONENT_0000000175",
+                            'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                        })
+        );
+
+    }
+
+
+    function logout(button_id) {
+
+        socket.send(JSON.stringify(
+                        {	'type' : "check_input",
+                            'localID' : button_id,
+                            'mdbueid': "456789ef",
+                            'mdb_session' : "http://www.morphdbase.de/resource/456789ef#TimeInterval_2",
+                            'html_form': "MY_DUMMY_MDB_0000000001",
+                            'connectSID': "s:kZuNvbuDmlKMq7sS-cAq9juxHEC4Zpjr.al5C3NERwDz0/sqdkPK24k8yhMQ6nBYp2ngZgMBKbbQ"
+                        })
+        );
+
+    }
+
+
+    // receive the query result and write the result in the output textarea
+    socket.onmessage = function(event) {
+
+        //split the JSON String
+        var outputJSONObj = JSON.parse(event.data);
+
+        // fill the output fields
+        if (typeof outputJSONObj.uuidURI !== "undefined") {
+            document.getElementById("uuidURI").value = outputJSONObj.uuidURI;
+        }
+
+
+        if (typeof outputJSONObj.sidURI !== "undefined") {
+            document.getElementById("sidURI").value = outputJSONObj.sidURI;
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

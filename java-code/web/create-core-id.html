@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Create MDB Core ID</title>
+</head>
+<body>
+
+    <form>
+        <label for="inputFirstName">first name:</label>
+        <input id="inputFirstName" type="text" >
+        <label for="inputMDBType" >select type:</label>
+        <!-- Choose output format for the SPARQL-Query -->
+        <select id="inputMDBType">
+            <option value="S">Specimen</option>
+            <option value="T">Taxon</option>
+            <option value="M">Media</option>
+            <option value="L">Literature</option>
+            <option value="D">Description</option>
+            <option value="MX">Matrix</option>
+            <option value="TD">Taxonomic Description</option>
+        </select>
+        <br>
+        <br>
+        <label for="inputLastName">last name:</label>
+        <input id="inputLastName" type="text" >
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;
+        <input onclick="generateID()" value="generate MDB Core ID" type="button">
+        <br><br>
+        <hr style="width:610px; float:left">
+        <br>
+        <!--<input onclick="saveMessage()" value="Save in named graph*" type="button">-->
+        <br><br>
+        <br><br>
+        <hr style="width:610px; float:left">
+        <br><br>
+        <label for="queryTime">time:</label>
+        <input id="queryTime" type="text" >
+        &nbsp;
+        <label for="outputMessage">message:</label>
+        <input id="outputMessage" type="text" >
+    </form>
+    <br><br>
+    *The named graph is called: "http://example.com/uris".
+    <br>
+    <a href="../javacode/">Query</a>
+    <br>
+    <a href="tripleinput.html">Triple Input</a>
+
+
+    <script>
+
+        // Strip the first slash
+        var patharray = location.pathname.split(/\//);
+
+        // create new WebSocket Object
+        var socket = new WebSocket("ws://" + location.host + "/" + patharray[1] + "/echo");
+
+        function generateID() {
+            // send the query to the Java class as a JSON String with specific keywords
+            socket.send(JSON.stringify(
+                    {'type' : "create_uri",
+                        'mdb_status_transition' : "mdbcore:MDB_CORE_0000000123",
+                        'first_name' : document.getElementById("inputFirstName").value,
+                        'last_name' : document.getElementById("inputLastName").value,
+                        'mdb_type' : document.getElementById("inputMDBType").value,
+                        'dataset' : "/home/path/to/tdb/mdb_core_workspace/" }));
+
+            document.getElementById("outputMessage").value = "";
+            document.getElementById("outputTime").value = "";
+
+        }
+
+        function saveMessage() {
+
+            if (document.getElementById("inputCoreID").value != ""
+                    && document.getElementById("inputCoreID").value != "undefined") {
+
+               socket.send(JSON.stringify(
+                        {	'type' : "push_triples",
+                            'mdb_status_transition' : "test_status_transition",
+                            'input_data' :
+                            {'datasets' : [
+                                {'dataset' : "/home/path/to/tdb/mdb_core_workspace/", // getJSONObject(i).getString("dataset")
+
+                                    'ngs' : [{  'ng' : "http://example.com/uris", // getJSONObject(i).getJSONArray("NG_URIs").getJSONObject(j).getString("NG_URI")
+                                                'triples': [
+                                                    {'subject' : document.getElementById("inputCoreID").value,
+                                                    'property' : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                                                    'object' :
+                                                    {'object_data' : "http://www.morphdbase.de/Ontologies/MDB/MDBEntry0v1#MDB_ENTRY_0000000029",
+                                                        'object_type' : "r"},
+                                                    'operation': "s"
+                                                    }
+                                                ]
+                                            } // getJSONArray("triples")
+                                            ]
+                                }] // getJSONArray("datasets")
+                            } // getJSONObject(inputdata)
+                        }));
+            }
+
+            document.getElementById("outputMessage").value = "";
+            document.getElementById("queryTime").value = "";
+
+        }
+
+
+        // receive the query result and write the result in the output textarea
+        socket.onmessage = function(event) {
+
+            //split the JSON String
+            var outputJSONObj = JSON.parse(event.data);
+
+            // fill the output fields
+            if (typeof outputJSONObj.output_message !== "undefined") {
+                document.getElementById("outputMessage").value = outputJSONObj.output_message;
+            }
+
+
+            if (typeof outputJSONObj.query_time !== "undefined") {
+                document.getElementById("queryTime").value = outputJSONObj.query_time + " ms";
+            }
+
+        }
+    </script>
+
+</body>
+</html>

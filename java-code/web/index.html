@@ -1,0 +1,71 @@
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <!-- input/output form for SPARQL-Queries -->
+
+    <form>
+        <label for="inputFormat" >select Format:</label>
+        <!-- Choose output format for the SPARQL-Query -->
+        <select id="inputFormat">
+            <option value="JSONLD">JSON-LD</option>
+            <option value="RDF/XML">RDF/XML</option>
+            <option value="TURTLE">TURTLE</option>
+            <option value="N-TRIPLES">N-TRIPLES</option>
+            <option value="RDF/XML-ABBREV">RDF/XML-ABBREV</option>
+            <option value="RDFJSON">RDF/JSON</option>
+        </select>
+        <br>
+        <label for="inputData">SPARQL-Query:</label>
+        <textarea id="inputData" rows="8" cols="100" style="vertical-align: top"></textarea>
+        <br>
+        <label for="outputData">Jena TDB Output:</label>
+        <textarea id="outputData" rows="40" cols="150" style="vertical-align: top"></textarea>
+        <br>
+        <label for="queryTime">Time:</label>
+        <input id="queryTime" type="text" >
+        <br>
+        <!-- clicking the "send"-button call the function "sendMessage" a new bridge between Java and Javascript -->
+        <input onclick="sendMessage()" value="Send" type="button">
+    </form>
+
+    <a href="tripleinput.html">Triple Input</a>
+    <br>
+    <a href="create-core-id.html">Create Core ID</a>
+
+    <script>
+
+        // Strip the first slash
+        var patharray = location.pathname.split(/\//);
+
+        // create new WebSocket Object
+        var socket = new WebSocket("ws://" + location.host + "/" + patharray[1] + "/echo");
+
+        function sendMessage() {
+            // send the query to the Java class as a JSON String with specific keywords
+            socket.send(JSON.stringify(
+                    {'type' : "query", 'query' : inputData.value, 'format' : inputFormat.value,
+                        'operation' : "l", 'dataset' : "/home/path/to/tdb/mdb_core_workspace/"}));
+        }
+
+        // receive the query result and write the result in the output textarea
+        socket.onmessage = function(event) {
+
+            //split the JSON String
+            var outputJSONObj = JSON.parse(event.data);
+
+            // fill the output fields
+            if (outputJSONObj.output_message !== "") {
+                document.getElementById("outputData").value = outputJSONObj.output_message;
+            }
+            if (outputJSONObj.query_time !== "") {
+                document.getElementById("queryTime").value = outputJSONObj.query_time + " ms";
+            }
+
+        }
+    </script>
+</body>
+</html>

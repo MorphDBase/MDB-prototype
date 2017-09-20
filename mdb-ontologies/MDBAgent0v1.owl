@@ -1,0 +1,1459 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obi "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bfo "http://purl.obolibrary.org/obo/bfo.owl#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY oboInOwl "http://www.geneontology.org/formats/oboInOwl#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY mdbagent "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#" >
+    <!ENTITY mdb "http://www.morphdbase.de/Ontologies/MDB/MDBSchema#" >
+    <!ENTITY mdbap "http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#" >
+    <!ENTITY mdbeqcl "http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#" >
+    <!ENTITY mdbuiap "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:mdbeqcl="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:mdbuiap="http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:mdb="http://www.morphdbase.de/Ontologies/MDB/MDBSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:bfo="&obi;bfo.owl#"
+     xmlns:mdbagent="http://www.morphdbase.de/Ontologies/MDB/MDBAgent#"
+     xmlns:mdbap="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:obi="http://purl.obolibrary.org/obo/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <Ontology rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBAgent">
+        <versionInfo rdf:datatype="&rdfs;Literal">0.1</versionInfo>
+        <dcterms:date rdf:datatype="&rdfs;Literal">27.11.2014</dcterms:date>
+        <dc:creator rdf:datatype="&rdfs;Literal">Lars Vogt</dc:creator>
+        <dcterms:title rdf:datatype="&rdfs;Literal">MDB Agent Ontology</dcterms:title>
+        <dcterms:description rdf:datatype="&rdfs;Literal">OWL vocabulary of MDB agents, which includes MDB users.</dcterms:description>
+        <protege:defaultLanguage xml:lang="en">en</protege:defaultLanguage>
+        <imports rdf:resource="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass/0.2.0"/>
+        <versionIRI rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBAgent/0.2.0"/>
+    </Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000115 -->
+
+    <rdf:Description rdf:about="&obi;IAO_0000115">
+        <rdfs:label rdf:datatype="&xsd;string">definition</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">textual definition</rdfs:label>
+        <rdfs:label>definition</rdfs:label>
+        <rdfs:label xml:lang="en">definition</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/dc/terms/contributor -->
+
+    <AnnotationProperty rdf:about="&dcterms;contributor"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <AnnotationProperty rdf:about="&dcterms;description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/hasVersion -->
+
+    <AnnotationProperty rdf:about="&dcterms;hasVersion"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <AnnotationProperty rdf:about="&dcterms;title"/>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#label -->
+
+    <rdf:Description rdf:about="&rdfs;label">
+        <rdfs:label>label</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <rdf:Description rdf:about="&dcterms;publisher">
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/dc/terms/rightsHolder -->
+
+    <rdf:Description rdf:about="&dcterms;rightsHolder">
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/pav/authoredBy -->
+
+    <rdf:Description rdf:about="http://purl.org/pav/authoredBy">
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000002"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/pav/contributedBy -->
+
+    <rdf:Description rdf:about="http://purl.org/pav/contributedBy">
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000022"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/pav/createdBy -->
+
+    <rdf:Description rdf:about="http://purl.org/pav/createdBy">
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000024"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000002 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000002">
+        <rdfs:label rdf:datatype="&xsd;string">authored</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000002</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This is the inverse property to &apos;authored by&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000022"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000020 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000020">
+        <rdfs:label rdf:datatype="&xsd;string">author of</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">Document that this Agent has authored.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000020</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000021"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000021 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000021">
+        <rdfs:label rdf:datatype="&xsd;string">has author</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">Agent that authored this document.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000021</oboInOwl:id>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000022 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000022">
+        <rdfs:label rdf:datatype="&xsd;string">contributed to</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000022</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This is the inverse property to &apos;contributed by&apos;.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000023 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000023">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">country of residence</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000023</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The country in which a person resides.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000024 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000024">
+        <rdfs:label rdf:datatype="&xsd;string">created</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000024</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This is the inverse property of &apos;created by&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000022"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000026 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000026">
+        <rdfs:label rdf:datatype="&xsd;string">expert for methods</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000026</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000027 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000027">
+        <rdfs:label rdf:datatype="&xsd;string">expert for taxon</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000027</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000028 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000028">
+        <rdfs:label xml:lang="en">funds</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A Project or Agent that is funded by this organization.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000029 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000029">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">has affiliation</rdfs:label>
+        <obi:IAO_0000112 xml:lang="en">A researcher has an affiliation with an institute or a department.</obi:IAO_0000112>
+        <obi:IAO_0000115 xml:lang="en">Institutional, consortia or other organizational affiliations.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000029</oboInOwl:id>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000030 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000030">
+        <rdfs:label rdf:datatype="&xsd;string">has PI</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000030</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The principal investigator of a research project.</obi:IAO_0000115>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000031 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000031">
+        <rdfs:label rdf:datatype="&xsd;string">MDB group has member</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A MDB User that is member of this Group.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000031</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000005"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000032 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000032">
+        <rdfs:label rdf:datatype="&xsd;string">institute</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An institute this agent is affiliated with.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000032</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000033 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000033">
+        <rdfs:label rdf:datatype="&xsd;string">is PI of</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000033</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The research project of which this person is the principal investigator.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000030"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000034 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000034">
+        <rdfs:label rdf:datatype="&xsd;string">member of MDB group</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A group of which this MDB User is member of.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000034</oboInOwl:id>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000005"/>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000031"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000035 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000035">
+        <rdfs:label rdf:datatype="&xsd;string">current MDB project</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A current MDB Project this Agent works on.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000013"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000036 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000036">
+        <rdfs:label rdf:datatype="&xsd;string">past MDB project</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A past MDB Project this Agent works on.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000036</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000013"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000047 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000047">
+        <rdfs:label rdf:datatype="&xsd;string">MDB agent/user  [object property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000047</oboInOwl:id>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000048 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000048">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">mbox of</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000048</oboInOwl:id>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000014"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000049 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000049">
+        <rdfs:label rdf:datatype="&xsd;string">has user image</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An image that can is used to depict an MDB user.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000049</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000012"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000074 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000074">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">desires salutation</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000074</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a salutation form that the person desires others to use when contacting them.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000075 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000075">
+        <rdfs:label rdf:datatype="&xsd;string">has academic position</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">MDB_AGENT_0000000075</obi:IAO_0000115>
+        <obi:IAO_0000115 xml:lang="en">Specifies the person&apos;s academic position.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000077 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000077">
+        <rdfs:label rdf:datatype="&xsd;string">contributed to MDB entry</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000077</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000089 -->
+
+    <ObjectProperty rdf:about="&mdbagent;MDB_AGENT_0000000089">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">has MDB user status</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000089</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property specifies the MDB user status of this MDB user.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000013 -->
+
+    <ObjectProperty rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000013"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/depicts -->
+
+    <rdf:Description rdf:about="&foaf;depicts">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000012"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/fundedBy -->
+
+    <rdf:Description rdf:about="&foaf;fundedBy">
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000028"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/homepage -->
+
+    <rdf:Description rdf:about="&foaf;homepage">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000015"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/knows -->
+
+    <rdf:Description rdf:about="&foaf;knows">
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/mbox -->
+
+    <rdf:Description rdf:about="&foaf;mbox">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000014"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+        <inverseOf rdf:resource="&mdbagent;MDB_AGENT_0000000048"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/member -->
+
+    <rdf:Description rdf:about="&foaf;member">
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/publications -->
+
+    <rdf:Description rdf:about="&foaf;publications">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/weblog -->
+
+    <rdf:Description rdf:about="&foaf;weblog">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000019"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/workInfoHomepage -->
+
+    <rdf:Description rdf:about="&foaf;workInfoHomepage">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000018"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/workplaceHomepage -->
+
+    <rdf:Description rdf:about="&foaf;workplaceHomepage">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:range rdf:resource="&mdbagent;MDB_AGENT_0000000017"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000047"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000037 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000037">
+        <rdfs:label rdf:datatype="&xsd;string">department name</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000037</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The name of the department this agent is affiliated with</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000038 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000038">
+        <rdfs:label rdf:datatype="&xsd;string">MDB group name</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000038</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The name of a MDB group.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000004"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000039 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000039">
+        <rdfs:label rdf:datatype="&xsd;string">institute name</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000039</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The name of the institute this agent is affiliated with</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000041 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000041">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">MDB password</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000041</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000042 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000042">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">organization name</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000042</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000043 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000043">
+        <rdfs:label rdf:datatype="&xsd;string">phone number</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000043</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The number used to call someone by phone.</obi:IAO_0000115>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000044 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000044">
+        <rdfs:label rdf:datatype="&xsd;string">postal address</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000044</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000045 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000045">
+        <rdfs:label rdf:datatype="&xsd;string">research interest</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000045</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000046 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000046">
+        <rdfs:label rdf:datatype="&xsd;string">MDB agent/user  [data property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000046</oboInOwl:id>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000073 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000073">
+        <rdfs:label rdf:datatype="&xsd;string">MDB user name</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000073</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The user name of this MDB user. It serves as human-readable unique identifier for MDB users.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000076 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000076">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">registered on</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000076</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the date this user has registered (signed up) to MDB.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000078 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000078">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">state of residence</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000078</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The state in which a person resides.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000079 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000079">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">city of residence</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000079</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The city in which a person resides.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000080 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000080">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">street and number of residence</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000080</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The street and house number of this person&apos;s residence.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000081 -->
+
+    <DatatypeProperty rdf:about="&mdbagent;MDB_AGENT_0000000081">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">postal code of residence</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000081</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The postal code of this person&apos;s residence.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+
+    <rdf:Description rdf:about="&foaf;firstName">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+
+    <rdf:Description rdf:about="&foaf;lastName">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/nickname -->
+
+    <rdf:Description rdf:about="&foaf;nickname">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/skypeID -->
+
+    <rdf:Description rdf:about="&foaf;skypeID">
+        <rdfs:domain rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/title -->
+
+    <rdf:Description rdf:about="&foaf;title">
+        <rdfs:subPropertyOf rdf:resource="&mdbagent;MDB_AGENT_0000000046"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/Agent -->
+
+    <rdf:Description rdf:about="&dcterms;Agent">
+        <equivalentClass rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000000 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000000">
+        <rdfs:label rdf:datatype="&xsd;string">agent</rdfs:label>
+        <equivalentClass rdf:resource="&foaf;Agent"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000000</oboInOwl:id>
+        <obi:IAO_0000112 xml:lang="en">person, group, organization, stearing committee, etc.</obi:IAO_0000112>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000001 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000001">
+        <rdfs:label rdf:datatype="&xsd;string">document</rdfs:label>
+        <equivalentClass rdf:resource="&foaf;Document"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000001</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000003 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000003">
+        <rdfs:label rdf:datatype="&xsd;string">URI</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000003</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000004 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000004">
+        <rdfs:label rdf:datatype="&xsd;string">group</rdfs:label>
+        <equivalentClass rdf:resource="&foaf;Group"/>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <obi:IAO_0000115 xml:lang="en">A class of Agents.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000004</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000005 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000005">
+        <rdfs:label rdf:datatype="&xsd;string">MDB user group</rdfs:label>
+        <equivalentClass>
+            <Class>
+                <intersectionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="&mdbagent;MDB_AGENT_0000000031"/>
+                        <someValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="&mdbagent;MDB_AGENT_0000000031"/>
+                        <allValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+                    </Restriction>
+                </intersectionOf>
+            </Class>
+        </equivalentClass>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000004"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="&mdbagent;MDB_AGENT_0000000031"/>
+                <allValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="&mdbagent;MDB_AGENT_0000000031"/>
+                <someValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <obi:IAO_0000115 xml:lang="en">A group of MDB user.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000005</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000006 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000006">
+        <rdfs:label rdf:datatype="&xsd;string">organization</rdfs:label>
+        <equivalentClass rdf:resource="&foaf;Organization"/>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <obi:IAO_0000115 xml:lang="en">An organization.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000006</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000007 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000007">
+        <rdfs:label rdf:datatype="&xsd;string">MDB organization</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000007</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000008 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000008">
+        <rdfs:label rdf:datatype="&xsd;string">person</rdfs:label>
+        <equivalentClass rdf:resource="&foaf;Person"/>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000000"/>
+        <obi:IAO_0000115 xml:lang="en">A person.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000008</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000009 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000009">
+        <rdfs:label rdf:datatype="&xsd;string">MDB user</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000008"/>
+        <obi:IAO_0000115 xml:lang="en">A Person that is registered in MDB.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000009</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000010 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000010">
+        <rdfs:label rdf:datatype="&xsd;string">logo</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000010</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000011 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000011">
+        <rdfs:label rdf:datatype="&xsd;string">RDF file</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000011</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000012 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000012">
+        <rdfs:label rdf:datatype="&xsd;string">user image</rdfs:label>
+        <equivalentClass>
+            <Class>
+                <intersectionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="&foaf;depicts"/>
+                        <someValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="&foaf;depicts"/>
+                        <allValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+                    </Restriction>
+                </intersectionOf>
+            </Class>
+        </equivalentClass>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000001"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="&foaf;depicts"/>
+                <allValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="&foaf;depicts"/>
+                <someValuesFrom rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000012</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000013 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000013">
+        <rdfs:label rdf:datatype="&xsd;string">MDB project</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000006"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000013</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000014 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000014">
+        <rdfs:label rdf:datatype="&xsd;string">email</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000003"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000014</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000015 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000015">
+        <rdfs:label rdf:datatype="&xsd;string">homepage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000003"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000015</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000016 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000016">
+        <rdfs:label rdf:datatype="&xsd;string">group homepage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000015"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000016</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000017 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000017">
+        <rdfs:label rdf:datatype="&xsd;string">organization homepage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000015"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000017</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000018 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000018">
+        <rdfs:label rdf:datatype="&xsd;string">person homepage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000015"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000018</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000019 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000019">
+        <rdfs:label rdf:datatype="&xsd;string">weblog</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000003"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000019</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000025 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000025">
+        <rdfs:label rdf:datatype="&xsd;string">MDB admin</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000009"/>
+        <obi:IAO_0000115 xml:lang="en">A Person that is registered in MDB and has the MDB role of an MDB admin.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000025</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000050 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000050">
+        <rdfs:label rdf:datatype="&xsd;string">MDB user email</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000086"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000050</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000053 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000053">
+        <rdfs:label rdf:datatype="&xsd;string">academic position</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.ifomis.org/bfo/1.1/snap#Role"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000053</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000064 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000064">
+        <rdfs:label rdf:datatype="&xsd;string">salutation</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000064</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000082 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000082">
+        <rdfs:label rdf:datatype="&xsd;string">funding agency</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000467"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000082</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000086 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000086">
+        <rdfs:label rdf:datatype="&xsd;string">agent email</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000014"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000086</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000087 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000087">
+        <rdfs:label rdf:datatype="&xsd;string">organization email</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000086"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000087</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000088 -->
+
+    <Class rdf:about="&mdbagent;MDB_AGENT_0000000088">
+        <rdfs:label rdf:datatype="&xsd;string">person email</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbagent;MDB_AGENT_0000000086"/>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000088</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000396 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000396"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000467 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000467"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Agent -->
+
+    <rdf:Description rdf:about="&foaf;Agent"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Document -->
+
+    <rdf:Description rdf:about="&foaf;Document"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Group -->
+
+    <rdf:Description rdf:about="&foaf;Group"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Organization -->
+
+    <rdf:Description rdf:about="&foaf;Organization"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <rdf:Description rdf:about="&foaf;Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000054 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000054">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Adjunct Professor</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Adjunct Professor</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000054</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000055 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000055">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Assistant Professor</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Assistant Professor</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000055</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000056 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000056">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Associate Professor</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Associate Professor</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000056</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000057 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000057">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Instructor</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Instructor</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000057</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000058 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000058">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Lecturer</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Lecturer</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000058</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000059 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000059">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">PhD Student</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">PhD Student</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000059</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000060 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000060">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">PostDoc</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">PostDoc</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000060</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000061 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000061">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Research Associate</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Resarch Associate</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000061</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000062 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000062">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">Student</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Student</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000062</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000063 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000063">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000053"/>
+        <rdfs:label rdf:datatype="&xsd;string">University Professor</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">University Professor</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000063</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000065 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000065">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Dr. [last name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Dr. [last name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000065</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000066 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000066">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Madam</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Madam</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000066</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000067 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000067">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Mr. [last name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Mr. [last name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000067</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000068 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000068">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Ms. [last name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Ms. [last name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000068</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000069 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000069">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Prof. [last name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Prof. [last name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000069</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000070 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000070">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Prof. Dr. [last name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Prof. Dr. [last name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000070</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000071 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000071">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1Sir</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">Sir</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id>MDB_AGENT_0000000071</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000072 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000072">
+        <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000064"/>
+        <rdfs:label rdf:datatype="&xsd;string">1[first name]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000201 rdf:datatype="&rdfs;Literal">[first name]</mdbuiap:MDB_UIAP_0000000201>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000072</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000083 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000083">
+        <rdf:type rdf:resource="&obi;OBI_0001942"/>
+        <rdfs:label rdf:datatype="&xsd;string">GRANT_AGENCY: DFG</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000083</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000084 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000084">
+        <rdf:type rdf:resource="&obi;OBI_0001942"/>
+        <rdfs:label rdf:datatype="&xsd;string">GRANT_AGENCY: BmBF</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000084</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000085 -->
+
+    <NamedIndividual rdf:about="&mdbagent;MDB_AGENT_0000000085">
+        <rdf:type rdf:resource="&obi;OBI_0001942"/>
+        <rdfs:label rdf:datatype="&xsd;string">GRANT_AGENCY: NSF</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AGENT_0000000085</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&obi;IAO_0000114">
+        <rdfs:label xml:lang="en">has curation status</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obi;IAO_0000412">
+        <rdfs:label xml:lang="en">imported from</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obi;IAO_0000117">
+        <rdfs:label xml:lang="en">term editor</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obi;IAO_0000111">
+        <rdfs:label>editor preferred term</rdfs:label>
+        <rdfs:label xml:lang="en">editor preferred label</rdfs:label>
+        <rdfs:label xml:lang="en">editor preferred term</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obi;IAO_0000118">
+        <rdfs:label xml:lang="en">alternative term</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dc;source">
+        <rdfs:label>Source</rdfs:label>
+        <rdfs:label xml:lang="en-us">Source</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&obi;IAO_0000119">
+        <rdfs:label xml:lang="en">definition source</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

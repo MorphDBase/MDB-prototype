@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://purl.obolibrary.org/obo/bco/releases/2015-04-10/bco.owl" uri="bco.owl"/>
+    <uri id="Imports Wizard Entry" name="http://purl.obolibrary.org/obo/iao/2015-02-23/iao.owl" uri="iao.owl"/>
+    <uri id="Imports Wizard Entry" name="http://purl.obolibrary.org/obo/iao/2015-02-23/iao.owl" uri="file:/C:/Users/Admin/Dropbox/eScience/04_Entwicklung/01_Ontologien/08_Information_Artifact_Ontology/iao.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/GUIComponent/0.1.0" uri="GUIComponent.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty/0.2.0" uri="MDBUserInterfaceAnnotationProperty.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/mdbuiap/0.2.0" uri="MDBUserInterfaceAnnotationProperty.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBCore/0.2.0" uri="MDBCore0v1.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen/0.2.0" uri="MDBSpecimen0v1.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBAgent/0.2.0" uri="MDBAgent0v1.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBEntry/0.2.0" uri="MDBEntry0v1.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass/0.2.0" uri="MDBCrossOntologyEquivalentClass0v1.owl"/>
+    <uri id="Imports Wizard Entry" name="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty/0.2.0" uri="MDBAnnotationProperty0v1.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.morphdbase.de/Ontologies/MDB/MDB_GUI" uri="MDB_GUI0v1.owl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://purl.obolibrary.org/obo/bco.owl" uri="bco.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://purl.obolibrary.org/obo/iao.owl" uri="iao.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://www.morphdbase.de/Ontologies/GUIComponent" uri="GUIComponent.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme" uri="MDBDataScheme0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://www.morphdbase.de/Ontologies/MDB/MDBTaxonomy" uri="MDBTaxonomy0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="http://www.morphdbase.de/Ontologies/MDB/MDB_GUIComposition0v1" uri="MDB_GUI0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBAgent0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBAnnotationProperty0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBCore0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBCrossOntologyEquivalentClass0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBEntry0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBSpecimen0v1.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505399248182" name="duplicate:http://www.w3.org/2002/07/owl" uri="MDBUserInterfaceAnnotationProperty.owl"/>
+    </group>
+</catalog>

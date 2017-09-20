@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Triple Input</title>
+</head>
+<body>
+
+    <form>
+        <label for="inputSubject">Subject:</label>
+        <input id="inputSubject" type="text" >
+        <label for="inputProperty">Property:</label>
+        <input id="inputProperty" type="text" >
+        <br>
+        <input name="inputType" type="radio" value="r" >Resource<br>
+        <input name="inputType" type="radio" value="l" >Literal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="inputObject">Object:</label>
+        <input id="inputObject" type="text" >
+        <br>
+        <label for="inputNG">Named Graph*:</label>
+        <input id="inputNG" type="text" >
+        <label for="inputNG">* empty for the default graph</label>
+        <br>
+        <label for="queryTime">Time:</label>
+        <input id="queryTime" type="text" >
+        <label for="outputData">Output-message:</label>
+        <input id="outputData" type="text" >
+        <br>
+        <!-- clicking the "send"-button call the function "sendMessage" a new bridge between Java and Javascript -->
+        <input onclick="saveMessage()" value="Save in named graph" type="button">
+        <input onclick="deleteMessage()" value="Delete from named graph" type="button">
+    </form>
+
+    <a href="../javacode/">Query</a>
+    <br>
+    <a href="create-core-id.html">Create Core ID</a>
+
+    <script>
+
+        // Strip the first slash
+        var patharray = location.pathname.split(/\//);
+
+        // create new WebSocket Object
+        var socket = new WebSocket("ws://" + location.host + "/" + patharray[1] + "/echo");
+
+        function saveMessage() {
+            var operation = "s";//save
+            sendMessage(operation);
+        }
+
+        function deleteMessage() {
+            var operation = "d";//delete
+            sendMessage(operation);
+        }
+
+        function sendMessage(operation) {
+
+            //dummyinput for radiobutton. use jquery for that part
+
+            var radios = document.getElementsByName('inputType');
+
+            var dummyType = "l";//literal
+
+            for (var i = 0, length = radios.length; i < length; i++) {
+
+                if (radios[i].checked) {
+
+                    dummyType = radios[i].value;
+
+                    break;
+                }
+            }
+
+
+            // send the query to the Java class as a JSON String with specific keywords
+
+            socket.send(JSON.stringify(
+                    {	'type' : "push_triples",
+                        'mdb_status_transition' : "test_status_transition",
+                        'input_data' :
+                        {'datasets' : [
+                                {'dataset' : '/home/path/to/tdb/mdb_core_workspace/', // getJSONObject(i).getString("dataset")
+
+                                'ngs' : [{  'ng_uri' : document.getElementById("inputNG").value, // getJSONObject(i).getJSONArray("NG_URIs").getJSONObject(j).getString("NG_URI")
+                                            'ng_data' : [
+                                                 {'triples': [
+                                                     {'subject' : document.getElementById("inputSubject").value,
+                                                     'property' : document.getElementById("inputProperty").value,
+                                                     'object' :
+                                                            {'object_data' : document.getElementById("inputObject").value,
+                                                            'object_type' : dummyType}
+                                                            }
+                                                 ],
+                                             'operations': [{'operation': operation}]}
+                                            ]} // getJSONArray("NG_data")
+                                ]// getJSONObject(i).getJSONArray("operations").getJSONObject(j).getString("operation")
+                              }] // getJSONArray("datasets")
+                        } // getJSONObject(inputdata)
+                    }));
+
+            document.getElementById("outputData").value = "";
+            document.getElementById("outputTime").value = "";
+        }
+
+        // receive the query result and write the result in the output textarea
+        socket.onmessage = function(event) {
+
+            //split the JSON String
+            var outputJSONObj = JSON.parse(event.data);
+
+            // fill the output fields
+            if (outputJSONObj.output_message !== "") {
+                document.getElementById("outputData").value = outputJSONObj.output_message;
+            }
+            if (outputJSONObj.query_time !== "") {
+                document.getElementById("queryTime").value = outputJSONObj.query_time + " ms";
+            }
+
+        }
+    </script>
+
+</body>
+</html>

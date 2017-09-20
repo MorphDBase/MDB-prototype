@@ -1,0 +1,770 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obi "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bfo "http://purl.obolibrary.org/obo/bfo.owl#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY oboInOwl "http://www.geneontology.org/formats/oboInOwl#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY mdbentry "http://www.morphdbase.de/Ontologies/MDB/MDBEntry#" >
+    <!ENTITY mdbap "http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#" >
+    <!ENTITY mdbeqcl "http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#" >
+    <!ENTITY mdbuiap "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:mdbeqcl="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:mdbuiap="http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:mdbentry="http://www.morphdbase.de/Ontologies/MDB/MDBEntry#"
+     xmlns:bfo="&obi;bfo.owl#"
+     xmlns:mdbap="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:obi="http://purl.obolibrary.org/obo/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <Ontology rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBEntry">
+        <versionInfo rdf:datatype="&rdfs;Literal">0.1</versionInfo>
+        <dcterms:date rdf:datatype="&rdfs;Literal">26.11.2014</dcterms:date>
+        <dcterms:description rdf:datatype="&rdfs;Literal">Basic OWL model of MDB Entry.</dcterms:description>
+        <dc:creator rdf:datatype="&rdfs;Literal">Lars Vogt</dc:creator>
+        <dcterms:title rdf:datatype="&rdfs;Literal">MDB Entry Ontology</dcterms:title>
+        <protege:defaultLanguage rdf:datatype="&rdfs;Literal">en</protege:defaultLanguage>
+        <imports rdf:resource="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass/0.2.0"/>
+        <versionIRI rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBEntry/0.2.0"/>
+    </Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/contributor -->
+
+    <AnnotationProperty rdf:about="&dcterms;contributor"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <AnnotationProperty rdf:about="&dcterms;description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/hasVersion -->
+
+    <AnnotationProperty rdf:about="&dcterms;hasVersion"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <AnnotationProperty rdf:about="&dcterms;title"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/accessRights -->
+
+    <ObjectProperty rdf:about="&dcterms;accessRights"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/conformsTo -->
+
+    <ObjectProperty rdf:about="&dcterms;conformsTo"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/contributor -->
+
+    <ObjectProperty rdf:about="&dcterms;contributor"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <ObjectProperty rdf:about="&dcterms;creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <ObjectProperty rdf:about="&dcterms;license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/provenance -->
+
+    <ObjectProperty rdf:about="&dcterms;provenance"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <ObjectProperty rdf:about="&dcterms;publisher"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/rights -->
+
+    <ObjectProperty rdf:about="&dcterms;rights"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/rightsHolder -->
+
+    <ObjectProperty rdf:about="&dcterms;rightsHolder"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000136 -->
+
+    <ObjectProperty rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000136"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000002 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000002">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">is annotation of</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000011 xml:lang="en">After the user has entered/uploaded all data required for a specific type of MDB entry, first, two new individuals must be generated and added to the respective graph(s):
+
+1) a new individual to the respective type of MDB entry.
+E.g. after entering all required data for adding a new user to MDB, an individual A of the type MDB_UserEntry must be added to the graph(s).
+
+2) a new individual to which all this entered data refers to and this individual is an instance of the class that is specified as the object (X) in the triple:
+&quot;MDB_EntryTYPE  isAnnotationOf  X&quot;
+E.g., for the newly added individual A of the type MDB_UserEntry (siehe step 1), an individual B of the type MDB_User must be added to the graph(s).
+
+3) All the data entered by the user must be added as triple statements. In some cases this requires the addition of furtherindividuals (through specified object resources).
+
+4) Finally, two triple statements relating the newly added individuals from steps 1 &amp; 2, using the inverse properties &apos;isAnnotationOf&apos; and &apos;hasAnnotation&apos;.
+E.g., for the example above this means adding the triples &quot;A isAnnotationOf B&quot; and &quot;B hasAnnotation A&quot;.</mdbuiap:MDB_UIAP_0000000011>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000002</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the entity that is annotated by this MDB entry.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000004 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000004">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">has MDB core ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000004</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This resource has a more abstract, non-versioned resource with equivalent content.
+
+This property is intended for relating a versioned MDB entry ID resource to its non-versioned or abstract MDB core ID resource.</obi:IAO_0000115>
+        <inverseOf rdf:resource="&mdbentry;MDB_ENTRY_0000000005"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+        <rdfs:range rdf:resource="&mdbentry;MDB_ENTRY_0000000029"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000005 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000005">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">core ID to MDB entry</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000005</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000011 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000011">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">has MDB entry ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000011</oboInOwl:id>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000000"/>
+        <inverseOf rdf:resource="&mdbentry;MDB_ENTRY_0000000012"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+        <rdfs:range rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000012 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000012">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">ID to MDB entry</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000012</oboInOwl:id>
+        <rdfs:range rdf:resource="&mdbentry;MDB_ENTRY_0000000000"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000013 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000013">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">has annotation</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000013</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the MDB entry that annotates this entity.</obi:IAO_0000115>
+        <inverseOf rdf:resource="&mdbentry;MDB_ENTRY_0000000002"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+        <rdfs:range rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000014 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000014">
+        <rdfs:label rdf:datatype="&xsd;string">MDB access rights</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000014</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;accessRights"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000028"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000015 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000015">
+        <rdfs:label rdf:datatype="&xsd;string">core ID has access right</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000015</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000014"/>
+        <inverseOf rdf:resource="&mdbentry;MDB_ENTRY_0000000016"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000029"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000016 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000016">
+        <rdfs:label rdf:datatype="&xsd;string">is access right of MDB core ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000016</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000014"/>
+        <rdfs:range rdf:resource="&mdbentry;MDB_ENTRY_0000000029"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000017 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000017">
+        <rdfs:label rdf:datatype="&xsd;string">is access right of MDB agent</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000017</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000014"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000018 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000018">
+        <rdfs:label rdf:datatype="&xsd;string">MDB agent has access right</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000018</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000014"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000028 -->
+
+    <ObjectProperty rdf:about="&mdbentry;MDB_ENTRY_0000000028">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry  [object property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000028</oboInOwl:id>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000039 -->
+
+    <ObjectProperty rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000039"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/fundedBy -->
+
+    <ObjectProperty rdf:about="&foaf;fundedBy">
+        <obi:IAO_0000115 xml:lang="en">An organization funding this MDB Project or this Person.</obi:IAO_0000115>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/homepage -->
+
+    <ObjectProperty rdf:about="&foaf;homepage">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/logo -->
+
+    <ObjectProperty rdf:about="&foaf;logo">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <obi:IAO_0000115 xml:lang="en">A logo representing some thing.</obi:IAO_0000115>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/mbox -->
+
+    <ObjectProperty rdf:about="&foaf;mbox">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/page -->
+
+    <ObjectProperty rdf:about="&foaf;page">
+        <obi:IAO_0000115 xml:lang="en">A page (URL) or document about this thing.</obi:IAO_0000115>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/pastProject -->
+
+    <ObjectProperty rdf:about="&foaf;pastProject"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/publications -->
+
+    <ObjectProperty rdf:about="&foaf;publications"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/skypeID -->
+
+    <ObjectProperty rdf:about="&foaf;skypeID">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/weblog -->
+
+    <ObjectProperty rdf:about="&foaf;weblog">
+        <obi:IAO_0000115 xml:lang="en">A weblog of this Agent.</obi:IAO_0000115>
+    </ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/workInfoHomepage -->
+
+    <ObjectProperty rdf:about="&foaf;workInfoHomepage"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/workplaceHomepage -->
+
+    <ObjectProperty rdf:about="&foaf;workplaceHomepage"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/available -->
+
+    <DatatypeProperty rdf:about="&dcterms;available">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <DatatypeProperty rdf:about="&dcterms;created">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+    <DatatypeProperty rdf:about="&dcterms;date">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateAccepted -->
+
+    <DatatypeProperty rdf:about="&dcterms;dateAccepted">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateCopyrighted -->
+
+    <DatatypeProperty rdf:about="&dcterms;dateCopyrighted">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateSubmitted -->
+
+    <DatatypeProperty rdf:about="&dcterms;dateSubmitted">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/identifier -->
+
+    <DatatypeProperty rdf:about="&dcterms;identifier"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+    <DatatypeProperty rdf:about="&dcterms;issued">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">This is the publication date of a resource</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <DatatypeProperty rdf:about="&dcterms;modified">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000003 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000003">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">author position</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000003</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the position in which an author is listed within the list of authors of a MDB entry.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+        <rdfs:range rdf:resource="&xsd;positiveInteger"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000021 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000021">
+        <rdfs:label rdf:datatype="&xsd;string">authored by</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">Data property equivalent to the object property &apos;authored by&apos;.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000021</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000023 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000023">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">MDB published</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000023</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This is the relase date of a MDB Entry</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+        <rdfs:range rdf:resource="&xsd;dateTimeStamp"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000024 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000024">
+        <rdfs:label rdf:datatype="&xsd;string">MDB modified</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000024</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This is the date on which this MDB Entry last has been modified (edited).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+        <rdfs:range rdf:resource="&xsd;dateTimeStamp"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000025 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000025">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry title</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000025</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000026 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000026">
+        <rdfs:label xml:lang="en">published  (BOOLEAN)</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
+        <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000027 -->
+
+    <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000027">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry  [data property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000027</oboInOwl:id>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/skypeID -->
+
+    <DatatypeProperty rdf:about="&foaf;skypeID"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000000 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000000"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000084 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000084"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000183 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000183"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000184 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000184"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000185 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000185"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000186 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000186"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000187 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000187"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000188 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000188"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000189 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000189"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000000 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000000">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry type</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000000</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000001 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000001">
+        <rdfs:label rdf:datatype="&xsd;string">MDB ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000001</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The complete ID of a MDB entry or an element of this ID.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000019 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000019">
+        <rdfs:label rdf:datatype="&xsd;string">MDB triple statement ID</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbentry;MDB_ENTRY_0000000001"/>
+        <obi:IAO_0000115 xml:lang="en">Every triple statement in MDB can have its own ID. This ID is based on the unique hash value that each triple statement has. This hash value is expressed in this ontology using the &apos;hash-value&apos; annotation.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000019</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000022 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000022">
+        <rdfs:label rdf:datatype="&xsd;string">MDB version ID</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbentry;MDB_ENTRY_0000000001"/>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000022</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The version ID of a MDB entry. This ID is part of the entry&apos;s ID.
+
+The MDB entry ID consists of the MDB core ID and a version ID. It is a resolvable unique URL that is composed of:
+
+&apos;www.morphdbase.de/resource/UEID-DATE-TYPE-SERIALNo-VersionID&apos;
+
+UEID: MDB user entry ID, consisting of a string of 8 hexadecimal character values
+DATE: creation date of the entry.
+TYPE: A single character specifying the type of entry (S=Specimen, T=Taxon, M=Media, L=Literature, Mx=Matrix, MD=Morphological Description, TD=Taxonomic Description).
+SERIALNo: A serial number that counts all core entries that the user has created so far (the first starting with &quot;1&quot; and continuing in integers).
+
+Version_ID: The Version ID of the particular Entry, with the first published version having the ID &quot;P_1&quot; and each following published revision version counting up in integers. Draft versions are distinguished from published version by a &quot;D&quot; (and revision draft version by a &quot;R&quot;) instead of the &quot;P&quot; and additionally identified by a separate number that follows the version number. For each new draft version this number is counted up in integers (first draft would be &quot;D_1_1&quot; and the next draft version would be &quot;D_1_2&quot;; when this entry is published, its VersionID would be  &quot;P_1&quot; and its first revision draft version &quot;R_2_1&quot;).</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000029 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000029">
+        <rdfs:label rdf:datatype="&xsd;string">MDB core ID</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbentry;MDB_ENTRY_0000000001"/>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000029</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The MDB core ID is the major part of an entry&apos;s unique URL, only lacking the version number. The core ID is composed of:
+
+&apos;www.morphdbase.de/resource/UEID-DATE-TYPE-SERIALNo&apos;
+
+UEID: This is the unique user entry ID and consists of a string of 8 hexadecimal character values. No two MDB user entries have the same UEID.
+DATE: creation date of the entry.
+TYPE: A single character specifying the type of entry (S=Specimen, T=Taxon, M=Media, L=Literature, Mx=Matrix, MD=Morphological Description, TD=Taxonomic Description).
+SERIALNo: A serial number that counts all core entries that the user has created so far (the first starting with &quot;1&quot; and continuing in integers).
+
+
+Within the MDB data scheme, each MDB core ID serves as resource from which every version of the entry is referenced through the property pav:&apos;has version&apos;.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000030 -->
+
+    <Class rdf:about="&mdbentry;MDB_ENTRY_0000000030">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry ID</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbentry;MDB_ENTRY_0000000001"/>
+        <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000030</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The MDB entry ID consists of the MDB core ID and a version ID. It is a resolvable unique URL that is composed of:
+
+&apos;www.morphdbase.de/resource/UEID-DATE-TYPE-SERIALNo-VersionID&apos;
+
+UEID: This is the unique user entry ID and consists of a string of 8 hexadecimal character values. No two MDB user entries have the same UEID.
+DATE: creation date of the entry.
+TYPE: A single character specifying the type of entry (S=Specimen, T=Taxon, M=Media, L=Literature, Mx=Matrix, MD=Morphological Description, TD=Taxonomic Description).
+SERIALNo: A serial number that counts all core entries that the user has created so far (the first starting with &quot;1&quot; and continuing in integers).
+
+Version_ID: The Version ID of the particular Entry, with the first published version having the ID &quot;P_1&quot; and each following published revision version counting up in integers. Draft versions are distinguished from published version by a &quot;D&quot; (and revision draft version by a &quot;R&quot;) instead of the &quot;P&quot; and additionally identified by a separate number that follows the version number. For each new draft version this number is counted up in integers (first draft would be &quot;D_1_1&quot; and the next draft version would be &quot;D_1_2&quot;; when this entry is published, its VersionID would be  &quot;P_1&quot; and its first revision draft version &quot;R_2_1&quot;).</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000001 -->
+
+    <Class rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000001"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Agent -->
+
+    <Class rdf:about="&foaf;Agent"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&owl;Thing">
+        <rdfs:label xml:lang="en">Thing</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/pav/createdOn">
+        <obi:IAO_0000412 rdf:resource="http://purl.org/pav/2.3"/>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

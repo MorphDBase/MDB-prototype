@@ -1,0 +1,848 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY cito "http://purl.org/spar/cito/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obi "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bfo "http://purl.obolibrary.org/obo/bfo.owl#" >
+    <!ENTITY attributes "http://rs.tdwg.org/dwc/terms/attributes/" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY oboInOwl "http://www.geneontology.org/formats/oboInOwl#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY mdbagent "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#" >
+    <!ENTITY mdbap "http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#" >
+    <!ENTITY mdbeqcl "http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:mdbeqcl="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:bfo="&obi;bfo.owl#"
+     xmlns:mdbagent="http://www.morphdbase.de/Ontologies/MDB/MDBAgent#"
+     xmlns:cito="http://purl.org/spar/cito/"
+     xmlns:mdbap="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:obi="http://purl.obolibrary.org/obo/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:attributes="http://rs.tdwg.org/dwc/terms/attributes/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <Ontology rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty">
+        <dcterms:date rdf:datatype="&rdfs;Literal">26.11.2014</dcterms:date>
+        <dcterms:title rdf:datatype="&rdfs;Literal">MDB Annotation Property Ontology</dcterms:title>
+        <dcterms:description rdf:datatype="&rdfs;Literal">OWL vocabulary of all annotation properties used in MDB ontologies.</dcterms:description>
+        <protege:defaultLanguage rdf:datatype="&rdfs;Literal">en</protege:defaultLanguage>
+        <versionInfo xml:lang="en">0.1</versionInfo>
+        <dc:creator xml:lang="en">Lars Vogt</dc:creator>
+        <versionIRI rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty/0.2.0"/>
+    </Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://protege.stanford.edu/plugins/owl/protege#defaultLanguage -->
+
+    <AnnotationProperty rdf:about="&protege;defaultLanguage">
+        <rdfs:label rdf:datatype="&xsd;string">default language</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000111 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000111">
+        <rdfs:label rdf:datatype="&xsd;string">editor preferred term</rdfs:label>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obolibrary.org/obo/obi&gt;</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000111</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The concise, meaningful, and human-friendly name for a class or property preferred by the ontology developers. (US-English)</obi:IAO_0000115>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000112 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000112">
+        <rdfs:label rdf:datatype="&xsd;string">example of usage</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A phrase describing how a class name should be used. May also include other kinds of examples that facilitate immediate understanding of a class semantics, such as widely known prototypical subclasses or instances of the class. Although essential for high level terms, examples for low level terms (e.g., Affymetrix HU133 array) are not</obi:IAO_0000115>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obolibrary.org/obo/obi&gt;</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000112</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000114 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000114">
+        <rdfs:label rdf:datatype="&xsd;string">has curation status
+</rdfs:label>
+        <oboInOwl:id xml:lang="en">IAO_0000114</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000115 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000115">
+        <rdfs:label rdf:datatype="&xsd;string">definition</rdfs:label>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obolibrary.org/obo/obi&gt;</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000115</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The official definition, explaining the meaning of a class or property. Shall be Aristotelian, formalized and normalized. Can be augmented with colloquial definitions.</obi:IAO_0000115>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000116 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000116">
+        <rdfs:label rdf:datatype="&xsd;string">editor note</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An administrative note intended for its editor. It may not be included in the publication version of the ontology, so it should contain nothing necessary for end users to understand the ontology.</obi:IAO_0000115>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obfoundry.org/obo/obi&gt;</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000116</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000117 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000117">
+        <rdfs:label rdf:datatype="&xsd;string">definition editor</rdfs:label>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obolibrary.org/obo/obi&gt;</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000117</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Name of editor entering the definition in the file. The definition editor is a point of contact for information regarding the term. The definition editor may be, but is not always, the author of the definition, which may have been worked upon by several people</obi:IAO_0000115>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000118 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000118">
+        <rdfs:label rdf:datatype="&xsd;string">alternative term</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An alternative name for a class or property which means the same thing as the preferred name (semantically equivalent)</obi:IAO_0000115>
+        <obi:IAO_0000119 xml:lang="en">GROUP:OBI:&lt;http://purl.obolibrary.org/obo/obi&gt;</obi:IAO_0000119>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000119 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000119">
+        <rdfs:label rdf:datatype="&xsd;string">definition source
+</rdfs:label>
+        <obi:IAO_0000119 xml:lang="en">Discussion on obo-discuss mailing-list, see http://bit.ly/hgm99w</obi:IAO_0000119>
+        <oboInOwl:id xml:lang="en">IAO_0000119</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">formal citation, e.g. identifier in external database to indicate / attribute source(s) for the definition. Free text indicate / attribute source(s) for the definition. EXAMPLE: Author Name, URI, MeSH Term C04, PUBMED ID, Wiki uri on 31.01.2007</obi:IAO_0000115>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000231 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000231">
+        <rdfs:label rdf:datatype="&xsd;string">has obsolence reason</rdfs:label>
+        <oboInOwl:id xml:lang="en">IAO_0000231</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Relates an annotation property to an obsolescence reason. The values of obsolescence reasons come from a list of predefined terms, instances of the class obsolescence reason specification.</obi:IAO_0000115>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000412 -->
+
+    <AnnotationProperty rdf:about="&obi;IAO_0000412">
+        <rdfs:label rdf:datatype="&xsd;string">imported from</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">For external terms/classes, the ontology from which the term was imported</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">IAO_0000412</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/creator -->
+
+    <AnnotationProperty rdf:about="&dc;creator">
+        <rdfs:label rdf:datatype="&xsd;string">creator</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An entity primarily responsible for making the resource.</obi:IAO_0000115>
+        <rdfs:comment xml:lang="en">Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/elements/1.1/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/source -->
+
+    <AnnotationProperty rdf:about="&dc;source">
+        <rdfs:label rdf:datatype="&xsd;string">source</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/BibliographicCitation -->
+
+    <AnnotationProperty rdf:about="&dcterms;BibliographicCitation">
+        <rdfs:label rdf:datatype="&xsd;string">bibliographic citation</rdfs:label>
+        <dcterms:description xml:lang="en">A bibliographic reference for the resource.</dcterms:description>
+        <rdfs:comment xml:lang="en">Recommended practice is to include sufficient bibliographic detail to identify the resource as unambiguously as possible.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/abstract -->
+
+    <AnnotationProperty rdf:about="&dcterms;abstract">
+        <rdfs:label rdf:datatype="&xsd;string">abstract</rdfs:label>
+        <rdfs:comment xml:lang="en">A summary of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;description"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/accessRights -->
+
+    <AnnotationProperty rdf:about="&dcterms;accessRights">
+        <rdfs:label rdf:datatype="&xsd;string">access rights</rdfs:label>
+        <dcterms:description xml:lang="en">Access Rights may include information regarding access or restrictions based on privacy, security, or other policies.</dcterms:description>
+        <rdfs:comment xml:lang="en">Information about who can access the resource or an indication of its security status.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;rights"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/alternative -->
+
+    <AnnotationProperty rdf:about="&dcterms;alternative">
+        <rdfs:label rdf:datatype="&xsd;string">alternative title</rdfs:label>
+        <rdfs:comment xml:lang="en">An alternative name for the resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">The distinction between titles and alternative titles is application-specific.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/available -->
+
+    <AnnotationProperty rdf:about="&dcterms;available">
+        <rdfs:label rdf:datatype="&xsd;string">date available</rdfs:label>
+        <rdfs:comment xml:lang="en">Date (often a range) that the resource became or will become available.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/conformsTo -->
+
+    <AnnotationProperty rdf:about="&dcterms;conformsTo">
+        <rdfs:label rdf:datatype="&xsd;string">conforms to</rdfs:label>
+        <rdfs:comment xml:lang="en">An established standard to which the described resource conforms.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/contributor -->
+
+    <AnnotationProperty rdf:about="&dcterms;contributor">
+        <rdfs:label rdf:datatype="&xsd;string">contributor</rdfs:label>
+        <rdfs:comment xml:lang="en">An entity responsible for making contributions to the resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">Examples of a Contributor include a person, an organization, or a service.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <AnnotationProperty rdf:about="&dcterms;created">
+        <rdfs:label rdf:datatype="&xsd;string">date created</rdfs:label>
+        <rdfs:comment xml:lang="en">Date of creation of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+    <AnnotationProperty rdf:about="&dcterms;date"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateAccepted -->
+
+    <AnnotationProperty rdf:about="&dcterms;dateAccepted">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateCopyrighted -->
+
+    <AnnotationProperty rdf:about="&dcterms;dateCopyrighted">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/dateSubmitted -->
+
+    <AnnotationProperty rdf:about="&dcterms;dateSubmitted">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <AnnotationProperty rdf:about="&dcterms;description">
+        <rdfs:label rdf:datatype="&xsd;string">description</rdfs:label>
+        <rdfs:comment xml:lang="en">An account of the resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/extent -->
+
+    <AnnotationProperty rdf:about="&dcterms;extent">
+        <rdfs:label rdf:datatype="&xsd;string">extent</rdfs:label>
+        <rdfs:comment xml:lang="en">The size or duration of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;format"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/format -->
+
+    <AnnotationProperty rdf:about="&dcterms;format">
+        <rdfs:label rdf:datatype="&xsd;string">format</rdfs:label>
+        <dcterms:description xml:lang="en">Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types [MIME].</dcterms:description>
+        <rdfs:comment xml:lang="en">The file format, physical medium, or dimensions of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/hasFormat -->
+
+    <AnnotationProperty rdf:about="&dcterms;hasFormat">
+        <rdfs:label rdf:datatype="&xsd;string">has format</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is substantially the same as the pre-existing described resource, but in another format.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/hasPart -->
+
+    <AnnotationProperty rdf:about="&dcterms;hasPart">
+        <rdfs:label rdf:datatype="&xsd;string">has part</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is included either physically or logically in the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/hasVersion -->
+
+    <AnnotationProperty rdf:about="&dcterms;hasVersion">
+        <rdfs:label rdf:datatype="&xsd;string">dcterms:has version</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is a version, edition, or adaptation of the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/identifier -->
+
+    <AnnotationProperty rdf:about="&dcterms;identifier"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/isFormatOf -->
+
+    <AnnotationProperty rdf:about="&dcterms;isFormatOf">
+        <rdfs:label rdf:datatype="&xsd;string">is format of</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is substantially the same as the described resource, but in another format.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/isPartOf -->
+
+    <AnnotationProperty rdf:about="&dcterms;isPartOf">
+        <rdfs:label rdf:datatype="&xsd;string">is part of</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource in which the described resource is physically or logically included.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/isReferencedBy -->
+
+    <AnnotationProperty rdf:about="&dcterms;isReferencedBy">
+        <rdfs:label rdf:datatype="&xsd;string">is referenced by
+</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that references, cites, or otherwise points to the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/isReplacedBy -->
+
+    <AnnotationProperty rdf:about="&dcterms;isReplacedBy">
+        <rdfs:label rdf:datatype="&xsd;string">is replaced by</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that supplants, displaces, or supersedes the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/isRequiredBy -->
+
+    <AnnotationProperty rdf:about="&dcterms;isRequiredBy">
+        <rdfs:label rdf:datatype="&xsd;string">is required by</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that requires the described resource to support its function, delivery, or coherence.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/isVersionOf -->
+
+    <AnnotationProperty rdf:about="&dcterms;isVersionOf">
+        <rdfs:label rdf:datatype="&xsd;string">is version of</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource of which the described resource is a version, edition, or adaptation.</rdfs:comment>
+        <dcterms:description xml:lang="en">Changes in version imply substantive changes in content rather than differences in format.</dcterms:description>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+    <AnnotationProperty rdf:about="&dcterms;issued">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/language -->
+
+    <AnnotationProperty rdf:about="&dcterms;language">
+        <rdfs:label rdf:datatype="&xsd;string">language</rdfs:label>
+        <rdfs:comment xml:lang="en">A language of the resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">Recommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646].</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <AnnotationProperty rdf:about="&dcterms;license">
+        <rdfs:label rdf:datatype="&xsd;string">license</rdfs:label>
+        <rdfs:comment xml:lang="en">A legal document giving official permission to do something with the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;rights"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/medium -->
+
+    <AnnotationProperty rdf:about="&dcterms;medium">
+        <rdfs:label rdf:datatype="&xsd;string">medium</rdfs:label>
+        <rdfs:comment xml:lang="en">The material or physical carrier of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;format"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <AnnotationProperty rdf:about="&dcterms;modified">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/publisher -->
+
+    <AnnotationProperty rdf:about="&dcterms;publisher">
+        <rdfs:label rdf:datatype="&xsd;string">publisher</rdfs:label>
+        <rdfs:comment xml:lang="en">An entity responsible for making the resource available.</rdfs:comment>
+        <dcterms:description xml:lang="en">Examples of a Publisher include a person, an organization, or a service.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/references -->
+
+    <AnnotationProperty rdf:about="&dcterms;references">
+        <rdfs:label rdf:datatype="&xsd;string">references</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is referenced, cited, or otherwise pointed to by the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/relation -->
+
+    <AnnotationProperty rdf:about="&dcterms;relation">
+        <rdfs:label rdf:datatype="&xsd;string">relation</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system. </dcterms:description>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/replaces -->
+
+    <AnnotationProperty rdf:about="&dcterms;replaces">
+        <rdfs:label rdf:datatype="&xsd;string">replaces</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is supplanted, displaced, or superseded by the described resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/requires -->
+
+    <AnnotationProperty rdf:about="&dcterms;requires">
+        <rdfs:label rdf:datatype="&xsd;string">requires</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource that is required by the described resource to support its function, delivery, or coherence.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/rights -->
+
+    <AnnotationProperty rdf:about="&dcterms;rights">
+        <rdfs:label rdf:datatype="&xsd;string">rights</rdfs:label>
+        <rdfs:comment xml:lang="en">Information about rights held in and over the resource.</rdfs:comment>
+        <dcterms:description xml:lang="en">Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/source -->
+
+    <AnnotationProperty rdf:about="&dcterms;source">
+        <rdfs:label rdf:datatype="&xsd;string">source</rdfs:label>
+        <rdfs:comment xml:lang="en">A related resource from which the described resource is derived.</rdfs:comment>
+        <dcterms:description xml:lang="en">The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.</dcterms:description>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/subject -->
+
+    <AnnotationProperty rdf:about="&dcterms;subject">
+        <rdfs:label rdf:datatype="&xsd;string">subject</rdfs:label>
+        <rdfs:comment xml:lang="en">The topic of the resource.</rdfs:comment>
+        <skos:note xml:lang="en">This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration.</skos:note>
+        <dcterms:description xml:lang="en">Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary.</dcterms:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/tableOfContents -->
+
+    <AnnotationProperty rdf:about="&dcterms;tableOfContents">
+        <rdfs:label rdf:datatype="&xsd;string">table of contents</rdfs:label>
+        <rdfs:comment xml:lang="en">A list of subunits of the resource.</rdfs:comment>
+        <rdfs:comment rdf:resource="http://purl.org/dc/terms/"/>
+        <rdfs:subPropertyOf rdf:resource="&dcterms;description"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <AnnotationProperty rdf:about="&dcterms;title">
+        <rdfs:label rdf:datatype="&xsd;string">title</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A name given to a resource.</obi:IAO_0000115>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/type -->
+
+    <AnnotationProperty rdf:about="&dcterms;type">
+        <rdfs:label rdf:datatype="&xsd;string">type</rdfs:label>
+        <dcterms:description xml:lang="en">Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To describe the file format, physical medium, or dimensions of the resource, use the Format element.</dcterms:description>
+        <rdfs:comment xml:lang="en">The nature or genre of the resource.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/valid -->
+
+    <AnnotationProperty rdf:about="&dcterms;valid">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/spar/cito/citesAsAuthority -->
+
+    <AnnotationProperty rdf:about="&cito;citesAsAuthority">
+        <rdfs:label rdf:datatype="&xsd;string">cited as authority</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/attributes/abcdEquivalence -->
+
+    <AnnotationProperty rdf:about="&attributes;abcdEquivalence">
+        <rdfs:label rdf:datatype="&xsd;string">ABCD Equivalence</rdfs:label>
+        <dcterms:issued xml:lang="en">2009-01-25</dcterms:issued>
+        <dcterms:modified xml:lang="en">2009-01-25</dcterms:modified>
+        <rdfs:comment xml:lang="en">Currently mapped to ABCD 2.06b</rdfs:comment>
+        <dcterms:description xml:lang="en">Used to show the xpath(s) to the equivalent term(s) in the current version of the Access to Biological Collections Data (ABCD) schema.</dcterms:description>
+        <dcterms:hasVersion rdf:resource="http://rs.tdwg.org/dwc/terms/attribute#abcdEquivalence"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/attributes/decision -->
+
+    <AnnotationProperty rdf:about="&attributes;decision">
+        <rdfs:label rdf:datatype="&xsd;string">decision</rdfs:label>
+        <dcterms:issued xml:lang="en">2009-01-25</dcterms:issued>
+        <dcterms:modified xml:lang="en">2009-01-25</dcterms:modified>
+        <rdfs:comment xml:lang="en">Example: &quot;http://rs.tdwg.org/dwc/terms/history/decisions/#Decision-2009-01-20_1&quot;</rdfs:comment>
+        <dcterms:description xml:lang="en">Used to reference the formal decision that resulted in this version of the term.</dcterms:description>
+        <dcterms:hasVersion rdf:resource="http://rs.tdwg.org/dwc/terms/attribute#decision"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#hasDefinition -->
+
+    <AnnotationProperty rdf:about="&oboInOwl;hasDefinition">
+        <rdfs:label rdf:datatype="&xsd;string">has definition</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#hasExactSynonym -->
+
+    <AnnotationProperty rdf:about="&oboInOwl;hasExactSynonym">
+        <rdfs:label rdf:datatype="&xsd;string">has exact synonym</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#hasOBONamespace -->
+
+    <AnnotationProperty rdf:about="&oboInOwl;hasOBONamespace">
+        <rdfs:label rdf:datatype="&xsd;string">has OBO namespace</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym -->
+
+    <AnnotationProperty rdf:about="&oboInOwl;hasRelatedSynonym">
+        <rdfs:label rdf:datatype="&xsd;string">has related synonym</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#id -->
+
+    <AnnotationProperty rdf:about="&oboInOwl;id">
+        <rdfs:label rdf:datatype="&xsd;string">id</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#MDB_AP_0000000008 -->
+
+    <AnnotationProperty rdf:about="&mdbap;MDB_AP_0000000008">
+        <rdfs:label rdf:datatype="&xsd;string">has synonym</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AP_0000000008</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#MDB_AP_0000000015 -->
+
+    <AnnotationProperty rdf:about="&mdbap;MDB_AP_0000000015">
+        <rdfs:label rdf:datatype="&xsd;string">DarwinCore</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AP_0000000015</oboInOwl:id>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#MDB_AP_0000000016 -->
+
+    <AnnotationProperty rdf:about="&mdbap;MDB_AP_0000000016">
+        <rdfs:label rdf:datatype="&xsd;string">DarwinCore equivalent term</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AP_0000000016</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbap;MDB_AP_0000000015"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#MDB_AP_0000000017 -->
+
+    <AnnotationProperty rdf:about="&mdbap;MDB_AP_0000000017">
+        <rdfs:label rdf:datatype="&xsd;string">DarwinCore version</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AP_0000000017</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbap;MDB_AP_0000000015"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#MDB_AP_0000000018 -->
+
+    <AnnotationProperty rdf:about="&mdbap;MDB_AP_0000000018">
+        <rdfs:label rdf:datatype="&xsd;string">acknowledgement</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_AP_0000000018</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The acknowledgements text of a data entry.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&rdfs;comment"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#comment -->
+
+    <rdf:Description rdf:about="&rdfs;comment">
+        <rdfs:label rdf:datatype="&xsd;string">comment</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#isDefinedBy -->
+
+    <rdf:Description rdf:about="&rdfs;isDefinedBy">
+        <rdfs:label rdf:datatype="&xsd;string">is defined by</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#label -->
+
+    <rdf:Description rdf:about="&rdfs;label">
+        <rdfs:label rdf:datatype="&xsd;string">label</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#versionInfo -->
+
+    <rdf:Description rdf:about="&owl;versionInfo">
+        <rdfs:label rdf:datatype="&xsd;string">version info</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#note -->
+
+    <AnnotationProperty rdf:about="&skos;note">
+        <rdfs:label rdf:datatype="&xsd;string">note</rdfs:label>
+    </AnnotationProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&owl;backwardCompatibleWith">
+        <rdfs:label rdf:datatype="&xsd;string">backward compatible with</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&owl;priorVersion">
+        <rdfs:label rdf:datatype="&xsd;string">prior version</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&owl;deprecated">
+        <rdfs:label rdf:datatype="&xsd;string">depcrecated</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&rdfs;seeAlso">
+        <rdfs:label rdf:datatype="&xsd;string">see also</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&owl;incompatibleWith">
+        <rdfs:label rdf:datatype="&xsd;string">incompatible with</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&oboInOwl;hasBroadSynonym">
+        <rdfs:label rdf:datatype="&xsd;string">has broad synonym</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

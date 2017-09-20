@@ -1,0 +1,925 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms" >
+    <!ENTITY terms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obo "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY attributes "http://rs.tdwg.org/dwc/terms/attributes/" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY ns "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+    <!ENTITY oboInOwl "http://www.geneontology.org/formats/oboInOwl#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY mdbcore "http://www.morphdbase.de/Ontologies/MDB/MDBCore#" >
+    <!ENTITY mdbgui "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#" >
+    <!ENTITY mdbentry "http://www.morphdbase.de/Ontologies/MDB/MDBEntry#" >
+    <!ENTITY mdbagent "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#" >
+    <!ENTITY mdbspecimen "http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen" >
+    <!ENTITY mdbtaxonomy "http://www.morphdbase.de/Ontologies/MDB/MDBTaxonomy0v1#" >
+    <!ENTITY mdbap "http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#" >
+    <!ENTITY mdbeqcl "http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#" >
+    <!ENTITY mdbuiap "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:mdbeqcl="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass#"
+     xmlns:mdbtaxonomy="http://www.morphdbase.de/Ontologies/MDB/MDBTaxonomy0v1#"
+     xmlns:ns="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:mdbuiap="http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:mdbentry="http://www.morphdbase.de/Ontologies/MDB/MDBEntry#"
+     xmlns:mdbagent="http://www.morphdbase.de/Ontologies/MDB/MDBAgent#"
+     xmlns:mdbspecimen="http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen"
+     xmlns:mdbap="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="&dcterms;/"
+     xmlns:mdbcore="http://www.morphdbase.de/Ontologies/MDB/MDBCore#"
+     xmlns:dcterms="http://purl.org/dc/terms"
+     xmlns:attributes="http://rs.tdwg.org/dwc/terms/attributes/"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:mdbgui="http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#">
+    <Ontology rdf:about="http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen">
+        <versionInfo rdf:datatype="&rdfs;Literal">0.1</versionInfo>
+        <terms:date rdf:datatype="&rdfs;Literal">17.12.2014</terms:date>
+        <dc:creator rdf:datatype="&rdfs;Literal">Lars Vogt</dc:creator>
+        <terms:title rdf:datatype="&rdfs;Literal">MDB Specimen Entry Ontology</terms:title>
+        <terms:description rdf:datatype="&rdfs;Literal">OWL vocabulary and data scheme for Specimen Entry in MDB.</terms:description>
+        <protege:defaultLanguage rdf:datatype="&rdfs;Literal">en</protege:defaultLanguage>
+        <rdfs:comment xml:lang="en">This file contains terms from the Darwin Core (DwC) type vocabulary, imported from the RDF representation of that vocabulary and interpreted as classes and properties in the MDB Specimen Ontology.</rdfs:comment>
+        <imports rdf:resource="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass/0.2.0"/>
+        <versionIRI rdf:resource="&mdbspecimen;/0.2.0"/>
+    </Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/IAO_0000412 -->
+
+    <rdf:Description rdf:about="&obo;IAO_0000412">
+        <rdfs:label xml:lang="en">imported from</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#identificationMethod -->
+
+    <ObjectProperty rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#identificationMethod">
+        <rdfs:label>identificationMethod</rdfs:label>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://lod.taxonconcept.org/ontology/txn.owl</obo:IAO_0000412>
+        <rdfs:comment>Method used to identify the individual, as a URI</rdfs:comment>
+        <ns:term_status>testing</ns:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://lod.taxonconcept.org/ontology/txn.owl"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#identificationReference -->
+
+    <ObjectProperty rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#identificationReference">
+        <rdfs:label>identification reference</rdfs:label>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://lod.taxonconcept.org/ontology/txn.owl</obo:IAO_0000412>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identificationReferences</mdbap:MDB_AP_0000000016>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/References</attributes:abcdEquivalence>
+        <ns:term_status>testing</ns:term_status>
+        <rdfs:comment>Links an identification to the URI for the reference used.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://lod.taxonconcept.org/ontology/txn.owl"/>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identificationReferences-2014-10-23"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#identifiedBy -->
+
+    <ObjectProperty rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#identifiedBy">
+        <rdfs:label rdf:datatype="&xsd;string">identified by</rdfs:label>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://lod.taxonconcept.org/ontology/txn.owl</obo:IAO_0000412>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identifiedBy</mdbap:MDB_AP_0000000016>
+        <ns:term_status>testing</ns:term_status>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+The name(s) of the person(s) who identified the organism.</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:comment>Links an identification to the URI a human that made the identification as URI</rdfs:comment>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/Identifiers/IdentifiersText</attributes:abcdEquivalence>
+        <rdfs:isDefinedBy rdf:resource="http://lod.taxonconcept.org/ontology/txn.owl"/>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identifiedBy-2014-10-23"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#individualhasImage -->
+
+    <ObjectProperty rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#individualhasImage">
+        <rdfs:label rdf:datatype="&xsd;string">individual has image</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">associatedMedia</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://lod.taxonconcept.org/ontology/txn.owl</obo:IAO_0000412>
+        <ns:term_status>testing</ns:term_status>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/MultimediaObjects</attributes:abcdEquivalence>
+        <rdfs:comment>Intended to link an individual to a image. Should be subproperty of foaf:depiction</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://lod.taxonconcept.org/ontology/txn.owl"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/associatedMedia-2014-10-30_16"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000000 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000000">
+        <rdfs:label rdf:datatype="&xsd;string">MDB specimen   [object property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000000</oboInOwl:id>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000010 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000010">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">specimen integrity</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000010</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">Specifies the integrity of the specimen.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Specify the integrity of the individual(s)</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+        <mdbuiap:MDB_UIAP_0000000022 rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000007"/>
+        <rdfs:range rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000007"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000011 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000011">
+        <rdfs:label rdf:datatype="&xsd;string">contains part of individual</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000011</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Specify which part(s) of the incomplete individual is sampled.
+
+Example: Head, Segment No. 3</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000016 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000016">
+        <rdfs:label rdf:datatype="&xsd;string">identification ID</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identificationID</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">An identifier for the Identification (the body of information associated with the assignment of a scientific name). May be a global unique identifier or an identifier specific to the data set.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+An identifier for the Identification (the body of information associated with the assignment of a scientific name). May be a global unique identifier or an identifier specific to the data set.</mdbuiap:MDB_UIAP_0000000018>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000016</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identificationID-2009-04-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000018 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000018">
+        <rdfs:label rdf:datatype="&xsd;string">specimen ID</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&xsd;string">Darwin Core current standard
+An identifier for an individual or named group of individual organisms represented in the Occurrence. Meant to accommodate resampling of the same individual or group for monitoring purposes. May be a global unique identifier or an identifier specific to a data set.
+
+Examples: &quot;U.amer.44&quot;; &quot;Smedley&quot;; &quot;Orca J 23&quot;
+
+Details: http://rs.tdwg.org/dwc/terms/history/index.htm#individualID-2009-04-24</mdbuiap:MDB_UIAP_0000000018>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">organismID</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">An identifier for the Organism instance (as opposed to a particular digital record of the Organism). May be a globally unique identifier or an identifier specific to the data set.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000018</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/organismID-2014-10-26_14"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000033 -->
+
+    <ObjectProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000033">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">overall specimen quality and condition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000033</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The overall quality and condition of the sampled specimen.</obo:IAO_0000115>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000000"/>
+        <rdfs:range rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000028"/>
+    </ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/identificationQualifier -->
+
+    <DatatypeProperty rdf:about="http://rs.tdwg.org/dwc/terms/identificationQualifier">
+        <rdfs:label rdf:datatype="&xsd;string">identification qualifier</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identificationQualifier</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">A brief phrase or a standard term (&quot;cf.&quot;, &quot;aff.&quot;) to express the determiner&apos;s doubts about the Identification.</obo:IAO_0000115>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/TaxonIdentified/IdentificationQualifier</attributes:abcdEquivalence>
+        <obo:IAO_0000112 xml:lang="en">Examples: 1) For the determination &quot;Quercus aff. agrifolia var. oxyadenia&quot;, identificationQualifier would be &quot;aff. agrifolia var. oxyadenia&quot; with accompanying values &quot;Quercus&quot; in genus, &quot;agrifolia&quot; in specificEpithet, &quot;oxyadenia&quot; in infraspecificEpithet, and &quot;var.&quot; in rank. 2) For the determination &quot;Quercus agrifolia cf. var. oxyadenia&quot;, identificationQualifier would be &quot;cf. var. oxyadenia &quot; with accompanying values &quot;Quercus&quot; in genus, &quot;agrifolia&quot; in specificEpithet, &quot;oxyadenia&quot; in infraspecificEpithet, and &quot;var.&quot; in rank.</obo:IAO_0000112>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/history/#identificationQualifier-2009-04-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000001 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000001">
+        <rdfs:label rdf:datatype="&xsd;string">MDB specimen   [data property]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000001</oboInOwl:id>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000002 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000002">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">specimen ID</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">organismID</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">An identifier for the Organism instance (as opposed to a particular digital record of the Organism). May be a globally unique identifier or an identifier specific to the data set.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+An identifier for an individual or named group of individual organisms represented in the Occurrence. Meant to accommodate resampling of the same individual or group for monitoring purposes. May be a global unique identifier or an identifier specific to a data set.
+
+Examples: &quot;U.amer.44&quot;; &quot;Smedley&quot;; &quot;Orca J 23&quot;
+
+Details: http://rs.tdwg.org/dwc/terms/history/index.htm#individualID-2009-04-24</mdbuiap:MDB_UIAP_0000000018>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000002</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/organismID-2014-10-26_14"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000003 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000003">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">number of individuals</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">individualCount</mdbap:MDB_AP_0000000016>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+The number of individuals present in the sample or observed in the sampling event.
+
+Examples: &quot;1&quot;; &quot;26&quot;
+
+Details:  http://rs.tdwg.org/dwc/terms/history/index.htm#individualCount-2009-04-24</mdbuiap:MDB_UIAP_0000000018>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000003</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The number of individuals present in the sample or observed in the sampling event.</obo:IAO_0000115>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/history/index.htm#individualCount-2009-04-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000006 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000006">
+        <rdfs:label rdf:datatype="&xsd;string">identified by</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identifiedBy</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+The name(s) of the person(s) who identified the organism.</mdbuiap:MDB_UIAP_0000000018>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/Identifiers/IdentifiersText</attributes:abcdEquivalence>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000006</oboInOwl:id>
+        <rdfs:comment xml:lang="en">The recommended best practice is to separate the values with a vertical bar (&apos; | &apos;). Examples: &quot;James L. Patton&quot;, &quot;Theodore Pappenfuss | Robert Macey&quot;. For discussion see http://terms.tdwg.org/wiki/dwc:identifiedBy</rdfs:comment>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identifiedBy-2014-10-23"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000015 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000015">
+        <rdfs:label rdf:datatype="&xsd;string">date identified</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">dateIdentified</mdbap:MDB_AP_0000000016>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+The date on which the specimen was identified as representing the Taxon given in Identification. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).
+
+Discussion: http://code.google.com/p/darwincore/wiki/Identification</mdbuiap:MDB_UIAP_0000000018>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/Date/DateText</attributes:abcdEquivalence>
+        <rdfs:comment xml:lang="en">Examples: &quot;1963-03-08T14:07-0600&quot; is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, &quot;2009-02-20T08:40Z&quot; is 20 Feb 2009 8:40am UTC, &quot;1809-02-12&quot; is 12 Feb 1809, &quot;1906-06&quot; is Jun 1906, &quot;1971&quot; is just that year, &quot;2007-03-01T13:00:00Z/2008-05-11T15:30:00Z&quot; is the interval between 1 Mar 2007 1pm UTC and 11 May 2008 3:30pm UTC, &quot;2007-11-13/15&quot; is the interval between 13 Nov 2007 and 15 Nov 2007. For discussion see http://terms.tdwg.org/wiki/dwc:dateIdentified</rdfs:comment>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000015</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The date on which the subject was identified as representing the Taxon. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E).</obo:IAO_0000115>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/dateIdentified-2009-08-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000017 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000017">
+        <rdfs:label rdf:datatype="&xsd;string">identification ID</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identificationID</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">An identifier for the Identification (the body of information associated with the assignment of a scientific name). May be a global unique identifier or an identifier specific to the data set.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+An identifier for the Identification (the body of information associated with the assignment of a scientific name). May be a global unique identifier or an identifier specific to the data set.</mdbuiap:MDB_UIAP_0000000018>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000017</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identificationID-2009-04-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000019 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000019">
+        <rdfs:label rdf:datatype="&xsd;string">identification remarks</rdfs:label>
+        <mdbap:MDB_AP_0000000016 rdf:datatype="&xsd;string">identificationRemarks</mdbap:MDB_AP_0000000016>
+        <obo:IAO_0000115 xml:lang="en">Comments or notes about the Identification.</obo:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Darwin Core current standard
+Comments or notes about the identification of the sample specimen.
+
+Example: &quot;Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the uñas.&quot;. 
+
+Discussion see http://terms.tdwg.org/wiki/dwc:identificationRemarks</mdbuiap:MDB_UIAP_0000000018>
+        <attributes:abcdEquivalence xml:lang="en">DataSets/DataSet/Units/Unit/Identifications/Identification/Notes</attributes:abcdEquivalence>
+        <obo:IAO_0000112 xml:lang="en">Example: &quot;Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the uñas.&quot;. For discussion see http://terms.tdwg.org/wiki/dwc:identificationRemarks</obo:IAO_0000112>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000019</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;bco_0000042"/>
+        <mdbap:MDB_AP_0000000017 rdf:resource="http://rs.tdwg.org/dwc/terms/identificationRemarks-2009-04-24"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000021 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000021">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">max number of individuals</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000021</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The maximum number of individuals present in the sample or observed in the sampling event.</obo:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000022 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000022">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label rdf:datatype="&xsd;string">min number of individuals</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000022</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The minimum number of individuals present in the sample or observed in the sampling event.</obo:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000025 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000025">
+        <rdfs:label rdf:datatype="&xsd;string">verbatim label</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000025</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">Specifies what is written on the actual physical label of the specimen</obo:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000034 -->
+
+    <DatatypeProperty rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000034">
+        <rdfs:label rdf:datatype="&xsd;string">specimen quality and condition remarks</rdfs:label>
+        <obo:IAO_0000115 xml:lang="en">Comments and remarks about the overall quality and condition of the sampled specimen.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000034</oboInOwl:id>
+        <rdfs:domain rdf:resource="&obo;OBI_0100051"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000001"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#Identification -->
+
+    <rdf:Description rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#Identification">
+        <equivalentClass rdf:resource="&obo;bco_0000042"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://lod.taxonconcept.org/ontology/txn.owl#Specimen -->
+
+    <rdf:Description rdf:about="http://lod.taxonconcept.org/ontology/txn.owl#Specimen">
+        <equivalentClass rdf:resource="&obo;OBI_0100051"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/BCO_0000061 -->
+
+    <Class rdf:about="&obo;BCO_0000061">
+        <rdfs:label rdf:datatype="&xsd;string">fossil specimen</rdfs:label>
+        <disjointWith rdf:resource="&obo;BCO_0000062"/>
+        <disjointWith rdf:resource="&obo;BCO_0000063"/>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/bco.owl</obo:IAO_0000412>
+        <obo:IAO_0000115 xml:lang="en">A specimen that is derived from a fossil.</obo:IAO_0000115>
+        <rdfs:comment xml:lang="en">Need to develop or import a class for fossil in order to define this class.</rdfs:comment>
+        <obo:IAO_0000112 xml:lang="en">a fossil housed in a natural history museum</obo:IAO_0000112>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000123"/>
+    </Class>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/BCO_0000062 -->
+
+    <Class rdf:about="&obo;BCO_0000062">
+        <rdfs:label rdf:datatype="&xsd;string">living specimen</rdfs:label>
+        <disjointWith rdf:resource="&obo;BCO_0000063"/>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/bco.owl</obo:IAO_0000412>
+        <obo:IAO_0000115 xml:lang="en">A specimen that is alive.</obo:IAO_0000115>
+        <rdfs:comment xml:lang="en">Need to import alive from PATO and add logical definition.</rdfs:comment>
+        <obo:IAO_0000112 xml:lang="en">a bacterial culture in a culture collection</obo:IAO_0000112>
+        <obo:IAO_0000112 xml:lang="en">a tree in an arboretum</obo:IAO_0000112>
+        <obo:IAO_0000112 xml:lang="en">an animal in a zoo</obo:IAO_0000112>
+        <obo:IAO_0000112 xml:lang="en">germplasm</obo:IAO_0000112>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000123"/>
+    </Class>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/BCO_0000063 -->
+
+    <Class rdf:about="&obo;BCO_0000063">
+        <rdfs:label rdf:datatype="&xsd;string">preserved specimen</rdfs:label>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/bco.owl</obo:IAO_0000412>
+        <obo:IAO_0000115 xml:lang="en">A specimen that has been preserved.</obo:IAO_0000115>
+        <rdfs:comment xml:lang="en">request a term for preservation in OBI and/or preserved in PATO</rdfs:comment>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000123"/>
+    </Class>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/ERO_0000020 -->
+
+    <rdf:Description rdf:about="&obo;ERO_0000020">
+        <equivalentClass rdf:resource="&obo;OBI_0100051"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/OBI_0000112 -->
+
+    <Class rdf:about="&obo;OBI_0000112">
+        <rdfs:label rdf:datatype="&xsd;string">specimen role</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.ifomis.org/bfo/1.1/snap#Role"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <obo:IAO_0000116 rdf:datatype="&xsd;string">22Jun09.  The definition includes whole organisms, and can include a human.  The link between specimen role and study subject role has been removed.  A specimen taken as part of a case study is not considered to be a population representative, while a specimen taken as representing a population, e.g. person taken from a cohort, blood specimen taken from an animal) would be considered a population representative and would also bear material sample role.</obo:IAO_0000116>
+        <obo:IAO_0000117 rdf:datatype="&xsd;string">GROUP:  Role Branch</obo:IAO_0000117>
+        <obo:IAO_0000116 rdf:datatype="&xsd;string">Note: definition is in specimen creation objective which is defined as an objective to obtain and store a material entity for potential use as an input during an investigation.</obo:IAO_0000116>
+        <obo:IAO_0000119 rdf:datatype="&xsd;string">OBI</obo:IAO_0000119>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/bco.owl</obo:IAO_0000412>
+        <obo:IAO_0000112 rdf:datatype="&xsd;string">liver section; a portion of a culture of cells; a nemotode or other animal once no longer a subject (generally killed); portion of blood from a patient.</obo:IAO_0000112>
+        <obo:IAO_0000115 xml:lang="en">a role borne by a material entity that is gained during a specimen collection process and that can be realized by use of the specimen in an investigation</obo:IAO_0000115>
+        <obo:IAO_0000118 xml:lang="en">material sample</obo:IAO_0000118>
+        <obo:IAO_0000111 xml:lang="en">specimen role</obo:IAO_0000111>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000122"/>
+    </Class>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/OBI_0100051 -->
+
+    <Class rdf:about="&obo;OBI_0100051">
+        <rdfs:label rdf:datatype="&xsd;string">specimen</rdfs:label>
+        <equivalentClass>
+            <Restriction>
+                <onProperty rdf:resource="&obo;RO_0000087"/>
+                <someValuesFrom rdf:resource="&obo;OBI_0000112"/>
+            </Restriction>
+        </equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.ifomis.org/bfo/1.1/snap#MaterialEntity"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="&obo;RO_0000087"/>
+                <someValuesFrom rdf:resource="&obo;OBI_0000112"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <obo:IAO_0000112 rdf:datatype="&xsd;string">Biobanking of blood taken and stored in a freezer for potential future investigations stores specimen.</obo:IAO_0000112>
+        <obo:IAO_0000116 rdf:datatype="&xsd;string">Note: definition is in specimen creation objective which is defined as an objective to obtain and store a material entity for potential use as an input during an investigation.</obo:IAO_0000116>
+        <obo:IAO_0000117 rdf:datatype="&xsd;string">PERSON: James Malone</obo:IAO_0000117>
+        <obo:IAO_0000117 rdf:datatype="&xsd;string">PERSON: Philippe Rocca-Serra</obo:IAO_0000117>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/obi.owl</obo:IAO_0000412>
+        <obo:IAO_0000115 xml:lang="en">A material entity that has the specimen role.</obo:IAO_0000115>
+        <obo:IAO_0000119 xml:lang="en">GROUP: OBI Biomaterial Branch</obo:IAO_0000119>
+        <obo:IAO_0000111 xml:lang="en">specimen</obo:IAO_0000111>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000122"/>
+    </Class>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/bco_0000042 -->
+
+    <Class rdf:about="&obo;bco_0000042">
+        <rdfs:label rdf:datatype="&xsd;string">taxonomic identification process</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <obo:IAO_0000412 rdf:datatype="&xsd;string">http://purl.obolibrary.org/obo/bco.owl</obo:IAO_0000412>
+        <obo:IAO_0000112>Using DNA barcoding to identify a plant species.</obo:IAO_0000112>
+        <dc:creator>Biocode Commons Ontology Hackathon</dc:creator>
+        <obo:IAO_0000115>A process by which a material sample is associated with a taxon or taxa.</obo:IAO_0000115>
+        <obo:IAO_0000112>Using BLAST to identify the taxa present in an environmental (metagenomic) sample.</obo:IAO_0000112>
+        <obo:IAO_0000112>Using a key to identify a plant in the field.</obo:IAO_0000112>
+        <obo:IAO_0000112>Associating a museum specimen with a specific taxonomic concept based on its characters.</obo:IAO_0000112>
+        <obo:IAO_0000114 rdf:resource="&obo;IAO_0000125"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000467 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000467"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000004 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000004">
+        <rdfs:label rdf:datatype="&xsd;string">specimen lot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <obo:IAO_0000115 xml:lang="en">A specimen that consists of material that enumerates to more than one individual organism.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000004</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000005 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000005">
+        <rdfs:label rdf:datatype="&xsd;string">ranged specimen lot</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <obo:IAO_0000115 xml:lang="en">A specimen that enumerates to more than one individual organism, but the exact number of individuals can only be specified to some value between a min and max.  Because they are not precisely enumerated, ranged specimen lots cannot be translated directly into specimen lots or single individual organism specimens.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000005</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000007 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000007">
+        <rdfs:label rdf:datatype="&xsd;string">specimen composition</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.ifomis.org/bfo/1.1/snap#SpecificallyDependentContinuant"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000007</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000012 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000012">
+        <rdfs:label rdf:datatype="&xsd;string">single individual organism specimen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <obo:IAO_0000115 xml:lang="en">A specimen that consists of material that enumerates to one individual organism.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000012</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000013 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000013">
+        <rdfs:label rdf:datatype="&xsd;string">preserved specimen - alcohol</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+        <rdfs:subClassOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000023"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000013</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000014 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000014">
+        <rdfs:label rdf:datatype="&xsd;string">preserved specimen - dried</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+        <rdfs:subClassOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000023"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000014</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000020 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000020">
+        <rdfs:label rdf:datatype="&xsd;string">part of individual organism specimen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <obo:IAO_0000115 xml:lang="en">A specimen that consists of material that enumerates to less than one individual organism.</obo:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000020</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000023 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000023">
+        <rdfs:label rdf:datatype="&xsd;string">specimen by preservation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000023</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000024 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000024">
+        <rdfs:label rdf:datatype="&xsd;string">preserved specimen - other</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+        <rdfs:subClassOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000023"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000024</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000026 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000026">
+        <rdfs:label rdf:datatype="&xsd;string">DNA sample specimen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000023"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000026</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000027 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000027">
+        <rdfs:label rdf:datatype="&xsd;string">tissue sample specimen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000023"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000027</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000028 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000028">
+        <rdfs:label rdf:datatype="&xsd;string">overall specimen quality and condition</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&obo;PATO_0001241"/>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000028</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000035 -->
+
+    <Class rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000035">
+        <rdfs:label rdf:datatype="&xsd;string">life stage</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000035</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary. [dwc lifeStage]</obo:IAO_0000115>
+        <skos:note xml:lang="en">dwc &apos;lifeStage&apos; recommended controlled vocabulary</skos:note>
+    </Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000008 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000008">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1SPECIMEN_INTEGRITY: whole organism</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000008</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The specimen consists of whole individual(s)</obo:IAO_0000115>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000009 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000009">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1SPECIMEN_INTEGRITY: part of individual</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000009</oboInOwl:id>
+        <obo:IAO_0000115 xml:lang="en">The specimen consists of only parts of indivual(s).</obo:IAO_0000115>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000029 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000029">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000028"/>
+        <rdfs:label rdf:datatype="&xsd;string">excellent</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000029</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000030 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000030">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000028"/>
+        <rdfs:label rdf:datatype="&xsd;string">fair</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000030</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000031 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000031">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000028"/>
+        <rdfs:label rdf:datatype="&xsd;string">good</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000031</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000032 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000032">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000028"/>
+        <rdfs:label rdf:datatype="&xsd;string">poor</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000032</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000036 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000036">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: zygote</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000036</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000037 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000037">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: sporophyte</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000037</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000038 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000038">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: spore</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000038</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000039 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000039">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: pupa</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000039</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000040 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000040">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: larva</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000040</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000041 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000041">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: juvenile</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000041</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000042 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000042">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: gametophyte</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000042</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000043 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000043">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: gamete</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000043</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000044 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000044">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: embryo</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000044</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen#MDB_SPECIMEN_0000000045 -->
+
+    <NamedIndividual rdf:about="&mdbspecimen;#MDB_SPECIMEN_0000000045">
+        <rdf:type rdf:resource="&mdbspecimen;#MDB_SPECIMEN_0000000035"/>
+        <rdfs:label rdf:datatype="&xsd;string">DWC_LIFESTAGE: adult</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_SPECIMEN_0000000045</oboInOwl:id>
+    </NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+
