@@ -1,0 +1,121 @@
+<div class="mdb_document">
+
+    <!-- Left column fixed width -->
+    <div class="left_main_panel container-fluid">
+
+        <!-------------- shown only for developers in $rootScope.developers ----------------------------------------------------------------------------------->
+        <div class="row" ng-if="$root.developers.indexOf(currentUser) > -1">
+
+            <h2>layout
+                <small>(debugging)</small>
+            </h2>
+
+            <div layout="row">
+                <div style="padding: 10px">
+                    <pre style="vertical-align: top; width:90%; height: 50px;">loggedIn = {{loggedIn | json}}</pre>
+                    <pre style="vertical-align: top; width:90%; height: 50px;">currentUser = {{currentUser | json}}</pre>
+                    <pre style="vertical-align: top; width:90%; height: 200px;">Angular Cookies = {{cookies | json}}</pre>
+                    <pre style="vertical-align: top; width:90%; height: 200px;">WsService.sent[0] = {{WsService.sent[0] | json}}</pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main column -->
+    <div class="right_main_panel container-fluid">
+
+        <!-------------- shown only for developers in $rootScope.developers ----------------------------------------------------------------------------------->
+        <div class="row" ng-if="$root.developers.indexOf(currentUser) > -1">
+
+            <div ng-hide="loggedIn">
+                <h2>You are not logged</h2>
+            </div>
+            <div ng-show="loggedIn">
+
+                    <h1>Annotation demo I
+                        <small>using annotator.js</small>
+                    </h1>
+
+                    <p>Annotate in the box below:</p>
+
+                <div layout="row" mw-annotator="{}" annotator-permissions="{user: currentUser}"
+                     annotator-plugins="['Validation', {name: 'Websocket', options: wsOptions}]">
+
+                        <p>W3C-Annotation ontologies:
+                        <ul>
+                            <li><a href="https://www.w3.org/TR/annotation-model">Web Annotation Data Model</li>
+                            <li><a href="https://www.w3.org/TR/annotation-vocab">Web Annotation Vocabulary</li>
+                            <li><a> <a href="https://www.w3.org/TR/annotation-protocol/">Web Annotation Protocol</a></li>
+                        </ul>
+                        </p>
+                        <pre>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate tortor nec dictum maximus.
+                            Maecenas a lacus a turpis tempus dapibus non vel dui. Suspendisse blandit luctus fringilla.
+                            Suspendisse condimentum tellus non urna pretium vulputate. Nulla pharetra consequat elit, at
+                            egestas sapien venenatis a. Sed eget efficitur elit. Aliquam ac orci sollicitudin, mollis lacus vel,
+                            condimentum orci.
+                        </pre>
+
+                        {{annotationForm.text}}
+
+                       {{text}}
+
+                        <strong>hypothes.is</strong><br/>
+                        <a href="https://hypothes.is/bioscience/" target="new">Bioscience at Hypothes.is</a>
+                        <br/>
+
+                    </div>
+
+
+                    <h1>Annotation demo II
+                        <small>showing raw autput (Demo of bioontology.org annotator)</small>
+                    </h1>
+
+                    <form method="GET"
+                          action="https://data.bioontology.org/annotator?apikey=8b5b7825-538d-40e0-9e9e-5ab9274a9aeb&ontologies=CL,MP&longest_only=false&exclude_numbers=false&whole_word_only=true&exclude_synonyms=false&expand_class_hierarchy=true&class_hierarchy_max_level=3">
+                        <textarea maxlength="500" name="text">Cats are similar in anatomy to other felids.</textarea>
+                        <input type="submit" value="Annotate!">
+                    </form>
+
+                    <h3>Parameter</h3>
+                    <ul>
+                        <li><b>URL:</b> http://data.bioontology.org/annotator</li>
+                        <li><b>apikey:</b> NCBO api key (Beispiel hier: Christians Key 8b5b7825-538d-40e0-9e9e-5ab9274a9aeb)</li>
+                        <li><b>text:</b>URL-encodeder Text bis zu 500 Zeichen</li>
+                        <li><b>ontologies:</b>Lister der Ontologien (NCBO Kürzel). Wenn leer, werden ALLE ontologien durchsucht.
+                        </li>
+                        <li><b>expand_class_hierarchy</b>: In Subklassen suchen? Erst einmal immer auf "true"</li>
+                        <li><b>lass_hierarchy_max_level: </b> In wie vielen Stufen von Subklassen soll gesucht werden. 3 - 5 ist ein
+                            guter Wert.
+                        </li>
+                        <li><b>format: </b>json oder XML. Lässt man den Parameter weg, ist es "human readable"</li>
+                        <li><b>longest_only, exclude_numbers und true&exclude_synonyms: </b> Werden von uns erst einmal fest gesetzt
+                        </li>
+                    </ul>
+
+                    <h2>Der Link</h2>
+                    <a target="_new"
+                       href="https://data.bioontology.org/annotator?apikey=8b5b7825-538d-40e0-9e9e-5ab9274a9aeb&ontologies=CL,MP&longest_only=false&exclude_numbers=false&whole_word_only=true&exclude_synonyms=false&expand_class_hierarchy=true&class_hierarchy_max_level=3&text=Cats%20are%20similar%20in%20anatomy%20to%20other%20felids.%20">
+                        http://data.bioontology.org/annotator
+                        ?apikey=8b5b7825-538d-40e0-9e9e-5ab9274a9aeb
+                        &ontologies=CL,MP
+                        &longest_only=false
+                        &exclude_numbers=false
+                        &whole_word_only=true
+                        &exclude_synonyms=false
+                        &expand_class_hierarchy=true
+                        &class_hierarchy_max_level=3
+                        &format=json
+                        &text=Cats%20are%20similar%20in%20anatomy%20to%20other%20felids.%20
+                    </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+

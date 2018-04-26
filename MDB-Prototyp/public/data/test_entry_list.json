@@ -1,0 +1,167 @@
+{
+  "connectSID": "s:42-HALLOHIERALARMEINS1ELF-TTESTT.SANDRASGANZPERSOENLICHEMDBPROTOTYPSESSIONID",
+  "mdbueid": "272b7f79",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412": "http://www.morphdbase.de/resource/272b7f79#MDB_CORE_0000000568_35",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411": "http://www.morphdbase.de/resource/272b7f79#TimeInterval_35",
+  "data": [
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Title changed",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171018-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "SpecimenEntryTest",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "3",
+      "uri": "http://www.morphdbase.de/resource/a3d611c8-20171027-s-3-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Der Sinn des Lebens ist",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "42",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171023-s-4-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Specimen Description",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "12",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171023-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "this is a new title",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171019-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "fdgd",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "12",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171023-s-3-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "wqeqe",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "12",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171020-s-2-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "test",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "1701",
+      "uri": "http://www.morphdbase.de/resource/272b7f79-20171023-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "2CreateOn",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "27102017",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171027-s-3-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Label was changed afterwards",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "MDB_GUI_0000000288": "Klaus",
+      "MDB_GUI_0000000088": "Maier",
+      "uri": "http://www.morphdbase.de/resource/caab6b18-20171019-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "test",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "1",
+      "uri": "http://www.morphdbase.de/resource/a3d611c8-20171025-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "A short and meaningful title",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "uri": "http://www.morphdbase.de/resource/272b7f79-20171023-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "wq",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "12",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171027-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "1teston",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "27102017",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171027-s-2-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "SpecimenEntryTest",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "3",
+      "uri": "http://www.morphdbase.de/resource/a3d611c8-20171027-s-2-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "specimenEntryTest",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "2",
+      "uri": "http://www.morphdbase.de/resource/a3d611c8-20171026-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Sample Specimen",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "2310",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171023-s-2-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "sad",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "12",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171020-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Lycoris aurea entry",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "uri": "http://www.morphdbase.de/resource/272b7f79-20171018-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "specimenTest",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "uri": "http://www.morphdbase.de/resource/a3d611c8-20171027-s-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Multicellular Organism",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "uri": "http://www.morphdbase.de/resource/421701d8-20171020-md-1-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "Klaus Maiers new Entry",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000611",
+      "MDB_GUI_0000000288": "Klaus",
+      "MDB_GUI_0000000088": "Maier",
+      "uri": "http://www.morphdbase.de/resource/caab6b18-20171019-md-2-d_1_1"
+    },
+    {
+      "withStatus": "MDB_CORE_0000000115",
+      "entryLabel": "3CreateOn",
+      "MDB_CORE_0000000602": "MDB_CORE_0000000613",
+      "entryLabel2": "27102017",
+      "uri": "http://www.morphdbase.de/resource/de46dd64-20171027-s-4-d_1_1"
+    }
+  ],
+  "load_page_localID": "list_entries",
+  "mdbueid_uri": "http://www.morphdbase.de/resource/272b7f79"
+}

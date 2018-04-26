@@ -1,0 +1,446 @@
+{
+  "connectSID": "s:42-HALLOHIERALARMEINS1ELF-TTESTT.SANDRASGANZPERSOENLICHEMDBPROTOTYPSESSIONID",
+  "mdbueid": "e47bbe55",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412": "http://www.morphdbase.de/resource/e47bbe55#MDB_CORE_0000000568_1",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411": "http://www.morphdbase.de/resource/e47bbe55#TimeInterval_1",
+  "data": [
+    {
+      "MDB_GUI_0000000040": [
+        {
+          "MDB_GUI_0000000042": "1",
+          "MDB_GUI_0000000040": [
+            {
+              "MDB_GUI_0000000042": "1",
+              "localID": "MDB_DATASCHEME_0000000704_1",
+              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000731_1",
+              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000168",
+              "MDB_GUI_0000000040": [
+                {
+                  "MDB_GUI_0000000042": "1",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "localID": "MDB_DATASCHEME_0000000712_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000139"
+                    },
+                    {
+                      "MDB_UIAP_0000000018": "USER NAME\nPlease provide a unique user name. User names serve as user-readable identification of users. \n\nThis represents required information for signing up to MDB.\n\n\nRemark: the MDB application itself unambiguously identifies a user through a Unique User ID, which is a string of 16 characters.",
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_UIAP_0000000386": "true",
+                      "MDB_CORE_0000000460": "huiui",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                      "localID": "MDB_DATASCHEME_0000000713_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "3",
+                      "MDB_UIAP_0000000266": "online",
+                      "localID": "MDB_DATASCHEME_0000000714_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000140",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "4",
+                      "MDB_GUI_0000000088": "last Login:",
+                      "MDB_GUI_0000000287": "06.03.2017",
+                      "localID": "MDB_DATASCHEME_0000000715_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000228"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "5",
+                      "MDB_GUI_0000000088": "updated:",
+                      "MDB_GUI_0000000287": "06.03.2017",
+                      "localID": "MDB_DATASCHEME_0000000716_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000228"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "6",
+                      "MDB_GUI_0000000088": "registered:",
+                      "MDB_GUI_0000000287": "06.03.2017",
+                      "localID": "MDB_DATASCHEME_0000000717_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000706_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000228"
+                    }
+                  ],
+                  "localID": "MDB_DATASCHEME_0000000706_1",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000704_1",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000267"
+                },
+                {
+                  "MDB_GUI_0000000417": "true",
+                  "MDB_GUI_0000000042": "2",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_GUI_0000000040": [
+                        {
+                          "MDB_GUI_0000000042": "1",
+                          "MDB_GUI_0000000088": "edit",
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                          "localID": "MDB_DATASCHEME_0000000707_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000705_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000239"
+                        }
+                      ],
+                      "MDB_UIAP_0000000118": [],
+                      "localID": "MDB_DATASCHEME_0000000705_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000957_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000235"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_GUI_0000000040": [
+                        {
+                          "MDB_UIAP_0000000457": "Salutation",
+                          "MDB_UIAP_0000000018": "Please indicate, how you want to be addressed when other users are contacting you.",
+                          "MDB_GUI_0000000042": "1",
+                          "MDB_UIAP_0000000118": [
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed with their professor title followed by their last name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000069",
+                              "selLabel": "Prof. [last name]"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed with their doctor title followed by their last name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000065",
+                              "selLabel": "Dr. [last name]"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed with their professor and their doctor title followed by their last name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000070",
+                              "selLabel": "Prof. Dr. [last name]"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed as Madam.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000066",
+                              "selLabel": "Madam"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed as Sir.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000071",
+                              "selLabel": "Sir"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed as Mr. followed by his last name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000067",
+                              "selLabel": "Mr. [last name]"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed with their first name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000072",
+                              "selLabel": "[first name]"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "This user wants to be addressed as Ms. followed by her last name.",
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000068",
+                              "selLabel": "Ms. [last name]"
+                            }
+                          ],
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000071",
+                          "localID": "MDB_DATASCHEME_0000000718_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000066"
+                        },
+                        {
+                          "MDB_UIAP_0000000457": "Academic position",
+                          "MDB_UIAP_0000000018": "You can specify your academic position.",
+                          "MDB_GUI_0000000042": "2",
+                          "MDB_UIAP_0000000118": [
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000057",
+                              "selLabel": "Instructor"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000056",
+                              "selLabel": "Associate Professor"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000063",
+                              "selLabel": "University Professor"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000055",
+                              "selLabel": "Assistant Professor"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000062",
+                              "selLabel": "Student"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000054",
+                              "selLabel": "Adjunct Professor"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000061",
+                              "selLabel": "Research Associate"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000059",
+                              "selLabel": "PhD Student"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000060",
+                              "selLabel": "PostDoc"
+                            },
+                            {
+                              "selValue": "http://www.morphdbase.de/Ontologies/MDB/MDBAgent#MDB_AGENT_0000000058",
+                              "selLabel": "Lecturer"
+                            }
+                          ],
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000071",
+                          "localID": "MDB_DATASCHEME_0000000719_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000066"
+                        },
+                        {
+                          "MDB_GUI_0000000417": "true",
+                          "MDB_GUI_0000000042": "3",
+                          "MDB_GUI_0000000040": [
+                            {
+                              "MDB_UIAP_0000000018": "FIRST NAME\nYour first name.\n\nThis represents required information for signing up to MDB.",
+                              "MDB_GUI_0000000042": "1",
+                              "MDB_UIAP_0000000386": "true",
+                              "MDB_CORE_0000000460": "Hui",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000720_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000709_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "LAST NAME\nYour last (or family) name.\n\nThis represents required information for signing up to MDB.",
+                              "MDB_GUI_0000000042": "2",
+                              "MDB_UIAP_0000000386": "true",
+                              "MDB_CORE_0000000460": "Ui",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000721_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000709_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            }
+                          ],
+                          "MDB_UIAP_0000000399": "true",
+                          "localID": "MDB_DATASCHEME_0000000709_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                        },
+                        {
+                          "MDB_UIAP_0000000018": "The name of the institute or organization you are affiliated with.\n\nThis represents required information for signing up to MDB.",
+                          "MDB_GUI_0000000042": "4",
+                          "MDB_UIAP_0000000386": "true",
+                          "MDB_UIAP_0000000399": "true",
+                          "MDB_CORE_0000000460": "Erde",
+                          "localID": "MDB_DATASCHEME_0000000730_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000114",
+                          "MDB_GUI_0000000417": "true",
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000072"
+                        },
+                        {
+                          "MDB_GUI_0000000417": "true",
+                          "MDB_GUI_0000000042": "5",
+                          "MDB_GUI_0000000040": [
+                            {
+                              "MDB_UIAP_0000000457": "Country",
+                              "MDB_UIAP_0000000018": "Select the country you are living in.",
+                              "MDB_GUI_0000000042": "1",
+                              "MDB_UIAP_0000000118": [],
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000071",
+                              "localID": "MDB_DATASCHEME_0000000722_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000710_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000066"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "If applicable, specify the state you are living in.",
+                              "MDB_UIAP_0000000220": "State",
+                              "MDB_GUI_0000000042": "2",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000723_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000710_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "Specify the city you are living in.",
+                              "MDB_UIAP_0000000220": "City",
+                              "MDB_GUI_0000000042": "3",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000724_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000710_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            }
+                          ],
+                          "MDB_UIAP_0000000399": "true",
+                          "localID": "MDB_DATASCHEME_0000000710_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                        },
+                        {
+                          "MDB_GUI_0000000417": "true",
+                          "MDB_GUI_0000000042": "6",
+                          "MDB_GUI_0000000040": [
+                            {
+                              "MDB_UIAP_0000000018": "If applicable, specify the postal code you are living in.",
+                              "MDB_UIAP_0000000220": "Postal code",
+                              "MDB_GUI_0000000042": "1",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000728_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000955_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            },
+                            {
+                              "MDB_UIAP_0000000018": "If applicable, specify the street and house number you are living in.",
+                              "MDB_UIAP_0000000220": "Street, No.",
+                              "MDB_GUI_0000000042": "2",
+                              "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                              "localID": "MDB_DATASCHEME_0000000729_1",
+                              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000955_1",
+                              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                            }
+                          ],
+                          "MDB_UIAP_0000000399": "true",
+                          "localID": "MDB_DATASCHEME_0000000955_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000708_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                        }
+                      ],
+                      "localID": "MDB_DATASCHEME_0000000708_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000957_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                    }
+                  ],
+                  "MDB_UIAP_0000000399": "true",
+                  "localID": "MDB_DATASCHEME_0000000957_1",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000704_1",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000278"
+                },
+                {
+                  "MDB_GUI_0000000417": "true",
+                  "MDB_GUI_0000000042": "3",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_UIAP_0000000018": "Specify your phone number.",
+                      "MDB_UIAP_0000000220": "Phone number",
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000353",
+                      "localID": "MDB_DATASCHEME_0000000725_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000711_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                    },
+                    {
+                      "MDB_UIAP_0000000018": "Please provide your email address. It will not be publicly visible to other users.\n\nThis represents required information for signing up to MDB.",
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_UIAP_0000000386": "true",
+                      "MDB_CORE_0000000454": "hui@ui.de",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000080",
+                      "localID": "MDB_DATASCHEME_0000000726_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000711_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                    },
+                    {
+                      "MDB_UIAP_0000000018": "Specify your personal work info homepage or the homepage of the institute you are working for.",
+                      "MDB_UIAP_0000000220": "Website",
+                      "MDB_GUI_0000000042": "3",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000081",
+                      "localID": "MDB_DATASCHEME_0000000727_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000711_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000113"
+                    }
+                  ],
+                  "MDB_UIAP_0000000399": "true",
+                  "localID": "MDB_DATASCHEME_0000000711_1",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000704_1",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000266"
+                }
+              ]
+            },
+            {
+              "MDB_GUI_0000000417": "true",
+              "MDB_GUI_0000000042": "2",
+              "MDB_GUI_0000000040": [
+                {
+                  "MDB_UIAP_0000000018": "If you are not a member of a research facility, please provide some information why you are interested in morphological data. This will help our editors to assess whether you will receive a MDB user account, because the account is only required if you want to upload and create your own content in MDB. \nThe assessment is not an automatic procedure and is required, because we want to prevent misuse of MDB (e.g. spamming the database with improper content).\n\nThis does NOT represents required information for signing up to MDB.",
+                  "MDB_UIAP_0000000220": "Comment",
+                  "MDB_GUI_0000000042": "1",
+                  "MDB_UIAP_0000000260": "Huiuiuiuiuiuiuiuiuiuiuiuiuiui!",
+                  "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                  "localID": "MDB_DATASCHEME_0000000788_1",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000791_1",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000120"
+                },
+                {
+                  "MDB_GUI_0000000417": "true",
+                  "MDB_GUI_0000000042": "2",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_GUI_0000000040": [
+                        {
+                          "MDB_UIAP_0000000018": "If you accept this registration request, the person will receive an email informing them about your decision. This message will also contain any information you provide in the comments section. The user status of the person will be automatically changed from 'preliminary user' to 'MDB user'.",
+                          "MDB_GUI_0000000042": "1",
+                          "MDB_GUI_0000000088": "Accept",
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                          "localID": "MDB_DATASCHEME_0000000796_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000953_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                        },
+                        {
+                          "MDB_GUI_0000000417": "true",
+                          "MDB_UIAP_0000000018": "If you decline this registration request, please provide the reasons in the appropriate comments section!\n\nWhen you decline this registration request, the person will receive an email informing them about your decision. This message will also contain the information you provide in the comments section.  Moreover, the person will lose their 'preliminary user' status and can only access MDB through the 'guest' account.",
+                          "MDB_GUI_0000000042": "2",
+                          "MDB_UIAP_0000000399": "true",
+                          "MDB_GUI_0000000088": "Decline",
+                          "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                          "localID": "MDB_DATASCHEME_0000000795_1",
+                          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000953_1",
+                          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                        }
+                      ],
+                      "localID": "MDB_DATASCHEME_0000000953_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000793_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                    },
+                    {
+                      "MDB_UIAP_0000000018": "Dear Editor,\n\nWe want to protect MDB from being spammed with unrelated content and other abuses. Therefore we do not accept every registration request. The person requesting registration must either show through their email address or their institute/affiliation that they belong to academia (i.e. a research institute) or through the comment field what their interest in MDB is and why they want to use it.\nIf this requirement is not met, the request must be declined. If this is the case, please explain why you have declined the registration request.",
+                      "MDB_UIAP_0000000220": "If request is declined, please explain why.",
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000072",
+                      "localID": "MDB_DATASCHEME_0000000790_1",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000793_1",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000120"
+                    }
+                  ],
+                  "MDB_UIAP_0000000399": "true",
+                  "localID": "MDB_DATASCHEME_0000000793_1",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000791_1",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000006"
+                }
+              ],
+              "MDB_UIAP_0000000399": "true",
+              "localID": "MDB_DATASCHEME_0000000791_1",
+              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000731_1",
+              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000168"
+            }
+          ],
+          "localID": "MDB_DATASCHEME_0000000731_1",
+          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000703_1",
+          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000310"
+        },
+        {
+          "MDB_GUI_0000000042": "2",
+          "localID": "MDB_DATASCHEME_0000000732_1",
+          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000000703_1",
+          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000311"
+        }
+      ],
+      "localID": "MDB_DATASCHEME_0000000703_1",
+      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000229"
+    }
+  ],
+  "load_page": "http://www.morphdbase.de/resource/e47bbe55#MDB_DATASCHEME_0000000703_1",
+  "load_page_localID": "MDB_DATASCHEME_0000000703_1",
+  "html_form": "MY_DUMMY_MDB_0000000001",
+  "localID": "MDB_DATASCHEME_0000000949",
+  "mdbueid_uri": "http://www.morphdbase.de/resource/e47bbe55"
+}

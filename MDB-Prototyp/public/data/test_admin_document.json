@@ -1,0 +1,173 @@
+{
+  "connectSID": "s:42-HALLOHIERALARMEINS1ELF-TTESTT.SANDRASGANZPERSOENLICHEMDBPROTOTYPSESSIONID",
+  "mdbueid": "fd30a6da",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412": "http://www.morphdbase.de/resource/fd30a6da#MDB_CORE_0000000568_84",
+  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411": "http://www.morphdbase.de/resource/fd30a6da#TimeInterval_84",
+  "data": [
+    {
+      "MDB_GUI_0000000042": "1",
+      "MDB_GUI_0000000040": [
+        {
+          "MDB_GUI_0000000042": "1",
+          "MDB_GUI_0000000040": [
+            {
+              "MDB_GUI_0000000042": "1",
+              "MDB_GUI_0000000088": "Admin Page",
+              "localID": "MDB_DATASCHEME_0000002328",
+              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002299",
+              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000068"
+            }
+          ],
+          "localID": "MDB_DATASCHEME_0000002299",
+          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002293",
+          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000168"
+        },
+        {
+          "MDB_GUI_0000000417": "true",
+          "MDB_GUI_0000000042": "2",
+          "MDB_GUI_0000000040": [
+            {
+              "MDB_GUI_0000000042": "1",
+              "MDB_GUI_0000000040": [
+                {
+                  "MDB_GUI_0000000042": "1",
+                  "MDB_UIAP_0000000019": "MDB_GUI_0000000172",
+                  "localID": "MDB_DATASCHEME_0000002308",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002307",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000196"
+                },
+                {
+                  "MDB_GUI_0000000042": "2",
+                  "MDB_GUI_0000000088": "Default Compositions",
+                  "localID": "MDB_DATASCHEME_0000002326",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002307",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000068"
+                }
+              ],
+              "localID": "MDB_DATASCHEME_0000002307",
+              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002297",
+              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+            },
+            {
+              "MDB_GUI_0000000417": "true",
+              "MDB_GUI_0000000042": "2",
+              "MDB_GUI_0000000040": [
+                {
+                  "MDB_GUI_0000000042": "1",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_GUI_0000000088": "update all default compositions",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002324",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002305",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    }
+                  ],
+                  "localID": "MDB_DATASCHEME_0000002305",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002295",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                },
+                {
+                  "MDB_GUI_0000000417": "true",
+                  "MDB_GUI_0000000042": "2",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_GUI_0000000088": "Compositions shared by all data entries",
+                      "localID": "MDB_DATASCHEME_0000002322",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002303",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000193"
+                    },
+                    {
+                      "MDB_GUI_0000000417": "true",
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_UIAP_0000000399": "true",
+                      "MDB_GUI_0000000088": "update core composition",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002320",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002303",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "3",
+                      "MDB_GUI_0000000088": "update mandatory entry compositions",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002318",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002303",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    }
+                  ],
+                  "MDB_UIAP_0000000399": "true",
+                  "localID": "MDB_DATASCHEME_0000002303",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002295",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                },
+                {
+                  "MDB_GUI_0000000417": "true",
+                  "MDB_GUI_0000000042": "3",
+                  "MDB_GUI_0000000040": [
+                    {
+                      "MDB_GUI_0000000042": "1",
+                      "MDB_GUI_0000000088": "Entry type specific compositions",
+                      "localID": "MDB_DATASCHEME_0000002316",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002301",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000193"
+                    },
+                    {
+                      "MDB_GUI_0000000417": "true",
+                      "MDB_GUI_0000000042": "2",
+                      "MDB_GUI_0000000088": "update specimen entry composition",
+                      "MDB_UIAP_0000000399": "true",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002314",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002301",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    },
+                    {
+                      "MDB_GUI_0000000042": "3",
+                      "MDB_GUI_0000000088": "update morphological description entry composition",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002310",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002301",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    },
+                    {
+                      "MDB_GUI_0000000417": "true",
+                      "MDB_GUI_0000000042": "4",
+                      "MDB_GUI_0000000088": "update user entry composition",
+                      "MDB_UIAP_0000000399": "true",
+                      "MDB_UIAP_0000000019": "MDB_GUI_0000000341",
+                      "localID": "MDB_DATASCHEME_0000002312",
+                      "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002301",
+                      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000141"
+                    }
+                  ],
+                  "MDB_UIAP_0000000399": "true",
+                  "localID": "MDB_DATASCHEME_0000002301",
+                  "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002295",
+                  "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+                }
+              ],
+              "MDB_UIAP_0000000399": "true",
+              "localID": "MDB_DATASCHEME_0000002295",
+              "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002297",
+              "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+            }
+          ],
+          "MDB_UIAP_0000000399": "true",
+          "localID": "MDB_DATASCHEME_0000002297",
+          "MDB_GUI_0000000037": "MDB_DATASCHEME_0000002293",
+          "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000168"
+        }
+      ],
+      "localID": "MDB_DATASCHEME_0000002293",
+      "MDB_UIAP_0000000193": "GUI_COMPONENT_0000000230"
+    }
+  ],
+  "load_page": "http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000313",
+  "load_page_localID": "Ontologies/GUIComponent#GUI_COMPONENT_0000000313",
+  "html_form": "MY_DUMMY_ADMIN_0000000001",
+  "localID": "MDB_DATASCHEME_0000002330",
+  "mdbueid_uri": "http://www.morphdbase.de/resource/fd30a6da"
+}
