@@ -4,12 +4,9 @@
 ## Installation
 
 #### Get GIT repository:
-Clone via bash...
-
-    git clone ssh://git@git.morphdbase.de:6020/roman/java-code.git
-    git clone ssh://git@git.morphdbase.de:6020/lars/mdb-ontologies.git
-
-... or via IntelliJ
+You obviously already have the code from
+https://github.com/MorphDBase/MDB-prototype
+:-)
 
 #### Create artifact via IDEA:
 

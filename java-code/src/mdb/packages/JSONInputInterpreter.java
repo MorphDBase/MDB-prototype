@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 20.05.15.
- * Last modified by Roman Baum on 19.05.17.
+ * Last modified by Roman Baum on 14.12.17.
  */
 package mdb.packages;
 
@@ -24,7 +24,7 @@ public class JSONInputInterpreter {
 
 
     /**
-     * The method save and/or delete triple(s) from a jena tdb. It use a JSON object as input.
+     * The method save and/or delete triple(s) or deletes complete named graphs from a jena tdb. It use a JSON object as input.
      * @param inputDataObject is an object with our internal JSON data structure
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return an array list with output information
@@ -39,6 +39,21 @@ public class JSONInputInterpreter {
         long dummy = System.currentTimeMillis();
 
         System.out.println((System.currentTimeMillis() - dummy) + "\t before loop");
+
+        if (inputDataObject.has("deleteNamedGraphs")) {
+            // remove complete named graphs from the store
+
+            JSONArray deleteNamedGraphs = inputDataObject.getJSONArray("deleteNamedGraphs");
+
+            for (int i = 0; i < deleteNamedGraphs.length(); i++) {
+
+                connectionToTDB.removeNamedModelFromTDB(deleteNamedGraphs.getJSONObject(i).getString("directory"), deleteNamedGraphs.getJSONObject(i).getString("ng"));
+
+            }
+
+            inputDataObject.remove("deleteNamedGraphs");
+
+        }
 
         // iterate over all dataset(s)/directorie(s)
         for (int i = 0; i < datasetsJSONArray.length(); i++ ) {

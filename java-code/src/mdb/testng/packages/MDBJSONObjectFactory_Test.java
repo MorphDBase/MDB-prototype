@@ -1,6 +1,7 @@
 package mdb.testng.packages;
 
 import mdb.basic.DataFactory;
+import mdb.mongodb.MongoDBConnection;
 import mdb.packages.MDBJSONObjectFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +24,8 @@ public class MDBJSONObjectFactory_Test {
     private JSONArray operationJSONArray = new JSONArray();
     private JSONArray ngJSONArray = new JSONArray();
     private JSONArray directoryJSONArray = new JSONArray();
+
+    private MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -69,7 +72,7 @@ public class MDBJSONObjectFactory_Test {
     public void convertArrayListToJSONObject_ConvertMultipleArrayListToJSONObject_ReturnDataAsJSONObject()
             throws Exception {
 
-        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory();
+        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mongoDBConnection);
 
         // call the method to test;
         JSONObject testJSONObject = mdbjsonObjectFactory.convertArrayListToJSONObject(inputArrayListData);
@@ -88,7 +91,7 @@ public class MDBJSONObjectFactory_Test {
     public void convertArrayListToJSONObject_ConvertMultipleArrayListToJSONObject_CheckContentOfJSONObjectIsEmpty()
             throws Exception {
 
-        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory();
+        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mongoDBConnection);
 
 
         // call the method to test;

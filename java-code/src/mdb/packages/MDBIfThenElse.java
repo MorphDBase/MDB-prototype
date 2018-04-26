@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 18.11.15.
- * Last modified by Roman Baum on 03.08.17.
+ * Last modified by Roman Baum on 12.02.18.
  */
 
 package mdb.packages;
@@ -29,7 +29,7 @@ public class MDBIfThenElse {
      * @param inputValues an array list which contains different input to check
      * @return true (if all inputValues are empty) or false
      */
-    public boolean allEmpty (ArrayList<String> inputValues) {
+    private boolean allEmpty (ArrayList<String> inputValues) {
 
 
         for (Object inputValue : inputValues) {
@@ -53,7 +53,7 @@ public class MDBIfThenElse {
      * @param inputValues an array list which contains different input to check
      * @return true (if all inputValues are equal) or false
      */
-    public boolean allEqual (ArrayList<String> inputValues) {
+    private boolean allEqual (ArrayList<String> inputValues) {
 
         boolean allInputAreTheSame = true;
 
@@ -75,7 +75,7 @@ public class MDBIfThenElse {
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return true (if all entries already exist) or false
      */
-    public boolean allInputAlreadyExistInDB(ArrayList<String> inputValues, JenaIOTDBFactory connectionToTDB) {
+    private boolean allInputAlreadyExistInDB(ArrayList<String> inputValues, JenaIOTDBFactory connectionToTDB) {
 
         boolean allInputAlreadyExist = false;
 
@@ -150,13 +150,12 @@ public class MDBIfThenElse {
 
     }
 
-
     /**
      * This method check if an input value is a value or not.
      * @param inputValues an array list which contains different input to check
      * @return true (if all entries are values) or false
      */
-    public boolean allInputIsValue(ArrayList<String> inputValues) {
+    private boolean allInputIsValue(ArrayList<String> inputValues) {
 
         MDBURLEncoder mdburlEncoder = new MDBURLEncoder();
 
@@ -246,7 +245,7 @@ public class MDBIfThenElse {
      * @param targetValues an array list which contains one target to check
      * @return true (if all inputValues are equal to the target value) or false
      */
-    public boolean allInputIsOfTargetType (ArrayList<String> inputValues, ArrayList<String> targetValues) {
+    private boolean allInputIsOfTargetType (ArrayList<String> inputValues, ArrayList<String> targetValues) {
 
         boolean allInputIsOfTargetType = true;
 
@@ -287,16 +286,65 @@ public class MDBIfThenElse {
 
     }
 
+    /**
+     * This method checks if all input values are resources
+     * @param inputValues an array list which contains different input to check
+     * @return true (if all inputValues are resources) or false
+     */
+    private boolean allInputIsSomeResource(ArrayList<String> inputValues) {
+
+        boolean allInputIsSomeResource = true;
+
+        ListIterator inputValuesLI = inputValues.listIterator();
+
+        if (!inputValuesLI.hasNext()) {
+
+            return false;
+
+        }
+
+        while ((inputValuesLI.hasNext()) && (allInputIsSomeResource)) {
+
+            String currInputValue = inputValuesLI.next().toString();
+
+            MDBURLEncoder mdbLEncoderSomeValue = new MDBURLEncoder();
+
+            UrlValidator urlValidatorSomeValue = new UrlValidator();
+
+            if (!urlValidatorSomeValue.isValid(mdbLEncoderSomeValue.encodeUrl(currInputValue, "UTF-8"))
+                    && !(EmailValidator.getInstance().isValid(currInputValue))) {
+
+                allInputIsSomeResource = false;
+
+            }
+
+        }
+
+        return allInputIsSomeResource;
+
+
+
+    }
+
 
     /**
      * Check if the input value is empty or not
      * @param inputValue is a string which contains input to check
      * @return true (if the inputValue is empty) or false
      */
-    public boolean isEmpty (String inputValue) {
+    private boolean isEmpty (String inputValue) {
 
+        if (inputValue.isEmpty()
+                || inputValue.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
+            // KEYWORD: empty
 
-        return inputValue.isEmpty();
+            return true;
+
+        } else {
+
+            return !inputValue.matches(".*\\w.*");
+
+        }
 
     }
 
@@ -306,7 +354,7 @@ public class MDBIfThenElse {
      * @param inputValue is a string which contains input to check
      * @return true (if the inputValue is not empty) or false
      */
-    public boolean notEmpty (String inputValue) {
+    private boolean notEmpty (String inputValue) {
 
         return !isEmpty(inputValue);
     }
@@ -317,7 +365,15 @@ public class MDBIfThenElse {
      * @param inputValues an array list which contains different input to check
      * @return true (if some inputValues are empty) or false
      */
-    public boolean someEmpty (ArrayList<String> inputValues) {
+    private boolean someEmpty (ArrayList<String> inputValues) {
+
+        if (inputValues.isEmpty()) {
+
+            System.out.println("ERROR: There exist no input value!");
+
+            return true;
+
+        }
 
         ListIterator inputValuesLI = inputValues.listIterator();
 
@@ -325,7 +381,9 @@ public class MDBIfThenElse {
 
         while ((inputValuesLI.hasNext()) & (!someInputValueIsEmpty)) {
 
-            someInputValueIsEmpty = isEmpty((inputValuesLI.next()).toString());
+            String currValue = (inputValuesLI.next()).toString();
+
+            someInputValueIsEmpty = isEmpty(currValue);
 
         }
 
@@ -339,7 +397,7 @@ public class MDBIfThenElse {
      * @param targetValues an array list which contains different target to check
      * @return true (if some inputValues are larger then a target value) or false
      */
-    public boolean someInputLargerThanTarget (ArrayList<String> inputValues, ArrayList<String> targetValues) {
+    private boolean someInputLargerThanTarget (ArrayList<String> inputValues, ArrayList<String> targetValues) {
 
         boolean someInputLargerThanTarget = false;
 
@@ -377,6 +435,47 @@ public class MDBIfThenElse {
         }
 
         return someInputLargerThanTarget;
+
+    }
+
+
+    /**
+     * This method checks if some input value has a value in the targets list or not.
+     * @param inputValues an array list which contains different input to check
+     * @param targetValues an array list which contains different target to check
+     * @return true (if an inputValues has no value in the targetValues) or false
+     */
+    private boolean someNull(ArrayList<String> inputValues, ArrayList<String> targetValues) {
+
+        if (inputValues.isEmpty()) {
+
+            System.out.println("ERROR: There exist no input value!");
+
+        }
+
+        ListIterator inputValuesLI = inputValues.listIterator();
+
+        while (inputValuesLI.hasNext()) {
+
+            String currInputValue = inputValuesLI.next().toString();
+
+            ListIterator targetValuesLI = targetValues.listIterator();
+
+            while ((targetValuesLI.hasNext())) {
+
+                String currTargetValue = targetValuesLI.next().toString();
+
+                if (currInputValue.equals(currTargetValue)) {
+
+                    return false;
+
+                }
+
+            }
+
+        }
+
+        return true;
 
     }
 
@@ -452,10 +551,24 @@ public class MDBIfThenElse {
 
                 break;
 
-            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000508":
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000508" :
                 // GUI__IF_OPERATION: ALL input is value
 
                 ifDecision = allInputIsValue(inputValues);
+
+                break;
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000509" :
+                // GUI__IF_OPERATION: ALL input is some resource
+
+                ifDecision = allInputIsSomeResource(inputValues);
+
+                break;
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000517" :
+                // GUI__IF_OPERATION: SOME null
+
+                ifDecision = someNull(inputValues, targetValues);
 
                 break;
 

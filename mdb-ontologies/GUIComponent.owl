@@ -1833,26 +1833,6 @@
     
 
 
-    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000156 -->
-
-    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000156">
-        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000144"/>
-        <rdfs:label rdf:datatype="&xsd;string">1GUI_COMPONENT__IMAGE_PANEL: generic user image</rdfs:label>
-        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000156</oboInOwl:id>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000157 -->
-
-    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000157">
-        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000144"/>
-        <rdfs:label rdf:datatype="&xsd;string">1GUI_COMPONENT__IMAGE_PANEL: generic logo image</rdfs:label>
-        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000157</oboInOwl:id>
-    </owl:NamedIndividual>
-    
-
-
     <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000158 -->
 
     <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000158">
@@ -3476,6 +3456,176 @@
         <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000051"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__ICON: .css-portion-of-organism-substance-icon</rdfs:label>
         <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000333</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000334 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000334">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000005"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BACKGROUND: .css-bg-white-transparent-bordered-round</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000334</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000335 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000335">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000112"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__INPUT_TYPE: .css-date-time-input</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000335</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000336 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000336">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000268"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__DIV: .css-map-div</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000336</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000337 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000337">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000007"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__FONT: .css-label9</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000337</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000338 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000338">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000005"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BACKGROUND: .css-bg-black</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000338</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000339 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000339">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000051"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__ICON: .css-file-upload-icon</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000339</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000340 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000340">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000012"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BUTTON: .css-search-matrix-btn</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000340</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000341 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000341">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000012"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BUTTON: .css-search-morphological-description-btn</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000341</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000343 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000343">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000012"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BUTTON: .css-search-taxon-btn</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000343</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000344 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000344">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000051"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__ICON: .css-group-of-scattered-anatomical-entities-icon</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000344</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000345 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000345">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000112"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__INPUT_TYPE: .css-CMYK-color-picker-input</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000345</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000346 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000346">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000112"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__INPUT_TYPE: .css-HSV-color-picker-input</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000346</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000347 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000347">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000112"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__INPUT_TYPE: .css-grayscale-color-picker-input</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000347</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000348 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000348">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000268"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__DIV: css.-template-div</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000348</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#GUI_COMPONENT_0000000349 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;GUI_COMPONENT_0000000349">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000007"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__FONT: .css-resource-label</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000349</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#MDB_DATASCHEME_0000004401 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;MDB_DATASCHEME_0000004401">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000012"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__BUTTON: .css-search-taxonomical-description-btn</rdfs:label>
+        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000342</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/GUIComponent#MDB_GUI_0000000612 -->
+
+    <owl:NamedIndividual rdf:about="&guicomp;MDB_GUI_0000000612">
+        <rdf:type rdf:resource="&guicomp;GUI_COMPONENT_0000000007"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT__FONT: .css-part-label</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000612</oboInOwl:id>
     </owl:NamedIndividual>
     
 

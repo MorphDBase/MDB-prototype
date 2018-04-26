@@ -1,10 +1,11 @@
 /*
  * Created by Roman Baum on 21.01.15.
- * Last modified by Roman Baum on 30.06.17
+ * Last modified by Roman Baum on 02.02.18
  */
 
 package mdb.packages;
 
+import mdb.vocabulary.OntologyPrefixList;
 import org.apache.jena.query.*;
 import org.apache.jena.query.text.EntityDefinition;
 import org.apache.jena.query.text.TextDatasetFactory;
@@ -45,9 +46,13 @@ public class JenaIOTDBFactory {
      * @param resultSet contains an unformatted result from a jena tdb.
      * @return a structured JSONArray.
      */
-    private JSONArray convertResultToJSONArray(ResultSet resultSet) {
+    private JSONArray convertAutoCompleteResultToJSONArray(ResultSet resultSet) {
 
         JSONArray jsonArray = new JSONArray();
+
+        OntologyPrefixList ontologiesVocabulary = new OntologyPrefixList();
+
+        JSONObject ontologyPrefixJSON = ontologiesVocabulary.getOntologyPrefixList();
 
         while (resultSet.hasNext()) {
 
@@ -78,6 +83,21 @@ public class JenaIOTDBFactory {
                 }
 
                 jsonObject.put(key, value);
+
+            }
+
+            // add ontology class prefix to label
+            Iterator<String> ontologyPrefixesIter = ontologyPrefixJSON.keys();
+
+            while (ontologyPrefixesIter.hasNext()) {
+
+                String ontologyPrefixKey = ontologyPrefixesIter.next();
+
+                if (jsonObject.getString("resource").contains(ontologyPrefixKey)) {
+
+                    jsonObject.put("label", (jsonObject.getString("label") + " (" + ontologyPrefixJSON.getString(ontologyPrefixKey) + ")"));
+
+                }
 
             }
 
@@ -357,8 +377,42 @@ public class JenaIOTDBFactory {
             // Select a RDF-result set with data from the Jena-TDB
             ResultSet resultsSel = qExec.execSelect();
 
-            return convertResultToJSONArray(resultsSel);
+            return convertAutoCompleteResultToJSONArray(resultsSel);
 
+
+        } finally {
+
+            // close the dataset
+            dataset.end();
+            // close the dataset
+            dataset.close();
+
+        }
+
+    }
+
+
+    /**
+     * This method execute a SPARQL text query and provide a result set for the query.
+     * @param pathToTDB the path to the tdb directory
+     * @param sparqlQueryString the path to the corresponding lucene directory
+     * @return a ResultSet for a query
+     */
+    public ResultSet pullMultipleSelectDataFromTDB(String pathToTDB, String sparqlQueryString) {
+
+        // create a TDB-dataset
+        Dataset dataset = TDBFactory.createDataset(pathToTDB);
+
+        dataset.begin(ReadWrite.READ);
+
+        try {
+
+            Query query = QueryFactory.create(sparqlQueryString);
+
+            QueryExecution qExec = QueryExecutionFactory.create(query, dataset);
+
+            // Select a RDF-result set with data from the Jena-TDB
+            return qExec.execSelect();
 
         } finally {
 

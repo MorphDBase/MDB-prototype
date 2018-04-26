@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 11.06.15.
- * Last modified by Roman Baum on 20.04.16.
+ * Last modified by Roman Baum on 19.10.17.
  */
 package mdb.basic;
 
@@ -33,14 +33,18 @@ public class TDBPath {
         switch (workspace) {
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000065":
+                // MDB_WORKSPACE_BASIC: MDB core workspace
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000494":
+                // MDB_WORKSPACE_DIRECTORY: MDB core workspace directory
 
                 pathToTDB += "mdb_core_workspace/";
 
                 break ;
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000082":
+                // MDB_WORKSPACE_BASIC: MDB admin workspace
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354":
+                // MDB_WORKSPACE_DIRECTORY: MDB admin workspace directory
 
                 pathToTDB += "mdb_admin_workspace/";
 
@@ -54,14 +58,18 @@ public class TDBPath {
                 break;
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000226":
+                // MDB_WORKSPACE_BASIC: MDB published workspace
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000502":
+                // MDB_WORKSPACE_DIRECTORY: MDB published workspace directory
 
                 pathToTDB += "mdb_published_workspace/";
 
                 break ;
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000229":
+                // MDB_WORKSPACE_BASIC: MDB draft workspace
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503":
+                // MDB_WORKSPACE_DIRECTORY: MDB draft workspace directory
 
                 pathToTDB += "mdb_draft_workspace/";
 

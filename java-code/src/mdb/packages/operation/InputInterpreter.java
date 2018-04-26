@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 19.02.16.
- * Last modified by Roman Baum on 21.08.17.
+ * Last modified by Roman Baum on 06.03.18.
  */
 package mdb.packages.operation;
 
@@ -24,9 +24,12 @@ import org.apache.jena.arq.querybuilder.AskBuilder;
 import org.apache.jena.arq.querybuilder.ConstructBuilder;
 import org.apache.jena.arq.querybuilder.SelectBuilder;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.core.Var;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -46,21 +49,34 @@ public class InputInterpreter {
 
     private Model overlayModel = ModelFactory.createDefaultModel();
 
-    public InputInterpreter(String individualURI, JSONObject jsonInputObject) {
+    private MongoDBConnection mongoDBConnection;
+
+    public InputInterpreter(JSONObject jsonInputObject, MongoDBConnection mongoDBConnection) {
+
+        this.jsonInputObject = jsonInputObject;
+        this.mongoDBConnection = mongoDBConnection;
+
+    }
+
+    public InputInterpreter(String individualURI, JSONObject jsonInputObject, MongoDBConnection mongoDBConnection) {
 
         this.individualURI = individualURI;
 
         this.jsonInputObject = jsonInputObject;
 
+        this.mongoDBConnection = mongoDBConnection;
+
     }
 
-    public InputInterpreter(String individualURI, JSONObject jsonInputObject, Model overlayModel) {
+    public InputInterpreter(String individualURI, JSONObject jsonInputObject, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
         this.individualURI = individualURI;
 
         this.jsonInputObject = jsonInputObject;
 
         this.overlayModel = overlayModel;
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -118,6 +134,8 @@ public class InputInterpreter {
 
         constructResult = checkInputTypeInModel(constructResult, entryComponents, connectionToTDB);
 
+        checkUseKeywordsFromComposition(constructResult);
+
         Selector selector = new SimpleSelector(null, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000490"), null, "");
         // triggers 'click' for MDB entry component
 
@@ -148,6 +166,337 @@ public class InputInterpreter {
         }
 
         return entryComponents;
+
+    }
+
+    /**
+     * This method generate the output data for input check of an entry list query
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return a JSONObject with data of an entry component
+     */
+    public JSONObject checkInputForListEntry(JenaIOTDBFactory connectionToTDB) {
+
+        Model unionModel = ModelFactory.createDefaultModel();
+
+        FilterBuilder filterBuilder = new FilterBuilder();
+
+        PrefixesBuilder draftListPB = new PrefixesBuilder();
+
+        ConstructBuilder draftListCB = new ConstructBuilder();
+
+        SelectBuilder draftListSWB = new SelectBuilder();
+
+        Var sVar = draftListCB.makeVar("?s"), pVar = draftListCB.makeVar("?publishedPVar"), oVar = draftListCB.makeVar("?publishedOVar");
+
+        draftListCB.addConstruct(sVar, pVar, oVar);
+
+        draftListSWB = draftListPB.addPrefixes(draftListSWB);
+
+        draftListSWB.addWhere(sVar, "<http://purl.org/spar/pso/withStatus>", "?oDummy");
+
+        draftListSWB.addWhere(sVar, pVar, oVar);
+
+        draftListCB = draftListPB.addPrefixes(draftListCB);
+
+        if (this.jsonInputObject.getString("value").equals("all")) {
+
+            draftListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000748");
+            // NAMED_GRAPH: NAMED_GRAPH: MDB draft media versions list
+            draftListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000749");
+            // NAMED_GRAPH: MDB draft morphological description versions list
+            draftListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000750");
+            // NAMED_GRAPH: MDB draft specimen versions list
+
+        } else if (this.jsonInputObject.getString("value").equals("md")) {
+
+            draftListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000749");
+            // NAMED_GRAPH: MDB draft morphological description versions list
+
+        } else if (this.jsonInputObject.getString("value").equals("s")) {
+
+            draftListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000750");
+            // NAMED_GRAPH: MDB draft specimen versions list
+
+        }
+
+        draftListCB.addGraph("?g", draftListSWB);
+
+        SPARQLFilter sparqlFilter = new SPARQLFilter();
+
+        ArrayList<ArrayList<String>> filterItems = new ArrayList<>();
+
+        filterItems = filterBuilder.addItems(filterItems, pVar.toString(), "<http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000379>");
+        // has header
+
+        ArrayList<String> filter = sparqlFilter.getINFilter(filterItems);
+
+        draftListCB = filterBuilder.addFilter(draftListCB, filter);
+
+        filterItems.clear();
+
+        String sparqlQueryString = draftListCB.buildString();
+
+        TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
+
+        Model draftModel = connectionToTDB.pullDataFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000494"), sparqlQueryString);
+        // MDB_WORKSPACE_DIRECTORY: MDB core workspace directory
+
+        unionModel.add(draftModel);
+
+        filterBuilder = new FilterBuilder();
+
+        PrefixesBuilder publishedListPB = new PrefixesBuilder();
+
+        ConstructBuilder publishedListCB = new ConstructBuilder();
+
+        SelectBuilder publishedListSWB = new SelectBuilder();
+
+        Var publishedSVar = publishedListCB.makeVar("?publishedSVar"), publishedPVar = publishedListCB.makeVar("?publishedPVar"), publishedOVar = publishedListCB.makeVar("?publishedOVar");
+
+        publishedListCB.addConstruct(publishedSVar, publishedPVar, publishedOVar);
+
+        publishedListSWB = publishedListPB.addPrefixes(publishedListSWB);
+
+        publishedListSWB.addWhere(publishedSVar, "<http://purl.org/spar/pso/withStatus>", "?oDummy");
+
+        publishedListSWB.addWhere(publishedSVar, publishedPVar, publishedOVar);
+
+        publishedListCB = publishedListPB.addPrefixes(publishedListCB);
+
+        if (this.jsonInputObject.getString("value").equals("all")) {
+
+            publishedListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000751");
+            // NAMED_GRAPH: NAMED_GRAPH: MDB published media versions list
+            publishedListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000752");
+            // NAMED_GRAPH: MDB published morphological description versions list
+            publishedListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000753");
+            // NAMED_GRAPH: MDB published specimen versions list
+
+        } else if (this.jsonInputObject.getString("value").equals("md")) {
+
+            publishedListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000752");
+            // NAMED_GRAPH: MDB published morphological description versions list
+
+        } else if (this.jsonInputObject.getString("value").equals("s")) {
+
+            publishedListCB.fromNamed("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000753");
+            // NAMED_GRAPH: MDB published specimen versions list
+
+        }
+
+        publishedListCB.addGraph("?g", publishedListSWB);
+
+        SPARQLFilter publishedSPARQLFilter = new SPARQLFilter();
+
+        ArrayList<ArrayList<String>> publishedFilterItems = new ArrayList<>();
+
+        publishedFilterItems = filterBuilder.addItems(publishedFilterItems, publishedPVar.toString(), "<http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000379>");
+        // has header
+
+        ArrayList<String> publishedFilter = publishedSPARQLFilter.getINFilter(publishedFilterItems);
+
+        publishedListCB = filterBuilder.addFilter(publishedListCB, publishedFilter);
+
+        publishedFilterItems.clear();
+
+        String publishedSPARQLQueryString = publishedListCB.buildString();
+
+        Model publishedModel = connectionToTDB.pullDataFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000494"), publishedSPARQLQueryString);
+        // MDB_WORKSPACE_DIRECTORY: MDB core workspace directory
+
+        unionModel.add(publishedModel);
+
+        Selector selector = new SimpleSelector(null, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000379"), null, "");
+        // has header
+
+        Iterator<Statement> stmtIter = unionModel.listStatements(selector);
+
+        JSONArray outputDataJSON = new JSONArray();
+
+        JSONObject knownUser = new JSONObject();
+
+        while (stmtIter.hasNext()) {
+
+            Statement currStmt = stmtIter.next();
+
+            Resource mdbEntryID = currStmt.getSubject().asResource();
+
+            Resource headerNG = currStmt.getObject().asResource();
+
+            Model headerModel;
+
+            if (headerNG.toString().contains("-d_")
+                    && headerNG.toString().contains(jsonInputObject.getString("mdbueid"))) {
+
+                headerModel = connectionToTDB.pullNamedModelFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503"), headerNG.toString());
+                // MDB_WORKSPACE_DIRECTORY: MDB draft workspace directory
+
+            } else {
+
+                headerModel = connectionToTDB.pullNamedModelFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000502"), headerNG.toString());
+                // MDB_WORKSPACE_DIRECTORY: MDB published workspace directory
+
+            }
+
+            JSONObject entryComponents = new JSONObject();
+
+            entryComponents.put("uri", mdbEntryID.toString());
+
+            if (headerModel.contains(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000602"))) {
+
+                Statement stmt = headerModel.getProperty(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000602"));
+
+                entryComponents.put(stmt.getPredicate().getLocalName(), stmt.getObject().asResource().getLocalName());
+
+            }
+
+            if (headerModel.contains(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088"))) {
+
+                Statement stmt = headerModel.getProperty(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088"));
+
+                entryComponents.put("entryLabel", stmt.getObject().asLiteral().getLexicalForm());
+
+            }
+
+            if (headerModel.contains(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000287"))) {
+
+                Statement stmt = headerModel.getProperty(mdbEntryID, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000287"));
+
+                entryComponents.put("entryLabel2", stmt.getObject().asLiteral().getLexicalForm());
+
+            }
+
+            if (headerModel.contains(mdbEntryID, ResourceFactory.createProperty("http://purl.org/spar/pso/withStatus"))) {
+
+                Statement stmt = headerModel.getProperty(mdbEntryID, ResourceFactory.createProperty("http://purl.org/spar/pso/withStatus"));
+
+                entryComponents.put(stmt.getPredicate().getLocalName(), stmt.getObject().asResource().getLocalName());
+
+            }
+
+            if (headerModel.contains(mdbEntryID, ResourceFactory.createProperty("http://purl.org/pav/createdBy"))) {
+
+                Statement stmt = headerModel.getProperty(mdbEntryID, ResourceFactory.createProperty("http://purl.org/pav/createdBy"));
+
+                String ueidString = stmt.getObject().asResource().getNameSpace();
+
+                Resource ueid = ResourceFactory.createResource(ueidString.substring(0, (ueidString.length()-1)));
+
+                if (!(knownUser.has(ueid.toString()))) {
+
+                    PrefixesBuilder userListPB = new PrefixesBuilder();
+
+                    SelectBuilder userListCB = new SelectBuilder();
+
+                    SelectBuilder userListSWB = new SelectBuilder();
+
+                    Var userVar = userListCB.makeVar("?o");
+
+                    userListCB.addVar(userVar);
+
+                    userListSWB = userListPB.addPrefixes(userListSWB);
+
+                    userListSWB.addWhere(ueid , "<http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000765>", userVar);
+                    // has MDB user entry ID named graph
+
+                    userListCB = userListPB.addPrefixes(userListCB);
+
+                    userListCB.addGraph("<http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000730>", userListSWB);
+                    // NAMED_GRAPH: MDB user entry list
+
+                    String userListSPARQLQueryString = userListCB.buildString();
+
+                    String userEntryIDNG = connectionToTDB.pullSingleDataFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"),userListSPARQLQueryString, userVar.toString());
+
+                    Model userEntryModel = connectionToTDB.pullNamedModelFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"), userEntryIDNG);
+
+                    if (userEntryModel.contains(ueid, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088"))) {
+
+                        Statement userStmt = userEntryModel.getProperty(ueid, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088"));
+
+                        entryComponents.put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                        if (!(knownUser.has(ueid.toString()))) {
+
+                            JSONObject currKnownUser = new JSONObject();
+
+                            currKnownUser.put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                            knownUser.put(ueid.toString(), currKnownUser);
+
+                        } else {
+
+                            (knownUser.getJSONObject(ueid.toString()))
+                                    .put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                        }
+
+                    }
+
+                    if (userEntryModel.contains(ueid, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000288"))) {
+
+                        Statement userStmt = userEntryModel.getProperty(ueid, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000288"));
+
+                        entryComponents.put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                        if (!(knownUser.has(ueid.toString()))) {
+
+                            JSONObject currKnownUser = new JSONObject();
+
+                            currKnownUser.put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                            knownUser.put(ueid.toString(), currKnownUser);
+
+                        } else {
+
+                            (knownUser.getJSONObject(ueid.toString()))
+                                    .put(userStmt.getPredicate().getLocalName(), userStmt.getObject().asLiteral().getLexicalForm());
+
+                        }
+
+                    }
+
+                } else {
+
+                    Iterator<String> keysIter = knownUser.getJSONObject(ueid.toString()).keys();
+
+                    while (keysIter.hasNext()) {
+
+                        String currKey = keysIter.next();
+
+                        entryComponents.put(currKey, knownUser.getJSONObject(ueid.toString()).getString(currKey));
+
+                    }
+
+                }
+
+            }
+
+            int numberOfKeys = 0;
+
+            Iterator<String> keys = entryComponents.keys();
+
+            while (keys.hasNext()) {
+
+                keys.next();
+
+                numberOfKeys++;
+
+            }
+
+            if (numberOfKeys > 1) {
+
+                outputDataJSON.put(entryComponents);
+
+            }
+
+        }
+
+        JSONObject outputObject = new JSONObject();
+
+        outputObject.put("data", outputDataJSON);
+
+        return outputObject;
 
     }
 
@@ -303,6 +652,27 @@ public class InputInterpreter {
 
                 break;
 
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000077" :
+                // GUI_COMPONENT_INPUT_TYPE: float
+
+                if (stringChecker.checkIfStringIsAFloat(this.jsonInputObject.getString("value"))) {
+
+                    if (Float.parseFloat(this.jsonInputObject.getString("value")) > 0) {
+
+                        this.currComponentObject.put("valid", "true");
+
+                        this.currInputIsValid = true;
+
+                        this.inputIsValid = true;
+
+                        return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
+
+                    }
+
+                }
+
+                break;
+
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000079" :
                 // GUI_COMPONENT_INPUT_TYPE: positive integer
 
@@ -344,11 +714,11 @@ public class InputInterpreter {
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000081" :
                 // GUI_COMPONENT_INPUT_TYPE: web address
 
-                MDBURLEncoder mdburlEncoderSomeValue = new MDBURLEncoder();
+                MDBURLEncoder mdbLEncoderSomeValue = new MDBURLEncoder();
 
                 UrlValidator urlValidatorSomeValue = new UrlValidator();
 
-                if (urlValidatorSomeValue.isValid(mdburlEncoderSomeValue.encodeUrl(this.jsonInputObject.getString("value"), "UTF-8"))) {
+                if (urlValidatorSomeValue.isValid(mdbLEncoderSomeValue.encodeUrl(this.jsonInputObject.getString("value"), "UTF-8"))) {
 
                     this.currComponentObject.put("valid", "true");
 
@@ -361,6 +731,32 @@ public class InputInterpreter {
                 }
 
                 break;
+
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000111" :
+                // GUI_COMPONENT_INPUT_TYPE: date time stamp
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                dateFormat.setLenient(false);
+
+                try {
+
+                    dateFormat.parse((this.jsonInputObject.getString("value")).trim());
+
+                } catch (ParseException pe) {
+
+                    break;
+
+                }
+
+                this.currComponentObject.put("valid", "true");
+
+                this.currInputIsValid = true;
+
+                this.inputIsValid = true;
+
+                return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000112" :
                 // GUI_COMPONENT_INPUT_TYPE: MDB user entry ID
@@ -419,7 +815,8 @@ public class InputInterpreter {
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000172" :
                 // GUI_COMPONENT_INPUT_TYPE: boolean
 
-                if (Boolean.parseBoolean(this.jsonInputObject.getString("value"))) {
+                if (this.jsonInputObject.getString("value").equals("true")
+                        || this.jsonInputObject.getString("value").equals("false")) {
 
                     this.currComponentObject.put("valid", "true");
 
@@ -479,11 +876,121 @@ public class InputInterpreter {
 
                 break;
 
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000558" :
+                // GUI_COMPONENT_INPUT_TYPE: integer percentage (0-100%)
+
+                if (stringChecker.checkIfStringIsAnInteger(this.jsonInputObject.getString("value"))) {
+
+                    if (Integer.parseInt(this.jsonInputObject.getString("value")) > 0
+                            && Integer.parseInt(this.jsonInputObject.getString("value")) <= 100) {
+
+                        this.currComponentObject.put("valid", "true");
+
+                        this.currInputIsValid = true;
+
+                        this.inputIsValid = true;
+
+                        return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
+
+                    }
+
+                }
+
+                break;
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000559" :
+                // GUI_COMPONENT_INPUT_TYPE: float percentage (0-100%)
+
+                if (stringChecker.checkIfStringIsAFloat(this.jsonInputObject.getString("value"))) {
+
+                    if (Float.parseFloat(this.jsonInputObject.getString("value")) > 0
+                            && Float.parseFloat(this.jsonInputObject.getString("value")) <= 100) {
+
+                        this.currComponentObject.put("valid", "true");
+
+                        this.currInputIsValid = true;
+
+                        this.inputIsValid = true;
+
+                        return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
+
+                    }
+
+                }
+
+                break;
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000560" :
+                // GUI_COMPONENT_INPUT_TYPE: float pH
+
+                if (stringChecker.checkIfStringIsAFloat(this.jsonInputObject.getString("value"))) {
+
+                    if (Float.parseFloat(this.jsonInputObject.getString("value")) > 0
+                            && Float.parseFloat(this.jsonInputObject.getString("value")) <= 14) {
+
+                        this.currComponentObject.put("valid", "true");
+
+                        this.currInputIsValid = true;
+
+                        this.inputIsValid = true;
+
+                        return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
+
+                    }
+
+                }
+
+                break;
+
         }
 
-        this.currComponentObject.put("valid", "false");
+        if ((this.jsonInputObject.getString("value")).trim().isEmpty()) {
+            // check if String only conatins whitespaces
 
-        this.currInputIsValid = false;
+            this.jsonInputObject.put("value", "");
+
+            this.currComponentObject.put("valid", "true");
+
+            this.currInputIsValid = true;
+
+            this.inputIsValid = true;
+
+        } else {
+
+            SelectBuilder selectBuilder = new SelectBuilder();
+
+            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+            SelectBuilder innerSelect = new SelectBuilder();
+
+            Property property = ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000388");
+            // MDB error-message
+
+            innerSelect.addWhere("<" + typeToCheck + ">", property, "?o");
+
+            selectBuilder.addVar(selectBuilder.makeVar("?o"));
+
+            selectBuilder.addGraph("?g", innerSelect);
+
+            String sparqlQueryString = selectBuilder.buildString();
+
+            String errorMessage = connectionToTDB.pullSingleDataFromTDB(OntologiesPath.pathToOntology, sparqlQueryString, "?o");
+
+            if (!errorMessage.isEmpty()) {
+
+                this.currComponentObject.put(property.getLocalName(), errorMessage);
+
+            }
+
+            this.currComponentObject.put("valid", "false");
+
+            this.currInputIsValid = false;
+
+        }
+
+
 
         return entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
 
@@ -544,6 +1051,27 @@ public class InputInterpreter {
         }
 
         return entryComponents;
+
+    }
+
+    /**
+     * This method checks if the model contains the 'use keywords from composition  [BOOLEAN]' or not.
+     * @param constructResult is a model to check for input
+     */
+    private void checkUseKeywordsFromComposition(Model constructResult) {
+
+        Property useKeywordsFromComposition = ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000529");
+        // use keywords from composition  [BOOLEAN]
+
+        if (constructResult.contains(null, useKeywordsFromComposition) && this.inputIsValid) {
+
+            Statement useKeywordsFromCompositionStmt = constructResult.getProperty(null, useKeywordsFromComposition);
+
+            this.jsonInputObject.put("useKeywordsFromComposition", useKeywordsFromCompositionStmt.getObject().asLiteral().getLexicalForm());
+
+            constructResult.remove(useKeywordsFromCompositionStmt);
+
+        }
 
     }
 
@@ -647,53 +1175,88 @@ public class InputInterpreter {
 
         JSONObject outputObject = new JSONObject();
 
-        // autocomplete for ontology
-        if (this.jsonInputObject.has("MDB_UIAP_0000000413")) {
 
-            String externalOntologyURI = this.jsonInputObject.getString("MDB_UIAP_0000000413");
+        if (this.jsonInputObject.has("MDB_UIAP_0000000413") ||
+                // autocomplete for ontology
+                this.jsonInputObject.has("MDB_UIAP_0000000578")) {
+                // autocomplete for
 
-            if (externalOntologyURI.contains("http://www.morphdbase.de/Ontologies/MDB/MDBCore")) {
+            JSONArray externalOntologyURIJSON = new JSONArray();
 
-                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+            if (this.jsonInputObject.has("MDB_UIAP_0000000413")) {
 
-                SelectBuilder selectBuilder = new SelectBuilder();
+                if (this.jsonInputObject.get("MDB_UIAP_0000000413") instanceof JSONArray) {
 
-                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+                    externalOntologyURIJSON = this.jsonInputObject.getJSONArray("MDB_UIAP_0000000413");
 
-                SelectBuilder subSelectBuilder = new SelectBuilder();
+                } else if (this.jsonInputObject.get("MDB_UIAP_0000000413") instanceof String) {
 
-                subSelectBuilder = prefixesBuilder.addPrefixes(subSelectBuilder);
+                    externalOntologyURIJSON.put(this.jsonInputObject.getString("MDB_UIAP_0000000413"));
 
-                // the angle brackets in the object are necessary to build a jena text query
-                subSelectBuilder.addWhere
-                        ("?s", "<http://jena.apache.org/text#query>",
-                                "<(rdfs:label '" + this.jsonInputObject.getString("value") + "*' 10)>");
-                subSelectBuilder.addWhere
-                        ("?s", "<http://www.w3.org/2000/01/rdf-schema#label>", "?label");
-
-                selectBuilder.addGraph("<http://www.morphdbase.de/Ontologies/MDB/" + ResourceFactory.createResource(externalOntologyURI).getLocalName() + ">", subSelectBuilder);
-
-                QueryBuilderConverter queryBuilderConverter = new QueryBuilderConverter();
-
-                String sparqlQueryString = queryBuilderConverter.toString(selectBuilder);
-
-                String basicPathToLucene = "/home/path/to/tdb-lucene/external-ontologies/";
-
-                JSONArray autoCompleteResults = connectionToTDB.pullAutoCompleteFromTDBLucene(OntologiesPath.mainDirectory + "external-ontologies/", basicPathToLucene, sparqlQueryString);
-
-                this.currComponentObject.put("autoCompleteData", autoCompleteResults);
-
-                JSONArray outputDataJSON = new JSONArray();
-
-                JSONObject entryComponents = new JSONObject();
-
-                entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
-
-                outputDataJSON.put(entryComponents);
-
-                outputObject.put("data", outputDataJSON);
+                }
 
             }
+
+            if (this.jsonInputObject.has("MDB_UIAP_0000000578")) {
+
+                if (this.jsonInputObject.get("MDB_UIAP_0000000578") instanceof JSONArray) {
+
+                    externalOntologyURIJSON = this.jsonInputObject.getJSONArray("MDB_UIAP_0000000578");
+
+                } else if (this.jsonInputObject.get("MDB_UIAP_0000000578") instanceof String) {
+
+                    externalOntologyURIJSON.put(this.jsonInputObject.getString("MDB_UIAP_0000000578"));
+
+                }
+
+            }
+
+            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+            SelectBuilder selectBuilder = new SelectBuilder();
+
+            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+            SelectBuilder subSelectBuilder = new SelectBuilder();
+
+            subSelectBuilder = prefixesBuilder.addPrefixes(subSelectBuilder);
+
+            // the angle brackets in the object are necessary to build a jena text query
+            subSelectBuilder.addWhere
+                    ("?s", "<http://jena.apache.org/text#query>",
+                            "<(rdfs:label '" + this.jsonInputObject.getString("value") + "*' 10)>");
+            subSelectBuilder.addWhere
+                    ("?s", "<http://www.w3.org/2000/01/rdf-schema#label>", "?label");
+
+            selectBuilder.addGraph("?g", subSelectBuilder);
+
+            for (int i = 0; i < externalOntologyURIJSON.length(); i++) {
+
+                selectBuilder.fromNamed("http://www.morphdbase.de/Ontologies/MDB/" + ResourceFactory.createResource(externalOntologyURIJSON.getString(i)).getLocalName());
+
+            }
+
+            selectBuilder.setDistinct(true);
+
+            QueryBuilderConverter queryBuilderConverter = new QueryBuilderConverter();
+
+            String sparqlQueryString = queryBuilderConverter.toString(selectBuilder);
+
+            String basicPathToLucene = "/home/YOUR_HOME_DIR/tdb-lucene/external-ontologies/";
+
+            JSONArray autoCompleteResults = connectionToTDB.pullAutoCompleteFromTDBLucene(OntologiesPath.mainDirectory + "external-ontologies/", basicPathToLucene, sparqlQueryString);
+
+            this.currComponentObject.put("autoCompleteData", autoCompleteResults);
+
+            JSONArray outputDataJSON = new JSONArray();
+
+            JSONObject entryComponents = new JSONObject();
+
+            entryComponents.put(this.jsonInputObject.getString("localID"), this.currComponentObject);
+
+            outputDataJSON.put(entryComponents);
+
+            outputObject.put("data", outputDataJSON);
 
         }
 
@@ -903,17 +1466,47 @@ public class InputInterpreter {
 
                     if (keywordsToTransfer) {
 
-                        mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), localIdentifiedResources, this.overlayModel);
+                        mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), localIdentifiedResources, this.overlayModel, this.mongoDBConnection);
 
                     } else {
 
-                        mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), this.overlayModel);
+                        mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), this.overlayModel, this.mongoDBConnection);
 
                     }
 
                 } else {
 
-                    String resourceFromHTMLForm =  "http://www.morphdbase.de/resource/" + this.jsonInputObject.getString("html_form");
+                    SelectBuilder selectBuilder = new SelectBuilder();
+
+                    PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                    selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                    SelectBuilder innerSelect = new SelectBuilder();
+
+                    innerSelect.addWhere("<" + this.individualURI + ">", "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>", "<" + resourceSubject + ">");
+                    innerSelect.addWhere("<" + this.individualURI + ">", "<http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000587>", "?isGeneralItem");
+                    // is general application item  [BOOLEAN]
+
+                    selectBuilder.addVar(selectBuilder.makeVar("?isGeneralItem"));
+
+                    selectBuilder.addGraph("?g", innerSelect);
+
+                    String sparqlQueryString = selectBuilder.buildString();
+
+                    String isGeneralItem = connectionToTDB.pullSingleDataFromTDB(this.pathToOntologies, sparqlQueryString, "?isGeneralItem");
+
+                    String resourceFromHTMLForm;
+
+                    if (isGeneralItem.equals("true")) {
+
+                        resourceFromHTMLForm = "http://www.morphdbase.de/" + this.jsonInputObject.getString("html_form");
+
+                    } else {
+
+                        resourceFromHTMLForm = "http://www.morphdbase.de/resource/" + this.jsonInputObject.getString("html_form");
+
+                    }
 
                     System.out.println("resourceFromHTMLForm = " + resourceFromHTMLForm);
 
@@ -928,11 +1521,11 @@ public class InputInterpreter {
 
                         if (keywordsToTransfer) {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), localIdentifiedResources, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), localIdentifiedResources, this.overlayModel, this.mongoDBConnection);
 
                         } else {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbidFinder.getMDBCoreID(), mdbidFinder.getMDBEntryID(), mdbidFinder.getMDBUEID(), this.overlayModel, this.mongoDBConnection);
 
                         }
 
@@ -941,9 +1534,7 @@ public class InputInterpreter {
                         if (this.individualURI.startsWith("http://www.morphdbase.de/resource/dummy-overlay#")) {
                             // special case for GUI_COMPONENT__BASIC_WIDGET: specify required information
 
-                            MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
-
-                            mongoDBConnection.putJSONInputObjectInMongoDB(this.jsonInputObject);
+                            this.mongoDBConnection.putJSONInputObjectInMongoDB(this.jsonInputObject);
 
                             String mdbCoreID = ResourceFactory.createResource(this.individualURI).getNameSpace().substring(0, ResourceFactory.createResource(this.individualURI).getNameSpace().length() - 1);
                             String mdbEntryID = ResourceFactory.createResource(this.individualURI).getNameSpace().substring(0, ResourceFactory.createResource(this.individualURI).getNameSpace().length() - 1);
@@ -952,17 +1543,17 @@ public class InputInterpreter {
                             this.jsonInputObject.put("mdbentryid", mdbEntryID);
                             this.jsonInputObject.put("mdbcoreid", mdbCoreID);
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbCoreID, mdbEntryID, mdbUEID, localIdentifiedResources, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(mdbCoreID, mdbEntryID, mdbUEID, localIdentifiedResources, this.overlayModel, this.mongoDBConnection);
 
                         } else {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.jsonInputObject.getString("mdbueid_uri"), this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.jsonInputObject.getString("mdbueid_uri"), this.overlayModel, this.mongoDBConnection);
 
                         }
 
                     } else {
 
-                        mdbjsonObjectFactory = new MDBJSONObjectFactory();
+                        mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mongoDBConnection);
 
                     }
 

@@ -1,11 +1,13 @@
 /*
  * Created by Roman Baum on 15.02.16.
- * Last modified by Roman Baum on 07.08.17.
+ * Last modified by Roman Baum on 02.01.18.
  */
 
 package mdb.packages.operation;
 
 
+import mdb.basic.MDBIDChecker;
+import mdb.basic.ShowEntryButton;
 import mdb.mongodb.MongoDBConnection;
 import mdb.packages.JenaIOTDBFactory;
 import mdb.packages.querybuilder.FilterBuilder;
@@ -34,14 +36,16 @@ public class OperationManager {
 
     private Model overlayModel = ModelFactory.createDefaultModel();
 
-    private MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
+    private MongoDBConnection mongoDBConnection;
 
     private JSONObject keywordsFromInputForSubsequentlyWA = new JSONObject();
 
     /**
      * Default constructor
      */
-    public OperationManager() {
+    public OperationManager(MongoDBConnection mongoDBConnection) {
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -50,9 +54,10 @@ public class OperationManager {
      * A constructor which provide a specific MDBUserEntryID for further calculations
      * @param mdbUEID contains the uri of the MDBUserEntryID
      */
-    public OperationManager(String mdbUEID) {
+    public OperationManager(String mdbUEID, MongoDBConnection mongoDBConnection) {
 
         this.mdbUEID = mdbUEID;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -63,7 +68,7 @@ public class OperationManager {
      * @param mdbEntryID contains the uri of the MDBEntryID
      * @param mdbUEID contains the uri of the MDBUserEntryID
      */
-    public OperationManager(String mdbCoreID, String mdbEntryID, String mdbUEID) {
+    public OperationManager(String mdbCoreID, String mdbEntryID, String mdbUEID, MongoDBConnection mongoDBConnection) {
 
         this.mdbCoreID = mdbCoreID;
 
@@ -71,15 +76,15 @@ public class OperationManager {
 
         this.mdbUEID = mdbUEID;
 
+        this.mongoDBConnection = mongoDBConnection;
+
     }
 
     public JSONObject checkAutocomplete(JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
 
-        String classURI = getClassURIForLocalIDFromMongoDB(jsonInputObject);
-
         String individualURI = getIndividualURIForLocalIDFromMongoDB(jsonInputObject);
 
-        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject);
+        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.mongoDBConnection);
 
         return inputinterpreter.checkAutocomplete(connectionToTDB);
 
@@ -93,17 +98,94 @@ public class OperationManager {
      */
     public JSONObject checkInput(JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
 
-        String classURI = getClassURIForLocalIDFromMongoDB(jsonInputObject);
+        String classURI, individualURI;
 
-        String individualURI = getIndividualURIForLocalIDFromMongoDB(jsonInputObject);
+        if (jsonInputObject.getString("value").equals("show_localID")) {
+            // case: change selected part in partonomy
 
-        jsonInputObject = getKeywordsForLocalIDFromMongoDB(jsonInputObject);
+            classURI = "http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme#MDB_DATASCHEME_0000003026";
+            // change part button item
 
-        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.overlayModel);
+            individualURI = "http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme#MDB_DATASCHEME_0000003027";
+            // BASIC_MDB_COMPONENT: change part button
+
+        } else {
+
+            classURI = getClassURIForLocalIDFromMongoDB(jsonInputObject);
+
+            individualURI = getIndividualURIForLocalIDFromMongoDB(jsonInputObject);
+
+            jsonInputObject = getKeywordsForLocalIDFromMongoDB(jsonInputObject);
+
+        }
+
+        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.overlayModel, this.mongoDBConnection);
 
         JSONObject outputJSON = inputinterpreter.checkInput(classURI, connectionToTDB);
 
         this.overlayModel = inputinterpreter.getOverlayModel();
+
+        return outputJSON;
+
+    }
+
+    /**
+     * This method reads and coordinates the input data for a panel
+     * @param jsonInputObject contains the information for the calculation
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return an output JSONObject with data
+     */
+    public JSONObject checkURI(JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+
+        MDBIDChecker mdbIDChecker = new MDBIDChecker();
+
+        if (mdbIDChecker.isMDBID(jsonInputObject.getString("value"), connectionToTDB)) {
+
+            String mdbResourcePart = jsonInputObject.getString("value");
+
+            mdbResourcePart = mdbResourcePart.substring(mdbResourcePart.lastIndexOf("/") + 1);
+
+            if (mdbIDChecker.isMDBEntryID()) {
+
+                mdbResourcePart = mdbResourcePart + "#MDB_CORE_0000000412_1";
+                // entry-composition named graph
+
+                jsonInputObject.put("html_form", mdbResourcePart);
+
+                jsonInputObject.put("localID", ShowEntryButton.localIndividualID);
+
+                String individualURI = ShowEntryButton.individualID;
+
+                String classURI = ShowEntryButton.classID;
+
+                InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.overlayModel, this.mongoDBConnection);
+
+                JSONObject outputJSON = inputinterpreter.checkInput(classURI, connectionToTDB);
+
+                this.overlayModel = inputinterpreter.getOverlayModel();
+
+                return outputJSON;
+
+            }
+
+        }
+
+        return null;
+    }
+
+
+
+    /**
+     * This method reads and coordinates the input data for a panel
+     * @param jsonInputObject contains the information for the calculation
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return an output JSONObject with data
+     */
+    public JSONObject checkInputForListEntry(JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+
+        InputInterpreter inputinterpreter = new InputInterpreter(jsonInputObject, this.mongoDBConnection);
+
+        JSONObject outputJSON = inputinterpreter.checkInputForListEntry(connectionToTDB);
 
         return outputJSON;
 
@@ -195,7 +277,7 @@ public class OperationManager {
 
             for (int i = 0; i < jsonInputQueue.length(); i++) {
 
-                OperationManager queueOperationManager = new OperationManager();
+                OperationManager queueOperationManager = new OperationManager(this.mongoDBConnection);
 
                 // calculate the input from the mongoDB
                 JSONObject outputJSON = queueOperationManager.checkInput(jsonInputQueue.getJSONObject(i), connectionToTDB);
@@ -227,7 +309,7 @@ public class OperationManager {
     }
 
     /**
-     *
+     * This method coordinates the input data for a subsequently workflow
      * @param jsonInputObject contains the information for the calculation
      * @param classURI contains the URI of an ontology class
      * @param keywordsToTransferJSON contains keywords from a preceding transition
@@ -240,7 +322,7 @@ public class OperationManager {
 
         jsonInputObject = updateJSONInputObject(individualURI, keywordsToTransferJSON, jsonInputObject);
 
-        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.overlayModel);
+        InputInterpreter inputinterpreter = new InputInterpreter(individualURI, jsonInputObject, this.overlayModel, this.mongoDBConnection);
 
         inputinterpreter.checkInput(classURI, connectionToTDB);
 
@@ -364,6 +446,24 @@ public class OperationManager {
 
                         }
 
+                        if ((localIDs.getJSONObject(i).getString("localID")).equals(jsonFromMongoDB.getJSONObject(j).getString("localID")) &&
+                                (jsonFromMongoDB.getJSONObject(j).has("keywordDefinition"))) {
+
+                            // add the corresponding keyword label information to the input
+                            jsonInputObject.getJSONArray("localIDs").getJSONObject(i).put("keywordDefinition", jsonFromMongoDB.getJSONObject(j).getString("keywordDefinition"));
+
+                            if (jsonInputObject.getJSONArray("localIDs").getJSONObject(i).get("value") instanceof JSONObject) {
+
+                                JSONObject valueObject = jsonInputObject.getJSONArray("localIDs").getJSONObject(i).getJSONObject("value");
+
+                                jsonInputObject.getJSONArray("localIDs").getJSONObject(i).put("valueDefinition", valueObject.getString("definition"));
+
+                                jsonInputObject.getJSONArray("localIDs").getJSONObject(i).put("value", valueObject.getString("resource"));
+
+                            }
+
+                        }
+
                     }
 
                 }
@@ -412,15 +512,15 @@ public class OperationManager {
 
         if (!this.mdbCoreID.isEmpty() && !this.mdbEntryID.isEmpty() && !this.mdbUEID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.mongoDBConnection);
 
         } else if(!this.mdbCoreID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbUEID, this.mongoDBConnection);
 
         } else {
 
-            outputGenerator = new OutputGenerator();
+            outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
         }
 
@@ -461,15 +561,15 @@ public class OperationManager {
 
         if (!this.mdbCoreID.isEmpty() && !this.mdbEntryID.isEmpty() && !this.mdbUEID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.mongoDBConnection);
 
         } else if(!this.mdbCoreID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbUEID, this.mongoDBConnection);
 
         } else {
 
-            outputGenerator = new OutputGenerator();
+            outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
         }
 
@@ -492,15 +592,15 @@ public class OperationManager {
 
         if (!this.mdbCoreID.isEmpty() && !this.mdbEntryID.isEmpty() && !this.mdbUEID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.mongoDBConnection);
 
         } else if(!this.mdbUEID.isEmpty()) {
 
-            outputGenerator = new OutputGenerator(this.mdbUEID);
+            outputGenerator = new OutputGenerator(this.mdbUEID, this.mongoDBConnection);
 
         } else {
 
-            outputGenerator = new OutputGenerator();
+            outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
         }
 
@@ -570,7 +670,7 @@ public class OperationManager {
      */
     public String getClassURIForLocalIDFromMongoDB(JSONObject jsonInputObject) {
 
-        JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDB(jsonInputObject);
+        JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDBWithLocalID(jsonInputObject);
 
         return jsonFromMongoDB.getString("classID");
 
@@ -584,7 +684,7 @@ public class OperationManager {
      */
     public String getIndividualURIForLocalIDFromMongoDB(JSONObject jsonInputObject) {
 
-        JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDB(jsonInputObject);
+        JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDBWithLocalID(jsonInputObject);
 
         return jsonFromMongoDB.getString("individualID");
 

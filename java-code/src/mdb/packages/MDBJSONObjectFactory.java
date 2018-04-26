@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 10.04.15.
- * Last modified by Roman Baum on 19.09.17.
+ * Last modified by Roman Baum on 28.02.18.
  */
 
 package mdb.packages;
@@ -20,12 +20,15 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.jena.arq.querybuilder.AskBuilder;
 import org.apache.jena.arq.querybuilder.ConstructBuilder;
 import org.apache.jena.arq.querybuilder.SelectBuilder;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.expr.ExprAggregator;
 import org.apache.jena.sparql.expr.ExprVar;
 import org.apache.jena.sparql.expr.aggregate.Aggregator;
 import org.apache.jena.sparql.expr.aggregate.AggregatorFactory;
 import org.apache.jena.sparql.vocabulary.FOAF;
+import org.apache.jena.util.ResourceUtils;
 import org.apache.jena.vocabulary.OWL2;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -63,10 +66,12 @@ public class MDBJSONObjectFactory {
     private ClassSet classSet = new ClassSet(this.pathToOntologies);
     private Model classModel = this.classSet.createModel();
 
-    private String mdbCoreID = "", mdbEntryID = "", mdbUEID = "", currentFocus = "", parentRoot = "", createOverlayNG;
+    private String mdbCoreID = "", mdbEntryID = "", mdbUEID = "", currentFocus = "", parentRoot = "", createOverlayNG,
+            tabToUse, previousCalculatedNG, tabToUseURI, newPositionCompositionPart = "", executionStepFocus = "";
 
     private boolean mdbCoreIDNotEmpty = false, mdbEntryIDNotEmpty = false, mdbUEIDNotEmpty = false,
-            focusHasNewNS = false, parentRootExist = false, hasCreateOverlayInput = false, updateComposition = false;
+            focusHasNewNS = false, parentRootExist = false, hasCreateOverlayInput = false, updateComposition = false,
+            useTab = false, multipleExecutionStepFocus = false, hasExecutionStepFocus = false;
 
     private int parentRootPosition;
 
@@ -76,59 +81,69 @@ public class MDBJSONObjectFactory {
             entrySpecificAndDefaultResourcesMap = new JSONObject(), rootResourcesOfCompositions = new JSONObject(),
             parentComponents = new JSONObject(), compositionUpdateJSON = new JSONObject();
 
+    private JSONArray executionStepFocuses = new JSONArray();
+
     private Model overlayModel;
 
-    private MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
-    public MDBJSONObjectFactory() {
+    private MongoDBConnection mongoDBConnection;
+
+    public MDBJSONObjectFactory(MongoDBConnection mongoDBConnection) {
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
-    public MDBJSONObjectFactory(JSONObject identifiedResources, Model overlayModel) {
+    public MDBJSONObjectFactory(JSONObject identifiedResources, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
         this.identifiedResources = identifiedResources;
         this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
-    public MDBJSONObjectFactory(JSONObject identifiedResources, JSONObject infoInput, Model overlayModel) {
+    public MDBJSONObjectFactory(JSONObject identifiedResources, JSONObject infoInput, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
-        this.identifiedResources = identifiedResources;
-        this.infoInput = infoInput;
-        this.overlayModel = overlayModel;
-
-    }
-
-    public MDBJSONObjectFactory(String mdbUEID, Model overlayModel) {
-
-        this.mdbUEID = mdbUEID;
-        this.currentFocus = mdbUEID;
-        this.mdbUEIDNotEmpty = true;
-        this.overlayModel = overlayModel;
-
-    }
-
-    public MDBJSONObjectFactory(String mdbUEID, JSONObject identifiedResources, Model overlayModel) {
-
-        this.mdbUEID = mdbUEID;
-        this.currentFocus = mdbUEID;
-        this.identifiedResources = identifiedResources;
-        this.mdbUEIDNotEmpty = true;
-        this.overlayModel = overlayModel;
-
-    }
-
-    public MDBJSONObjectFactory(String mdbUEID, JSONObject identifiedResources, JSONObject infoInput, Model overlayModel) {
-
-        this.mdbUEID = mdbUEID;
-        this.currentFocus = mdbUEID;
         this.identifiedResources = identifiedResources;
         this.infoInput = infoInput;
-        this.mdbUEIDNotEmpty = true;
         this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
-    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, Model overlayModel) {
+    public MDBJSONObjectFactory(String mdbUEID, Model overlayModel, MongoDBConnection mongoDBConnection) {
+
+        this.mdbUEID = mdbUEID;
+        this.currentFocus = mdbUEID;
+        this.mdbUEIDNotEmpty = true;
+        this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
+
+    }
+
+    public MDBJSONObjectFactory(String mdbUEID, JSONObject identifiedResources, Model overlayModel, MongoDBConnection mongoDBConnection) {
+
+        this.mdbUEID = mdbUEID;
+        this.currentFocus = mdbUEID;
+        this.identifiedResources = identifiedResources;
+        this.mdbUEIDNotEmpty = true;
+        this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
+
+    }
+
+    public MDBJSONObjectFactory(String mdbUEID, JSONObject identifiedResources, JSONObject infoInput, Model overlayModel, MongoDBConnection mongoDBConnection) {
+
+        this.mdbUEID = mdbUEID;
+        this.currentFocus = mdbUEID;
+        this.identifiedResources = identifiedResources;
+        this.infoInput = infoInput;
+        this.mdbUEIDNotEmpty = true;
+        this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
+
+    }
+
+    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
         this.mdbCoreID = mdbCoreID;
         this.mdbEntryID = mdbEntryID;
@@ -138,10 +153,11 @@ public class MDBJSONObjectFactory {
         this.mdbEntryIDNotEmpty = true;
         this.mdbUEIDNotEmpty = true;
         this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
-    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, JSONObject identifiedResources, Model overlayModel) {
+    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, JSONObject identifiedResources, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
         this.mdbCoreID = mdbCoreID;
         this.mdbEntryID = mdbEntryID;
@@ -152,10 +168,11 @@ public class MDBJSONObjectFactory {
         this.mdbEntryIDNotEmpty = true;
         this.mdbUEIDNotEmpty = true;
         this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
-    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, JSONObject identifiedResources, JSONObject infoInput, Model overlayModel) {
+    public MDBJSONObjectFactory(String mdbCoreID, String mdbEntryID, String mdbUEID, JSONObject identifiedResources, JSONObject infoInput, Model overlayModel, MongoDBConnection mongoDBConnection) {
 
         this.mdbCoreID = mdbCoreID;
         this.mdbEntryID = mdbEntryID;
@@ -167,6 +184,7 @@ public class MDBJSONObjectFactory {
         this.mdbEntryIDNotEmpty = true;
         this.mdbUEIDNotEmpty = true;
         this.overlayModel = overlayModel;
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -242,6 +260,11 @@ public class MDBJSONObjectFactory {
 
                     if (currProperty.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040")) {
                         // has MDB entry component
+
+                        individualToCheck.put(currStmt.getObject().toString());
+
+                    } else if (currProperty.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000555")) {
+                        // belongs to radio button group
 
                         individualToCheck.put(currStmt.getObject().toString());
 
@@ -370,14 +393,381 @@ public class MDBJSONObjectFactory {
 
     }
 
+    /**
+     * This method checks if an input URI is a keyword
+     * @param potentialKeyword contains an URI
+     * @return the value of a keyword or the input URI
+     */
+    private String calculateValueForKeyword(String potentialKeyword) {
+
+        if (potentialKeyword.contains("__MDB_UIAP_")) {
+
+            String localNamePropertyInObject = potentialKeyword.substring(potentialKeyword.indexOf("__") + 2);
+
+            Iterator<String> keyIterator = this.generatedResources.keys();
+
+            while (keyIterator.hasNext()) {
+
+                String currKey = keyIterator.next();
+
+                // get local name of a key
+                String localNameOfKey = ResourceFactory.createResource(currKey).getLocalName();
+
+                if (localNameOfKey.equals(localNamePropertyInObject)) {
+                    // get ng from generated resources
+
+                    if (this.mdbCoreIDNotEmpty
+                            && this.mdbUEIDNotEmpty
+                            && !this.mdbEntryIDNotEmpty) {
+
+
+                    } else if (this.mdbEntryIDNotEmpty
+                            && this.mdbUEIDNotEmpty) {
+
+                        return this.generatedResources.getString(currKey);
+
+
+                    } else if (this.mdbUEIDNotEmpty) {
+
+                        return this.generatedResources.getString(currKey);
+
+                    }
+
+                }
+
+            }
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    if (EmailValidator.getInstance().isValid(this.identifiedResources.getString(currKey))) {
+                        // convert mail to a complete uri
+
+                        return "mailto:" + this.identifiedResources.getString(currKey);
+
+                    }
+
+                    return this.identifiedResources.getString(currKey);
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.getString(currKey);
+
+                }
+
+            }
+
+        } else {
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    return this.identifiedResources.getString(currKey);
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.getString(currKey);
+
+                }
+
+            }
+
+        }
+
+        // return object from input
+        return potentialKeyword;
+
+    }
+
+
+    private void calculateFocusForExecutionStep(String uriForFocusCalculation) {
+
+        if (uriForFocusCalculation.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
+            // KEYWORD: this MDB user entry ID
+
+            this.executionStepFocus = this.mdbUEID;
+
+        } else if (checkValueOfKeywordIsJSONArray(uriForFocusCalculation)) {
+
+            this.multipleExecutionStepFocus = true;
+
+            this.executionStepFocuses = calculateValueListForKeyword(uriForFocusCalculation);
+
+        } else {
+
+            this.executionStepFocus = calculateValueForKeyword(uriForFocusCalculation);
+
+        }
+
+        this.hasExecutionStepFocus = true;
+
+        System.out.println("INFO: An execution step specific focus was set.");
+
+    }
+
+    /**
+     * This method checks if a keyword has a JSONArray as value or not.
+     * @param potentialKeyword contains an URI
+     * @return 'true' if value has type JSONArray, else 'false'
+     */
+    private boolean checkValueOfKeywordIsJSONArray(String potentialKeyword) {
+
+        if (potentialKeyword.contains("__MDB_UIAP_")) {
+
+            String localNamePropertyInObject = potentialKeyword.substring(potentialKeyword.indexOf("__") + 2);
+
+            Iterator<String> keyIterator = this.generatedResources.keys();
+
+            while (keyIterator.hasNext()) {
+
+                String currKey = keyIterator.next();
+
+                // get local name of a key
+                String localNameOfKey = ResourceFactory.createResource(currKey).getLocalName();
+
+                if (localNameOfKey.equals(localNamePropertyInObject)) {
+                    // get ng from generated resources
+
+                    return this.generatedResources.get(currKey) instanceof JSONArray ? true : false;
+
+                }
+
+            }
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    return this.identifiedResources.get(currKey) instanceof JSONArray ? true : false;
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.get(currKey) instanceof JSONArray ? true : false;
+
+                }
+
+            }
+
+        } else {
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    return this.identifiedResources.get(currKey) instanceof JSONArray ? true : false;
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.get(currKey) instanceof JSONArray ? true : false;
+
+                }
+
+            }
+
+        }
+
+        // return object from input
+        return false;
+
+    }
+
+
+    /**
+     * This method checks if an input URI is a keyword
+     * @param potentialKeyword contains an URI
+     * @return the list of a keyword or the input URI
+     */
+    private JSONArray calculateValueListForKeyword(String potentialKeyword) {
+
+        if (potentialKeyword.contains("__MDB_UIAP_")) {
+
+            String localNamePropertyInObject = potentialKeyword.substring(potentialKeyword.indexOf("__") + 2);
+
+            Iterator<String> keyIterator = this.generatedResources.keys();
+
+            while (keyIterator.hasNext()) {
+
+                String currKey = keyIterator.next();
+
+                // get local name of a key
+                String localNameOfKey = ResourceFactory.createResource(currKey).getLocalName();
+
+                if (localNameOfKey.equals(localNamePropertyInObject)) {
+                    // get ng from generated resources
+
+                    if (this.mdbCoreIDNotEmpty
+                            && this.mdbUEIDNotEmpty
+                            && !this.mdbEntryIDNotEmpty) {
+
+
+                    } else if (this.mdbEntryIDNotEmpty
+                            && this.mdbUEIDNotEmpty) {
+
+                        return this.generatedResources.getJSONArray(currKey);
+
+
+                    } else if (this.mdbUEIDNotEmpty) {
+
+                        return this.generatedResources.getJSONArray(currKey);
+
+                    }
+
+                }
+
+            }
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    return this.identifiedResources.getJSONArray(currKey);
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.getJSONArray(currKey);
+
+                }
+
+            }
+
+        } else {
+
+            // check identified resources
+            Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+            while (identifiedResIterator.hasNext()) {
+
+                String currKey = identifiedResIterator.next();
+
+                if (currKey.equals(potentialKeyword)) {
+                    // get already identified resource from cache
+
+                    return this.identifiedResources.getJSONArray(currKey);
+
+                }
+
+            }
+
+            // check info input
+            Iterator<String> infoInputKeys = this.infoInput.keys();
+
+            while (infoInputKeys.hasNext()) {
+
+                String currKey = infoInputKeys.next();
+
+                if (currKey.equals(potentialKeyword)) {
+
+                    return this.infoInput.getJSONArray(currKey);
+
+                }
+
+            }
+
+        }
+
+        System.out.println("WARN: There is no known JSONArray for the keyword: " + potentialKeyword);
+
+        // return object from input
+        return new JSONArray();
+
+    }
 
     /**
      * This method calculate the named graph for a statement
      * @param currExecStep contains all information from the ontology for the current execution step
+     * @param currComponentObject contains the current component information for the output json
+     * @param jsonInputObject contains the information for the calculation
      * @param connectionToTDB contains a JenaIOTDBFactory object
-     * @return the uri of a named graph
+     * @return the URI of a named graph
      */
-    private String calculateNG(JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+    private String calculateNG(JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
 
         // handle special case create overlay
         if (this.hasCreateOverlayInput) {
@@ -389,13 +779,13 @@ public class MDBJSONObjectFactory {
         for (int i = 0; i < currExecStep.length(); i++) {
 
             if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")) {
-                // load from/save to/update in named graph
+                    // load from/save to/update in named graph
 
-                String localNamePropertyInObject = currExecStep.getJSONObject(i).getString("object");
+                String ng = currExecStep.getJSONObject(i).getString("object");
 
-                if (localNamePropertyInObject.contains("__MDB_UIAP_")) {
+                if (ng.contains("__MDB_UIAP_")) {
 
-                    localNamePropertyInObject = localNamePropertyInObject.substring(localNamePropertyInObject.indexOf("__") + 2);
+                    String localNamePropertyInObject = ng.substring(ng.indexOf("__") + 2);
 
                     Iterator<String> keyIterator = this.generatedResources.keys();
 
@@ -430,16 +820,142 @@ public class MDBJSONObjectFactory {
 
                     }
 
-                } else {
-                    // return object from input
+                    // check identified resources
+                    Iterator<String> identifiedResIterator = this.identifiedResources.keys();
 
+                    while (identifiedResIterator.hasNext()) {
+
+                        String currKey = identifiedResIterator.next();
+
+                        if (currKey.equals(ng)) {
+                            // get already identified resource from cache
+
+                            if (EmailValidator.getInstance().isValid(this.identifiedResources.getString(currKey))) {
+                                // convert mail to a complete uri
+
+                                return "mailto:" + this.identifiedResources.getString(currKey);
+
+                            }
+
+                            return this.identifiedResources.getString(currKey);
+
+                        }
+
+                    }
+
+                    // check info input
+                    Iterator<String> infoInputKeys = this.infoInput.keys();
+
+                    while (infoInputKeys.hasNext()) {
+
+                        String currKey = infoInputKeys.next();
+
+                        if (currKey.equals(ng)) {
+
+                            return this.infoInput.getString(currKey);
+
+                        }
+
+                    }
+
+
+                } else {
+
+                    if (ng.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000544")) {
+                        // KEYWORD: find named graph
+
+                        if (this.previousCalculatedNG.isEmpty()) {
+
+                            return "Error: There was no named graph calculated earlier in the transition.";
+
+                        } else {
+                            // create sparql query to find the named graph in combination of active_tab and this.previousCalculatedNG
+
+                            String workspace = calculateWorkspaceDirectory(currExecStep);
+
+                            SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                            selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                            if (this.useTab && jsonInputObject.getString("value").equals("show_localID")) {
+                                // identify named graph with active tab
+
+                                selectWhereBuilder.addWhere("<" + this.mdbEntryID + "#" + jsonInputObject.getString("localID") + ">", "<" + this.tabToUseURI + ">", "?o");
+
+                            } else {
+
+                                selectWhereBuilder.addWhere("<" + this.mdbEntryID + "#" + jsonInputObject.getString("localID") + ">", "?p", "?o");
+
+                            }
+
+                            SelectBuilder selectBuilder = new SelectBuilder();
+
+                            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                            ExprVar exprVar = new ExprVar("o");
+
+                            selectBuilder.addVar(exprVar);
+
+                            selectBuilder.addGraph("<" + this.previousCalculatedNG + ">", selectWhereBuilder);
+
+                            String sparqlQueryString = selectBuilder.buildString();
+
+                            return connectionToTDB.pullSingleDataFromTDB(workspace, sparqlQueryString, "?o");
+
+                        }
+
+                    }
+
+                    // check identified resources
+                    Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+                    while (identifiedResIterator.hasNext()) {
+
+                        String currKey = identifiedResIterator.next();
+
+                        if (currKey.equals(ng)) {
+                            // get already identified resource from cache
+
+                            return this.identifiedResources.getString(currKey);
+
+                        }
+
+                    }
+
+                    // check info input
+                    Iterator<String> infoInputKeys = this.infoInput.keys();
+
+                    while (infoInputKeys.hasNext()) {
+
+                        String currKey = infoInputKeys.next();
+
+                        if (currKey.equals(ng)) {
+
+                            return this.infoInput.getString(currKey);
+
+                        }
+
+                    }
+
+                    // return object from input
                     return currExecStep.getJSONObject(i).getString("object");
 
                 }
 
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000392")) {
-                // load from/save to/update in named graph (individual of)
+                // load from/save to/update in named graph (copied individual of)
 
+                boolean useNGForALaterExecutionStep = false;
+
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000694")) {
+                    // save individual for a later execution step to calculate 'KEYWORD: find named graph' or
+                    // 'KEYWORD: find root element'
+
+                    useNGForALaterExecutionStep = true;
+
+                }
 
                 if (this.mdbCoreIDNotEmpty
                         && this.mdbUEIDNotEmpty
@@ -464,11 +980,38 @@ public class MDBJSONObjectFactory {
 
                     }
 
+                    JSONArray objectsInJSONArray = currComponentObject.getJSONObject("input_data").getJSONArray("object_data");
+                    // todo maybe advance this calculation for multiple instances of one class
+
+                    // check if object already was generated in execution step 'copy and save triple statement(s)'
+                    for (int j = 0; j < objectsInJSONArray.length(); j++) {
+
+                        if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
+
+                            if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                    && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
+
+                                return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
+
+                            }
+
+                        }
+
+                    }
+
                     IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
 
                     String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                    return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+                    String calculatedNG = individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+
+                    if (useNGForALaterExecutionStep) {
+
+                        this.previousCalculatedNG = calculatedNG;
+
+                    }
+
+                    return calculatedNG;
 
                 } else if (this.mdbUEIDNotEmpty) {
 
@@ -479,6 +1022,15 @@ public class MDBJSONObjectFactory {
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
                 // load from/save to/update in named graph (this entry's specific individual of)
 
+                boolean useNGForALaterExecutionStep = false;
+
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000694")) {
+                    // save individual for a later execution step to calculate 'KEYWORD: find named graph' or
+                    // 'KEYWORD: find root element'
+
+                    useNGForALaterExecutionStep = true;
+
+                }
 
                 if (this.mdbCoreIDNotEmpty
                         && this.mdbUEIDNotEmpty
@@ -488,20 +1040,66 @@ public class MDBJSONObjectFactory {
                 } else if (this.mdbEntryIDNotEmpty
                         && this.mdbUEIDNotEmpty) {
 
-                    IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
+                    IndividualURI individualURI;
+
+                    if (this.hasExecutionStepFocus) {
+
+                        individualURI = new IndividualURI(this.executionStepFocus);
+
+                    } else {
+
+                        individualURI = new IndividualURI(this.mdbEntryID);
+
+                    }
 
                     String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                    return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+                    String calculatedNG;
+
+                    if (jsonInputObject.has("partID")) {
+
+                        calculatedNG = individualURI.getThisURIForAnIndividualWithPartID(currExecStep.getJSONObject(i).getString("object"), jsonInputObject.getString("partID"), workspace, connectionToTDB);
+
+                    } else {
+
+                        calculatedNG = individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+
+                    }
+
+                    if (useNGForALaterExecutionStep) {
+
+                        this.previousCalculatedNG = calculatedNG;
+
+                    }
+
+                    return calculatedNG;
 
 
                 } else if (this.mdbUEIDNotEmpty) {
 
-                    IndividualURI individualURI = new IndividualURI(this.mdbUEID);
+                    IndividualURI individualURI;
+
+                    if (this.hasExecutionStepFocus) {
+
+                        individualURI = new IndividualURI(this.executionStepFocus);
+
+                    } else {
+
+                        individualURI = new IndividualURI(this.mdbUEID);
+
+                    }
 
                     String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                    return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+                    String calculatedNG = individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+
+                    if (useNGForALaterExecutionStep) {
+
+                        this.previousCalculatedNG = calculatedNG;
+
+                    }
+
+                    return calculatedNG;
 
                 }
 
@@ -511,9 +1109,118 @@ public class MDBJSONObjectFactory {
 
         return null;
 
+    }
+
+
+    /**
+     * This method calculates the named graph URI of a current execution step ('property','object')-key pair.
+     * @param propertyURI contains the property URI of the current execution step
+     * @param objectURI contains the object URI of the current execution step
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param currComponentObject contains the current component information for the output json
+     * @param jsonInputObject contains the information for the calculation
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return the URI of a named graph
+     */
+    private String calculateNGWithMultipleInput(String propertyURI, String objectURI, JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB){
+
+        JSONArray ngSpecificExecStep = new JSONArray();
+
+        JSONObject ngSpecificExecStepObject = new JSONObject();
+
+        ngSpecificExecStepObject.put("property", propertyURI);
+
+        ngSpecificExecStepObject.put("object", objectURI);
+
+        ngSpecificExecStep.put(ngSpecificExecStepObject);
+
+        boolean copyFromWorkspace = false;
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000107")) {
+                // copy from workspace
+
+                ngSpecificExecStepObject = new JSONObject();
+
+                ngSpecificExecStepObject.put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078");
+                // named graph belongs to workspace
+
+                ngSpecificExecStepObject.put("object", currExecStep.getJSONObject(i).getString("object"));
+
+                ngSpecificExecStep.put(ngSpecificExecStepObject);
+
+                copyFromWorkspace = true;
+
+            }
+
+        }
+
+        if (!copyFromWorkspace) {
+
+            for (int i = 0; i < currExecStep.length(); i++) {
+
+                if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
+                    // named graph belongs to workspace
+
+                    ngSpecificExecStepObject = new JSONObject();
+
+                    ngSpecificExecStepObject.put("property", currExecStep.getJSONObject(i).getString("property"));
+
+                    ngSpecificExecStepObject.put("object", currExecStep.getJSONObject(i).getString("object"));
+
+                    ngSpecificExecStep.put(ngSpecificExecStepObject);
+
+                }
+
+            }
+
+        }
+
+        return calculateNG(ngSpecificExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
     }
 
+
+    /**
+     * This method modifies a list of named graphs and maybe adds some new named graphs to the list of named graphs.
+     * @param keywordOfNGList contains an URI of an already known keyword list
+     * @param ngsJSONArray contains a list of named graphs
+     * @return a list of named graphs
+     */
+    private JSONArray calculateNGListWithMultipleInput(String keywordOfNGList, JSONArray ngsJSONArray) {
+
+        Iterator<String> identifiedResourcesIter = this.identifiedResources.keys();
+
+        boolean keyWasFound = false;
+
+        while (identifiedResourcesIter.hasNext() && !keyWasFound) {
+
+            String currKey = identifiedResourcesIter.next();
+
+            if (currKey.equals(keywordOfNGList)) {
+
+                if (this.identifiedResources.get(keywordOfNGList) instanceof JSONArray) {
+
+                    JSONArray ngListJSONArray = this.identifiedResources.getJSONArray(keywordOfNGList);
+
+                    for (int i = 0; i < ngListJSONArray.length(); i++) {
+
+                        ngsJSONArray.put(ngListJSONArray.getString(i));
+
+                    }
+
+                    keyWasFound = true;
+
+                }
+
+            }
+
+        }
+
+        return ngsJSONArray;
+
+    }
 
     /**
      * This method calculate the property for a statement
@@ -527,11 +1234,21 @@ public class MDBJSONObjectFactory {
             if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000041")) {
                 // property
 
+                String property = currExecStep.getJSONObject(i).getString("object");
+
+                if (this.infoInput.has(property)) {
+
+                    return this.infoInput.getString(property);
+
+                }
+
                 return currExecStep.getJSONObject(i).getString("object");
 
             }
 
         }
+
+        System.out.println("Error: Can't calculate property.");
 
         return "Error: Can't calculate property.";
 
@@ -556,12 +1273,18 @@ public class MDBJSONObjectFactory {
 
                 for (int i = 0; i < currExecStep.length(); i++) {
 
-                    if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                    if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
                         // object
 
                         String object = currExecStep.getJSONObject(i).getString("object");
 
-                        if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000116")) {
+                        if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000114")) {
+                            // KEYWORD: this MDB entry ID
+
+                            return hasExecutionStepFocus ? this.executionStepFocus : this.mdbEntryID;
+
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000116")) {
                             // KEYWORD: this MDB user ID
 
                             // the MDB user ID is the combination of the mdbUEID and the local identifier MDB_AGENT_0000000009_1
@@ -621,6 +1344,70 @@ public class MDBJSONObjectFactory {
                             // KEYWORD: this MDB user entry ID
 
                             return this.mdbUEID;
+
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000361")) {
+                            // KEYWORD: max position +1
+
+                            if (this.newPositionCompositionPart.isEmpty()) {
+
+                                SelectBuilder selectBuilder = new SelectBuilder();
+
+                                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                                SelectBuilder tripleSPO = new SelectBuilder();
+
+                                ExprVar exprVar = new ExprVar("o");
+
+                                Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+
+                                ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+
+                                selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+                                String property = "?p";
+
+                                if (dataToFindObjectInTDB.has("property")) {
+
+                                    property = "<" + dataToFindObjectInTDB.getString("property") + ">";
+
+                                }
+
+                                tripleSPO.addWhere("?s", property, "?o");
+
+                                for (int j = 0; j < currComponentObject.length(); j++) {
+
+                                    if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")
+                                            // subject
+                                            || currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+                                        // subject (copied individual of)
+
+                                        tripleSPO.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(j).getString("object") + ">");
+
+                                    }
+
+                                }
+
+                                String ng = "?g";
+
+                                if (dataToFindObjectInTDB.has("ng")) {
+
+                                    ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+
+                                }
+
+                                selectBuilder.addGraph(ng, tripleSPO);
+
+                                String sparqlQueryString = selectBuilder.buildString();
+
+                                String numberOfPositions = connectionToTDB.pullSingleDataFromTDB(dataToFindObjectInTDB.getString("directory"), sparqlQueryString, "?count");
+
+                                this.newPositionCompositionPart = numberOfPositions.isEmpty() ? "1" : String.valueOf(Integer.parseInt(numberOfPositions) + 1);
+
+                            }
+
+                            return this.newPositionCompositionPart;
 
                         } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000410")) {
                             // KEYWORD: MDB entry currently in focus
@@ -690,6 +1477,16 @@ public class MDBJSONObjectFactory {
                             // todo recalculate this part when the icon has an uri
 
                             return object;
+
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605")) {
+                            // KEYWORD: this MDB entry version number
+
+                            return this.currentFocus.substring((this.currentFocus.lastIndexOf("-") + 1));
+
+                        } else if (object.contains("MDB_UIAP_0000000530")) {
+                            // case 'KEYWORD: identified MDB workflow action'
+
+                            return jsonInputObject.getString("MDB_UIAP_0000000530");
 
                         } else {
 
@@ -771,7 +1568,7 @@ public class MDBJSONObjectFactory {
 
                                             }
 
-                                        }  else if (currJSONObject.has("keywordLabel")) {
+                                        } else if (currJSONObject.has("keywordLabel")) {
 
                                             if (ResourceFactory.createResource(object).getLocalName().equals(currJSONObject.getString("keywordLabel")) &&
                                                     jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
@@ -783,6 +1580,23 @@ public class MDBJSONObjectFactory {
                                                 } else {
 
                                                     return currJSONObject.getString("valueLabel");
+
+                                                }
+
+                                            }
+
+                                        } else if (currJSONObject.has("keywordDefinition")) {
+
+                                            if (ResourceFactory.createResource(object).getLocalName().equals(currJSONObject.getString("keywordDefinition")) &&
+                                                    jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
+
+                                                if (EmailValidator.getInstance().isValid(currJSONObject.getString("valueDefinition"))) {
+
+                                                    return "mailto:" + currJSONObject.getString("valueDefinition");
+
+                                                } else {
+
+                                                    return currJSONObject.getString("valueDefinition");
 
                                                 }
 
@@ -800,7 +1614,8 @@ public class MDBJSONObjectFactory {
 
                         }
 
-                    } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
+                    } else if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
                         // object (copied individual of)
 
                         if (this.mdbCoreIDNotEmpty
@@ -835,7 +1650,8 @@ public class MDBJSONObjectFactory {
 
                                 if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
 
-                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                            && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                         return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -853,7 +1669,8 @@ public class MDBJSONObjectFactory {
 
                                 if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
 
-                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                            && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                         return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -866,7 +1683,8 @@ public class MDBJSONObjectFactory {
                         }
 
 
-                    } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000231")) {
+                    } else if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000231")) {
                         // object (this entry's specific individual of)
 
                         for (int j = 0; j < currExecStep.length(); j++) {
@@ -874,17 +1692,12 @@ public class MDBJSONObjectFactory {
                             if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
                                 // set new focus on MDB entry ID for this execution step
 
-                                if (currExecStep.getJSONObject(j).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
-                                    // KEYWORD: this MDB user entry ID
+                                // input contains for example this.mdbUEID
+                                IndividualURI individualURI = new IndividualURI(this.executionStepFocus);
 
-                                    // input contains for example this.mdbUEID
-                                    IndividualURI individualURI = new IndividualURI(this.mdbUEID);
+                                String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                                    String workspace = calculateWorkspaceDirectory(currExecStep);
-
-                                    return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
-
-                                }
+                                return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
 
                             }
 
@@ -897,6 +1710,34 @@ public class MDBJSONObjectFactory {
                         return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
 
 
+                    } else if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000659")) {
+                        // object (unique individual of)
+
+                        String correspondingNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        String correspondingDirectory = calculateWorkspaceDirectory(currExecStep);
+
+                        SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                        selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                        selectWhereBuilder.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(i).getString("object") + ">");
+
+                        SelectBuilder selectBuilder = new SelectBuilder();
+
+                        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                        selectBuilder.addVar("?s");
+
+                        selectBuilder.addGraph("<" + correspondingNG + ">", selectWhereBuilder);
+
+                        String sparqlQueryString = selectBuilder.buildString();
+
+                        return connectionToTDB.pullSingleDataFromTDB(correspondingDirectory, sparqlQueryString, "?s");
+
                     }
 
                 }
@@ -907,7 +1748,8 @@ public class MDBJSONObjectFactory {
 
                 for (int i = 0; i < currExecStep.length(); i++) {
 
-                    if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                    if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
                         // object
 
                         String object = currExecStep.getJSONObject(i).getString("object");
@@ -973,6 +1815,70 @@ public class MDBJSONObjectFactory {
 
                             return this.mdbUEID;
 
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000361")) {
+                            // KEYWORD: max position +1
+
+                            if (this.newPositionCompositionPart.isEmpty()) {
+
+                                SelectBuilder selectBuilder = new SelectBuilder();
+
+                                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                                SelectBuilder tripleSPO = new SelectBuilder();
+
+                                ExprVar exprVar = new ExprVar("o");
+
+                                Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+
+                                ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+
+                                selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+                                String property = "?p";
+
+                                if (dataToFindObjectInTDB.has("property")) {
+
+                                    property = "<" + dataToFindObjectInTDB.getString("property") + ">";
+
+                                }
+
+                                tripleSPO.addWhere("?s", property, "?o");
+
+                                for (int j = 0; j < currComponentObject.length(); j++) {
+
+                                    if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")
+                                            // subject
+                                            || currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+                                        // subject (copied individual of)
+
+                                        tripleSPO.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(j).getString("object") + ">");
+
+                                    }
+
+                                }
+
+                                String ng = "?g";
+
+                                if (dataToFindObjectInTDB.has("ng")) {
+
+                                    ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+
+                                }
+
+                                selectBuilder.addGraph(ng, tripleSPO);
+
+                                String sparqlQueryString = selectBuilder.buildString();
+
+                                String numberOfPositions = connectionToTDB.pullSingleDataFromTDB(dataToFindObjectInTDB.getString("directory"), sparqlQueryString, "?count");
+
+                                this.newPositionCompositionPart = numberOfPositions.isEmpty() ? "1" : String.valueOf(Integer.parseInt(numberOfPositions) + 1);
+
+                            }
+
+                            return this.newPositionCompositionPart;
+
                         } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000111")) {
                             // GUI_COMPONENT_INPUT_TYPE: date time stamp
 
@@ -989,10 +1895,20 @@ public class MDBJSONObjectFactory {
 
                             return firstName + " " + lastName;
 
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605")) {
+                            // KEYWORD: this MDB entry version number
+
+                            return this.currentFocus.substring((this.currentFocus.lastIndexOf("-") + 1));
+
                         } else if ( object.equals("true") ||
                                 object.equals("false")) {
 
                             return object;
+
+                        } else if (object.contains("MDB_UIAP_0000000530")) {
+                            // case 'KEYWORD: identified MDB workflow action'
+
+                            return jsonInputObject.getString("MDB_UIAP_0000000530");
 
                         } else {
                             // check identified resources
@@ -1075,6 +1991,15 @@ public class MDBJSONObjectFactory {
 
                                                 }
 
+                                            } else if (currJSONObject.has("keywordDefinition")) {
+
+                                                if (ResourceFactory.createResource(object).getLocalName().equals(currJSONObject.getString("keywordDefinition")) &&
+                                                        jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
+
+                                                    return currJSONObject.getString("valueDefinition");
+
+                                                }
+
                                             }
 
                                         }
@@ -1146,6 +2071,13 @@ public class MDBJSONObjectFactory {
 
                                 }
 
+                            } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000515")) {
+                                // KEYWORD: calculate position in partonomy
+
+                                object = calculatePositionInPartonomy(dataToFindObjectInTDB, currExecStep, connectionToTDB);
+
+                                return object;
+
                             }
 
                             return object;
@@ -1216,6 +2148,11 @@ public class MDBJSONObjectFactory {
                             // return 'KEYWORD: empty' - URI (if result is empty) or the URI from the jena tdb
                             return queryResult.equals("") ?  "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423" : queryResult;
 
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000114")) {
+                            // KEYWORD: this MDB entry ID
+
+                            return hasExecutionStepFocus ? this.executionStepFocus : this.mdbEntryID;
+
                         } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000116")) {
                             // KEYWORD: this MDB user ID
 
@@ -1226,6 +2163,70 @@ public class MDBJSONObjectFactory {
                             // KEYWORD: this MDB core ID
 
                             return this.mdbCoreID;
+
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000361")) {
+                            // KEYWORD: max position +1
+
+                            if (this.newPositionCompositionPart.isEmpty()) {
+
+                                SelectBuilder selectBuilder = new SelectBuilder();
+
+                                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                                SelectBuilder tripleSPO = new SelectBuilder();
+
+                                ExprVar exprVar = new ExprVar("o");
+
+                                Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+
+                                ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+
+                                selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+                                String property = "?p";
+
+                                if (dataToFindObjectInTDB.has("property")) {
+
+                                    property = "<" + dataToFindObjectInTDB.getString("property") + ">";
+
+                                }
+
+                                tripleSPO.addWhere("?s", property, "?o");
+
+                                for (int j = 0; j < currComponentObject.length(); j++) {
+
+                                    if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")
+                                            // subject
+                                            || currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+                                        // subject (copied individual of)
+
+                                        tripleSPO.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(j).getString("object") + ">");
+
+                                    }
+
+                                }
+
+                                String ng = "?g";
+
+                                if (dataToFindObjectInTDB.has("ng")) {
+
+                                    ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+
+                                }
+
+                                selectBuilder.addGraph(ng, tripleSPO);
+
+                                String sparqlQueryString = selectBuilder.buildString();
+
+                                String numberOfPositions = connectionToTDB.pullSingleDataFromTDB(dataToFindObjectInTDB.getString("directory"), sparqlQueryString, "?count");
+
+                                this.newPositionCompositionPart = numberOfPositions.isEmpty() ? "1" : String.valueOf(Integer.parseInt(numberOfPositions) + 1);
+
+                            }
+
+                            return this.newPositionCompositionPart;
 
                         } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
                             // KEYWORD: this MDB user entry ID
@@ -1241,7 +2242,7 @@ public class MDBJSONObjectFactory {
 
                             } else {
 
-                                JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDB(jsonInputObject);
+                                JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDBWithLocalID(jsonInputObject);
 
                                 return jsonFromMongoDB.getString("individualID");
 
@@ -1310,6 +2311,29 @@ public class MDBJSONObjectFactory {
 
                             }
 
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000471")) {
+                            // KEYWORD: resource described with this description form composition
+
+                            if (jsonInputObject.has("partID")) {
+
+                                return jsonInputObject.getString("mdbentryid") + "#" + jsonInputObject.getString("partID");
+
+                            } else {
+
+                                System.out.println("WARN: There is no partID in Input!");
+
+                            }
+
+                        } else if (object.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605")) {
+                            // KEYWORD: this MDB entry version number
+
+                            return this.currentFocus.substring((this.currentFocus.lastIndexOf("-") + 1));
+
+                        } else if (object.contains("MDB_UIAP_0000000530")) {
+                            // case 'KEYWORD: identified MDB workflow action'
+
+                            return jsonInputObject.getString("MDB_UIAP_0000000530");
+
                         } else if (object.contains("__MDB_UIAP_")) {
 
                             String localNamePropertyInObject = object.substring(object.indexOf("__") + 2);
@@ -1367,6 +2391,23 @@ public class MDBJSONObjectFactory {
                                                 } else {
 
                                                     return currJSONObject.getString("valueLabel");
+
+                                                }
+
+                                            }
+
+                                        } else if (currJSONObject.has("keywordDefinition")) {
+
+                                            if (ResourceFactory.createResource(object).getLocalName().equals(currJSONObject.getString("keywordDefinition")) &&
+                                                    jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
+
+                                                if (EmailValidator.getInstance().isValid(currJSONObject.getString("valueDefinition"))) {
+
+                                                    return "mailto:" + currJSONObject.getString("valueDefinition");
+
+                                                } else {
+
+                                                    return currJSONObject.getString("valueDefinition");
 
                                                 }
 
@@ -1459,7 +2500,8 @@ public class MDBJSONObjectFactory {
 
                                 if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
 
-                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                            && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                         return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -1479,7 +2521,8 @@ public class MDBJSONObjectFactory {
 
                                 if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
 
-                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                                    if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                            && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                         return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -1508,17 +2551,12 @@ public class MDBJSONObjectFactory {
                             if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
                                 // set new focus on MDB entry ID for this execution step
 
-                                if (currExecStep.getJSONObject(j).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
-                                    // KEYWORD: this MDB user entry ID
+                                // input contains for example this.mdbUEID
+                                IndividualURI individualURI = new IndividualURI(this.executionStepFocus);
 
-                                    // input contains for example this.mdbUEID
-                                    IndividualURI individualURI = new IndividualURI(this.mdbUEID);
+                                String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                                    String workspace = calculateWorkspaceDirectory(currExecStep);
-
-                                    return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
-
-                                }
+                                return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
 
                             }
 
@@ -1529,6 +2567,34 @@ public class MDBJSONObjectFactory {
                         String workspace = calculateWorkspaceDirectory(currExecStep);
 
                         return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+
+                    } else if (currExecStep.getJSONObject(i).getString("property")
+                            .equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000659")) {
+                        // object (unique individual of)
+
+                        String correspondingNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        String correspondingDirectory = calculateWorkspaceDirectory(currExecStep);
+
+                        SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                        selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                        selectWhereBuilder.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(i).getString("object") + ">");
+
+                        SelectBuilder selectBuilder = new SelectBuilder();
+
+                        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                        selectBuilder.addVar("?s");
+
+                        selectBuilder.addGraph("<" + correspondingNG + ">", selectWhereBuilder);
+
+                        String sparqlQueryString = selectBuilder.buildString();
+
+                        return connectionToTDB.pullSingleDataFromTDB(correspondingDirectory, sparqlQueryString, "?s");
 
                     }
 
@@ -1545,6 +2611,117 @@ public class MDBJSONObjectFactory {
         System.out.println();
         System.out.println("Error: currExecStep = " + currExecStep);
         return "Error: Can't calculate object.";
+
+    }
+
+
+    /**
+     * This method calculate a list of objects.
+     * @param dataToFindObjectInTDB contains information to find a potential object in a jena tdb
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return the specific value of the object resource
+     */
+    private JSONArray calculateObjectList(JSONObject dataToFindObjectInTDB, JenaIOTDBFactory connectionToTDB) {
+
+        SelectBuilder selectBuilder = new SelectBuilder();
+
+        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+        SelectBuilder tripleSPO = new SelectBuilder();
+
+        String subject = "?s";
+
+        if (dataToFindObjectInTDB.has("subject")
+                && !subject.equals(dataToFindObjectInTDB.getString("subject"))) {
+
+            subject = "<" + dataToFindObjectInTDB.getString("subject") + ">";
+
+        }
+
+        String property = "?p";
+
+        if (dataToFindObjectInTDB.has("property")
+                && !property.equals(dataToFindObjectInTDB.getString("property"))) {
+
+            property = "<" + dataToFindObjectInTDB.getString("property") + ">";
+
+        }
+
+        tripleSPO.addWhere(subject, property, "?o");
+
+        selectBuilder.addVar(selectBuilder.makeVar("?o"));
+
+        String ng = "?g";
+
+        if (dataToFindObjectInTDB.has("ng")
+                && !ng.equals(dataToFindObjectInTDB.getString("ng"))) {
+
+            ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+
+        }
+
+        selectBuilder.addGraph(ng, tripleSPO);
+
+        String sparqlQueryString = selectBuilder.buildString();
+
+        return connectionToTDB.pullMultipleDataFromTDB(dataToFindObjectInTDB.getString("directory"), sparqlQueryString, "?o");
+
+    }
+
+    /**
+     * This method calculate a list of subjects.
+     * @param dataToFindSubjectInTDB contains information to find a potential subject in a jena tdb
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return a list of subject resource(s)
+     */
+    private JSONArray calculateSubjectList(JSONObject dataToFindSubjectInTDB, JenaIOTDBFactory connectionToTDB) {
+
+        SelectBuilder selectBuilder = new SelectBuilder();
+
+        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+        SelectBuilder tripleSPO = new SelectBuilder();
+
+        String object = "?o";
+
+        if (dataToFindSubjectInTDB.has("object")
+                && !object.equals(dataToFindSubjectInTDB.getString("object"))) {
+
+            object = "<" + dataToFindSubjectInTDB.getString("object") + ">";
+
+        }
+
+        String property = "?p";
+
+        if (dataToFindSubjectInTDB.has("property")
+                && !property.equals(dataToFindSubjectInTDB.getString("property"))) {
+
+            property = "<" + dataToFindSubjectInTDB.getString("property") + ">";
+
+        }
+
+        tripleSPO.addWhere("?s", property, object);
+
+        selectBuilder.addVar(selectBuilder.makeVar("?s"));
+
+        String ng = "?g";
+
+        if (dataToFindSubjectInTDB.has("ng")
+                && !ng.equals(dataToFindSubjectInTDB.getString("ng"))) {
+
+            ng = "<" + dataToFindSubjectInTDB.getString("ng") + ">";
+
+        }
+
+        selectBuilder.addGraph(ng, tripleSPO);
+
+        String sparqlQueryString = selectBuilder.buildString();
+
+        return connectionToTDB.pullMultipleDataFromTDB(dataToFindSubjectInTDB.getString("directory"), sparqlQueryString, "?s");
 
     }
 
@@ -1654,15 +2831,112 @@ public class MDBJSONObjectFactory {
 
 
     /**
-     * This method calculate the subject for a statement
+     * This method calculates the position of a new generated part in the partonomy.
      * @param dataToFindObjectInTDB contains information to find a potential object in a jena tdb
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return the position in the partonomy
+     */
+    private String calculatePositionInPartonomy(JSONObject dataToFindObjectInTDB, JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        String parent = "?parent";
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000531")) {
+                // parent required for 'KEYWORD: calculate position in partonomy'
+
+                boolean parentWasFound = false;
+
+                // check info input
+                Iterator<String> infoInputKeys = this.infoInput.keys();
+
+                while (infoInputKeys.hasNext() && (!parentWasFound)) {
+
+                    String currKey = infoInputKeys.next();
+
+                    if (currKey.equals(currExecStep.getJSONObject(i).getString("object"))) {
+
+                        parent = "<" + this.infoInput.getString(currKey) + ">";
+
+                        parentWasFound = true;
+
+                    }
+
+                }
+
+                if (!parentWasFound) {
+
+                    parent = "<" + currExecStep.getJSONObject(i).getString("object") + ">";
+
+                }
+
+            }
+
+        }
+
+        String posProperty = "?posProperty";
+
+        if (dataToFindObjectInTDB.has("property")) {
+
+            posProperty = "<" + dataToFindObjectInTDB.getString("property") + ">";
+
+        }
+
+        String ng = "?g";
+
+        if (dataToFindObjectInTDB.has("ng")) {
+
+            ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+
+        }
+
+        String directory = dataToFindObjectInTDB.getString("directory");
+
+        SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+        selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+        selectWhereBuilder.addWhere(parent, "<http://purl.obolibrary.org/obo/BFO_0000051>", "?children");
+        // has part
+
+        selectWhereBuilder.addWhere("?children", posProperty, "?o");
+
+        SelectBuilder selectBuilder = new SelectBuilder();
+
+        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+        ExprVar exprVar = new ExprVar("children");
+
+        Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+
+        ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+
+        selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+        selectBuilder.addGraph(ng, selectWhereBuilder);
+
+        String sparqlQueryString = selectBuilder.buildString();
+
+        String numberOfKnownPositions = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, "?count");
+
+        return "" + (Integer.parseInt(numberOfKnownPositions) + 1);
+
+    }
+
+
+    /**
+     * This method calculate the subject for a statement
+     * @param dataToFindSubjectInTDB contains information to find a potential subject in a jena tdb
      * @param currExecStep contains all information from the ontology for the current execution step
      * @param currComponentObject contains the current component information for the output json
      * @param jsonInputObject contains the information for the calculation
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return the specific uri of a subject
      */
-    private String calculateSubject(JSONObject dataToFindObjectInTDB, JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+    private String calculateSubject(JSONObject dataToFindSubjectInTDB, JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
@@ -1671,7 +2945,12 @@ public class MDBJSONObjectFactory {
 
                 String subject = currExecStep.getJSONObject(i).getString("object");
 
-                if (subject.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000116")) {
+                if (subject.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000114")) {
+                    // KEYWORD: this MDB entry ID
+
+                    return hasExecutionStepFocus ? this.executionStepFocus : this.mdbEntryID;
+
+                } else if (subject.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000116")) {
                     // KEYWORD: this MDB user ID
 
                     // the MDB user ID is the combination of the mdbUEID and the local identifier MDB_AGENT_0000000009_1
@@ -1695,17 +2974,17 @@ public class MDBJSONObjectFactory {
 
                     String property = "?p";
 
-                    if (dataToFindObjectInTDB.has("property")) {
+                    if (dataToFindSubjectInTDB.has("property")) {
 
-                        property = "<" + dataToFindObjectInTDB.getString("property") + ">";
+                        property = "<" + dataToFindSubjectInTDB.getString("property") + ">";
 
                     }
 
                     String object = "?o";
 
-                    if (dataToFindObjectInTDB.has("object")) {
+                    if (dataToFindSubjectInTDB.has("object")) {
 
-                        object = "<" + dataToFindObjectInTDB.getString("object") + ">";
+                        object = "<" + dataToFindSubjectInTDB.getString("object") + ">";
 
                     }
 
@@ -1715,9 +2994,9 @@ public class MDBJSONObjectFactory {
 
                     String ng = "?g";
 
-                    if (dataToFindObjectInTDB.has("ng")) {
+                    if (dataToFindSubjectInTDB.has("ng")) {
 
-                        ng = "<" + dataToFindObjectInTDB.getString("ng") + ">";
+                        ng = "<" + dataToFindSubjectInTDB.getString("ng") + ">";
 
                     }
 
@@ -1725,7 +3004,7 @@ public class MDBJSONObjectFactory {
 
                     String sparqlQueryString = selectBuilder.buildString();
 
-                    String queryResult = connectionToTDB.pullSingleDataFromTDB(dataToFindObjectInTDB.getString("directory"), sparqlQueryString, "?s");
+                    String queryResult = connectionToTDB.pullSingleDataFromTDB(dataToFindSubjectInTDB.getString("directory"), sparqlQueryString, "?s");
 
                     // return 'KEYWORD: empty' - URI (if result is empty) or the URI from the jena tdb
                     return queryResult.equals("") ? "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423" : queryResult;
@@ -1733,7 +3012,7 @@ public class MDBJSONObjectFactory {
                 } else if (subject.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000155")) {
                     // KEYWORD: this MDB entry component
 
-                    JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDB(jsonInputObject);
+                    JSONObject jsonFromMongoDB = this.mongoDBConnection.pullDataFromMongoDBWithLocalID(jsonInputObject);
 
                     return jsonFromMongoDB.getString("individualID");
 
@@ -1747,6 +3026,24 @@ public class MDBJSONObjectFactory {
                     // KEYWORD: MDB entry currently in focus
 
                     return this.currentFocus;
+
+                } else if (subject.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000471")) {
+                    // KEYWORD: resource described with this description form composition
+
+                    if (jsonInputObject.has("partID")) {
+
+                        return jsonInputObject.getString("mdbentryid") + "#" + jsonInputObject.getString("partID");
+
+                    } else {
+
+                        System.out.println("WARN: There is no partID in Input!");
+
+                    }
+
+                } else if (subject.contains("MDB_UIAP_0000000530")) {
+                    // case 'KEYWORD: identified MDB workflow action'
+
+                    return jsonInputObject.getString("MDB_UIAP_0000000530");
 
                 } else if (subject.contains("__MDB_UIAP_")) {
 
@@ -1796,6 +3093,44 @@ public class MDBJSONObjectFactory {
                                 }
 
                             }
+
+                        }
+
+                    }
+
+                    // check identified resources
+                    Iterator<String> identifiedResIterator = this.identifiedResources.keys();
+
+                    while (identifiedResIterator.hasNext()) {
+
+                        String currKey = identifiedResIterator.next();
+
+                        if (currKey.equals(subject)) {
+                            // get already identified resource from cache
+
+                            if (EmailValidator.getInstance().isValid(this.identifiedResources.getString(currKey))) {
+                                // convert mail to a complete uri
+
+                                return "mailto:" + this.identifiedResources.getString(currKey);
+
+                            }
+
+                            return this.identifiedResources.getString(currKey);
+
+                        }
+
+                    }
+
+                    // check info input
+                    Iterator<String> infoInputKeys = this.infoInput.keys();
+
+                    while (infoInputKeys.hasNext()) {
+
+                        String currKey = infoInputKeys.next();
+
+                        if (currKey.equals(subject)) {
+
+                            return this.infoInput.getString(currKey);
 
                         }
 
@@ -1899,6 +3234,14 @@ public class MDBJSONObjectFactory {
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
                 // subject (copied individual of)
 
+                String subject = currExecStep.getJSONObject(i).getString("object");
+
+                if (this.infoInput.has(subject)) {
+
+                    subject = this.infoInput.getString(subject);
+
+                }
+
                 if (this.mdbCoreIDNotEmpty
                         && this.mdbUEIDNotEmpty
                         && !this.mdbEntryIDNotEmpty) {
@@ -1917,7 +3260,7 @@ public class MDBJSONObjectFactory {
 
                             String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                            return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
+                            return individualURI.getThisURIForAnIndividual(subject, workspace, connectionToTDB);
 
                         }
 
@@ -1928,9 +3271,10 @@ public class MDBJSONObjectFactory {
                     // check if subject already was generated in execution step 'copy and save triple statement(s)'
                     for (int j = 0; j < objectsInJSONArray.length(); j++) {
 
-                        if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
+                        if (objectsInJSONArray.getString(j).equals(subject)) {
 
-                            if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                            if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                    && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                 return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -1946,9 +3290,10 @@ public class MDBJSONObjectFactory {
 
                     for (int j = 0; j < objectsInJSONArray.length(); j++) {
 
-                        if (objectsInJSONArray.getString(j).equals(currExecStep.getJSONObject(i).getString("object"))) {
+                        if (objectsInJSONArray.getString(j).equals(subject)) {
 
-                            if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())) {
+                            if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(j).equals(RDF.type.toString())
+                                    && currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(j).equals("s")) {
 
                                 return currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(j);
 
@@ -1968,17 +3313,12 @@ public class MDBJSONObjectFactory {
                     if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
                         // set new focus on MDB entry ID for this execution step
 
-                        if (currExecStep.getJSONObject(j).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
-                            // KEYWORD: this MDB user entry ID
+                        // input contains for example this.mdbUEID
+                        IndividualURI individualURI = new IndividualURI(this.executionStepFocus);
 
-                            // input contains for example this.mdbUEID
-                            IndividualURI individualURI = new IndividualURI(this.mdbUEID);
+                        String workspace = calculateWorkspaceDirectory(currExecStep);
 
-                            String workspace = calculateWorkspaceDirectory(currExecStep);
-
-                            return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
-
-                        }
+                        return individualURI.getThisURIForAnIndividual(currExecStep.getJSONObject(i).getString("object"), workspace, connectionToTDB);
 
                     }
 
@@ -2020,21 +3360,10 @@ public class MDBJSONObjectFactory {
 
                     String sparqlQueryString = selectBuilder.buildString();
 
-                    TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
+                    String directory = calculateWorkspaceDirectory(currExecStep);
 
-                    String potentialSubject = connectionToTDB.pullSingleDataFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503"), sparqlQueryString, "?s");
+                    return connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, "?s");
                     // MDB_WORKSPACE_DIRECTORY: MDB draft workspace directory
-
-                    if (potentialSubject.isEmpty()) {
-
-                        return connectionToTDB.pullSingleDataFromTDB(tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000494"), sparqlQueryString, "?s");
-                        // MDB_WORKSPACE_DIRECTORY: MDB core workspace directory
-
-                    } else {
-
-                        return potentialSubject;
-
-                    }
 
                 } else if (this.mdbUEIDNotEmpty) {
 
@@ -2052,7 +3381,7 @@ public class MDBJSONObjectFactory {
 
                     selectBuilder.addVar(selectBuilder.makeVar("?s"));
 
-                    selectBuilder.addGraph("?g", tripleSPO);
+                selectBuilder.addGraph("?g", tripleSPO);
 
                     SPARQLFilter sparqlFilter = new SPARQLFilter();
 
@@ -2060,9 +3389,9 @@ public class MDBJSONObjectFactory {
 
                     filterItems.add(jsonInputObject.getString("mdbueid"));
 
-                    ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterItems);
+                ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterItems);
 
-                    selectBuilder = filterBuilder.addFilter(selectBuilder, filter);
+                selectBuilder = filterBuilder.addFilter(selectBuilder, filter);
 
                     String sparqlQueryString = selectBuilder.buildString();
 
@@ -2073,6 +3402,33 @@ public class MDBJSONObjectFactory {
 
                 }
 
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000658")) {
+                // subject (unique individual of)
+
+                String correspondingNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                String correspondingDirectory = calculateWorkspaceDirectory(currExecStep);
+
+                SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                selectWhereBuilder.addWhere("?s", RDF.type, "<" + currExecStep.getJSONObject(i).getString("object") + ">");
+
+                SelectBuilder selectBuilder = new SelectBuilder();
+
+                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                selectBuilder.addVar("?s");
+
+                selectBuilder.addGraph("<" + correspondingNG + ">", selectWhereBuilder);
+
+                String sparqlQueryString = selectBuilder.buildString();
+
+                return connectionToTDB.pullSingleDataFromTDB(correspondingDirectory, sparqlQueryString, "?s");
+
             }
 
         }
@@ -2081,6 +3437,88 @@ public class MDBJSONObjectFactory {
 
     }
 
+
+    /**
+     * This method translates the output for an active tab in the mdb partonomy widget
+     * @param uriToCheck contains are URI with potential tab information
+     * @param jsonInputObject contains the information for the calculation
+     * @return a value for the JSON key 'active_tab'
+     */
+    private String calculateTabToUse (String uriToCheck, JSONObject jsonInputObject) {
+
+        switch (uriToCheck) {
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000542" :
+                // KEYWORD: use active tab
+
+                if (jsonInputObject.has("active_tab")) {
+
+                    switch (jsonInputObject.getString("active_tab")) {
+
+                        case "image" :
+
+                            this.tabToUseURI = "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000699";
+                            // has image annotation in named graph
+
+                            break;
+
+                        case "text" :
+
+                            this.tabToUseURI = "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000701";
+                            // has free text description in named graph
+
+                            break;
+
+                        case "meta" :
+
+                            this.tabToUseURI = "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000702";
+                            // has metadata form in named graph
+
+                            break;
+
+                        case "form" :
+
+                            this.tabToUseURI = "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000703";
+                            // has description form in named graph
+
+                            break;
+
+                    }
+
+                    return jsonInputObject.getString("active_tab");
+
+                } else {
+
+                    return "ERROR: There is no key 'active_tab' in the jsonInputObject.";
+
+                }
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000699" :
+                // has image annotation in named graph
+
+                return "image";
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000701" :
+                // has free text description in named graph
+
+                return "text";
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000702" :
+                // has metadata form in named graph
+
+                return "meta";
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000703" :
+                // has description form in named graph
+
+                return "form";
+
+            default:
+
+                return "ERROR: Not possible to handle the input to provide an information for the active tab.";
+
+        }
+
+    }
 
     /**
      * This method calculate the corresponding workspace directory for an execution step
@@ -2096,7 +3534,43 @@ public class MDBJSONObjectFactory {
 
                 TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
 
-                return tdbPath.getPathToTDB(currExecStep.getJSONObject(i).getString("object"));
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000543")
+                        // KEYWORD: find workspace
+                        || currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000604")) {
+                        // KEYWORD: this MDB entry's workspace
+                    // TODO: one of these KEYWORDs is redundant and must be deleted in the future
+
+
+                    String uriWorkspaceIdentifier = this.mdbEntryID.substring((this.mdbEntryID.lastIndexOf("-") + 1), this.mdbEntryID.indexOf("_"));
+
+                    switch (uriWorkspaceIdentifier) {
+                        // todo: advanced this calculation if we need it for the general workspace calculation (e.g. core or admin workspace)
+
+                        case "d" :
+                            // draft
+                        case "r" :
+                            // revision
+
+                            return tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503");
+
+                        case "p" :
+                            // publish
+
+                            return tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000502");
+
+                        default:
+
+                            return "Error: Can't calculate directory from MDBEntryID.";
+
+                    }
+
+                } else {
+
+                    String workspaceURI = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                    return tdbPath.getPathToTDB(workspaceURI);
+
+                }
 
             }
 
@@ -2110,11 +3584,11 @@ public class MDBJSONObjectFactory {
 
 
     /**
-     * This method gets the corresponding workspace directory for a default composition
+     * This method gets the corresponding source workspace directory
      * @param currExecStep contains all information from the ontology for the current execution step
-     * @return the path to the workspace directory
+     * @return the path to the source workspace directory
      */
-    private String calculateWorkspaceDirectoryForDefaultComposition(JSONArray currExecStep) {
+    private String copyFromWorkspace(JSONArray currExecStep) {
 
         for (int i = 0; i < currExecStep.length();i++) {
 
@@ -2130,6 +3604,84 @@ public class MDBJSONObjectFactory {
         }
 
         return "Error: Can't find directory.";
+
+    }
+
+
+    /**
+     * This method identifies a workspace directory.
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @return the path to a workspace directory
+     */
+    private String saveNewURIsToWorkspace(JSONArray currExecStep) {
+
+        for (int i = 0; i < currExecStep.length();i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000645")) {
+                // save new URIs to workspace
+
+                TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
+
+                return tdbPath.getPathToTDB(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        return "Error: Can't find directory.";
+
+    }
+
+    /**
+     * This method generates a hashmap with key,value-pair (IDspace, namespace)
+     * @param keywordURI contains the URI of a keyword
+     * @param idSpaceNamespaceHashMap contains a JSONObject for save the key,value-pair(s)
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return a JSONObject with key,value-pair(s)
+     */
+    private JSONObject useOntologyIDSpaceMapping(String keywordURI, JSONObject idSpaceNamespaceHashMap, JenaIOTDBFactory connectionToTDB) {
+
+        SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+        selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+        ExprVar idSpaceVar = new ExprVar("IDspace");
+
+        ExprVar namespaceVar = new ExprVar("namespace");
+
+        selectWhereBuilder.addWhere("<" + keywordURI + ">", "<http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000641>", idSpaceVar.toString());
+        //has ontology IDspace
+
+        selectWhereBuilder.addWhere("?axiom", OWL2.annotatedTarget, idSpaceVar.toString());
+
+        selectWhereBuilder.addWhere("?axiom", "<http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000642>", namespaceVar.toString());
+        // has ontology namespace
+
+        SelectBuilder selectBuilder = new SelectBuilder();
+
+        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+        selectBuilder.addVar(idSpaceVar);
+
+        selectBuilder.addVar(namespaceVar);
+
+        selectBuilder.addGraph("?g", selectWhereBuilder);
+
+        String sparqlQueryString = selectBuilder.buildString();
+
+        ResultSet queryResultSet = connectionToTDB.pullMultipleSelectDataFromTDB(OntologiesPath.pathToOntology, sparqlQueryString);
+
+        while (queryResultSet.hasNext()) {
+
+            QuerySolution currSolution = queryResultSet.nextSolution();
+
+            idSpaceNamespaceHashMap.put(currSolution.getLiteral(idSpaceVar.toString()).getLexicalForm(), currSolution.getResource(namespaceVar.toString()).toString());
+
+        }
+
+        return idSpaceNamespaceHashMap;
 
     }
 
@@ -2319,18 +3871,6 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    /*if (currComponentObject.has("input_data")) {
-
-                        System.out.println("length subject: " + currComponentObject.getJSONObject("input_data").getJSONArray("subject").length());
-                        System.out.println("length property: " + currComponentObject.getJSONObject("input_data").getJSONArray("property").length());
-                        System.out.println("length object_data: " + currComponentObject.getJSONObject("input_data").getJSONArray("object_data").length());
-                        System.out.println("length object_type: " + currComponentObject.getJSONObject("input_data").getJSONArray("object_type").length());
-                        System.out.println("length ng: " + currComponentObject.getJSONObject("input_data").getJSONArray("ng").length());
-                        System.out.println("length directory: " + currComponentObject.getJSONObject("input_data").getJSONArray("directory").length());
-                        System.out.println("length operation: " + currComponentObject.getJSONObject("input_data").getJSONArray("operation").length());
-
-                    }*/
-
                     System.out.println("query time1= " + queryTime);
 
                     break;
@@ -2392,7 +3932,7 @@ public class MDBJSONObjectFactory {
                     //System.out.println(currExecStep);
 
                     currComponentObject = executionStepCopyAndSaveTripleStatements
-                            (currExecStep, currComponentObject, connectionToTDB);
+                            (currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
@@ -2411,8 +3951,29 @@ public class MDBJSONObjectFactory {
                     currComponentObject = executionStepUpdateTripleStatements
                             (currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time4= " + queryTime);
+
                     break;
 
+                case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000108" :
+                    // execution step: delete named graphs
+
+                    System.out.println("currExecStepIndex: " + currExecStepIndex);
+                    System.out.println();
+                    //System.out.println(currExecStep);
+
+                    currComponentObject = executionStepDeleteNamedGraphs
+                            (currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time5= " + queryTime);
+
+                    break;
 
                 case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000175" :
                     // execution step: decision dialogue
@@ -2437,12 +3998,29 @@ public class MDBJSONObjectFactory {
 
                     }
 
-                    currComponentObject.put("valid", "false");
+                    if (jsonInputObject.has("localID")) {
+                        // todo remove this after workshop
+                        // this part handle the special case 1 for component MDB_DATASCHEME_0000002709
+
+                        if ((jsonInputObject.getString("localID").equals("MDB_DATASCHEME_0000002709_1")
+                                && !currComponentObject.has("MDB_UIAP_0000000388"))
+                                || (jsonInputObject.getString("localID").contains("MDB_DATASCHEME_0000002355")
+                                && !currComponentObject.has("MDB_UIAP_0000000388"))) {
+
+                            currComponentObject.put("valid", "true");
+
+                        } else {
+
+                            currComponentObject.put("valid", "false");
+
+                        }
+
+                    }
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time4= " + queryTime);
+                    System.out.println("query time6= " + queryTime);
 
                     return currComponentObject;
 
@@ -2458,7 +4036,7 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time5= " + queryTime);
+                    System.out.println("query time7= " + queryTime);
 
                     break;
 
@@ -2473,7 +4051,7 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time6= " + queryTime);
+                    System.out.println("query time8= " + queryTime);
 
                     break;
 
@@ -2491,7 +4069,7 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time7= " + queryTime);
+                    System.out.println("query time9= " + queryTime);
 
                     break;
 
@@ -2506,7 +4084,7 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time8= " + queryTime);
+                    System.out.println("query time10= " + queryTime);
 
                     return currComponentObject;
 
@@ -2521,7 +4099,12 @@ public class MDBJSONObjectFactory {
                     System.out.println("currExecStepIndex: " + currExecStepIndex);
                     System.out.println();
 
-                    executionStepSearchMDB(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+                    executionStepSearchMDB(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time11= " + queryTime);
 
                     break;
 
@@ -2538,7 +4121,7 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time9= " + queryTime);
+                    System.out.println("query time12= " + queryTime);
 
 
                     break;
@@ -2551,12 +4134,12 @@ public class MDBJSONObjectFactory {
                     //System.out.println("currExecStep: " + currExecStep);
                     //System.out.println();
 
-                    currComponentObject = executionStepDefineVariables(currComponentObject,jsonInputObject, currExecStep, connectionToTDB);
+                    currComponentObject = executionStepDefineVariables(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time10= " + queryTime);
+                    System.out.println("query time13= " + queryTime);
 
 
                     break;
@@ -2569,12 +4152,12 @@ public class MDBJSONObjectFactory {
                     //System.out.println("currExecStep: " + currExecStep);
                     //System.out.println();
 
-                    executionStepDeleteAllTriplesOfNamedGraph(currExecStep, connectionToTDB);
+                    executionStepDeleteAllTriplesOfNamedGraph(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time11= " + queryTime);
+                    System.out.println("query time14= " + queryTime);
 
                     break;
 
@@ -2586,12 +4169,12 @@ public class MDBJSONObjectFactory {
                     //System.out.println("currExecStep: " + currExecStep);
                     //System.out.println();
 
-                    executionStepExtractAndSaveMDBEntryComposition(currExecStep, currComponentObject, connectionToTDB);
+                    executionStepExtractAndSaveMDBEntryComposition(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time12= " + queryTime);
+                    System.out.println("query time15= " + queryTime);
 
                     break;
 
@@ -2603,12 +4186,12 @@ public class MDBJSONObjectFactory {
                     //System.out.println("currExecStep: " + currExecStep);
                     //System.out.println();
 
-                    currComponentObject = executionStepCreateCompositionForMDBHyperlink(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+                    currComponentObject = executionStepSpecificationsAndAllocationsForMDBHyperlink(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
 
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time13= " + queryTime);
+                    System.out.println("query time16= " + queryTime);
 
                     break;
 
@@ -2625,7 +4208,58 @@ public class MDBJSONObjectFactory {
                     // calculate the query time
                     queryTime = System.currentTimeMillis() - executionStart;
 
-                    System.out.println("query time14= " + queryTime);
+                    System.out.println("query time17= " + queryTime);
+
+                    break;
+
+                case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000544" :
+                    // execution step: delete part of composition
+
+                    System.out.println("currExecStepIndex: " + currExecStepIndex);
+                    System.out.println();
+                    //System.out.println("currExecStep: " + currExecStep);
+                    //System.out.println();
+
+                    currComponentObject = executionStepDeletePartOfComposition(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time18= " + queryTime);
+
+                    break;
+
+                case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000604" :
+                    // execution step: copy named graphs
+
+                    System.out.println("currExecStepIndex: " + currExecStepIndex);
+                    System.out.println();
+                    //System.out.println("currExecStep: " + currExecStep);
+                    //System.out.println();
+
+                    currComponentObject = executionStepCopyNamedGraphs(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time19= " + queryTime);
+
+                    break;
+
+                case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000629" :
+                    // execution step: get DOI
+
+                    System.out.println("currExecStepIndex: " + currExecStepIndex);
+                    System.out.println();
+                    //System.out.println("currExecStep: " + currExecStep);
+                    //System.out.println();
+
+                    executionStepGetDOI(jsonInputObject, currExecStep, connectionToTDB);
+
+                    // calculate the query time
+                    queryTime = System.currentTimeMillis() - executionStart;
+
+                    System.out.println("query time20= " + queryTime);
 
                     break;
 
@@ -2638,7 +4272,7 @@ public class MDBJSONObjectFactory {
 
             }
 
-            // check if there exist the property "go to execution step" in the current execution step
+            // check if there exist the property "go to execution step" in the current execution step or end action operation
             for (int j = 0; j < currExecStep.length(); j++) {
 
                 if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000239")) {
@@ -2675,6 +4309,277 @@ public class MDBJSONObjectFactory {
         return currComponentObject;
 
     }
+
+
+    /**
+     * This method removes statement(s) in a jena tdb
+     * @param currComponentObject contains information about the current object
+     * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return additional modified information about the current object
+     */
+    public JSONObject executionStepCopyNamedGraphs(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                           JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        String newFocusURI = "";
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000185")) {
+                // set new focus on MDB entry ID
+
+                newFocusURI = setFocusOnIndividual(currExecStep.getJSONObject(i).getString("object"), currExecStep, jsonInputObject, newFocusURI, connectionToTDB);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        JSONArray ngsJSONArray = new JSONArray(), localIDsOfIgnoredURIs = new JSONArray();
+
+        JSONObject idSpaceNamespaceHashMap = new JSONObject();
+
+        String newDirectory = "", oldDirectory = "", newcreatedURIsWorkspace="", newNS = "", oldNS = "", coreIndividualsNG = "";
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")
+                  || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
+                // load from/save to/update in named graph
+                // load from/save to/update in named graph (this entry's specific individual of)
+
+                String ng = calculateNGWithMultipleInput(currExecStep.getJSONObject(i).getString("property"), currExecStep.getJSONObject(i).getString("object"), currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                if (!ng.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
+                    // KEYWORD: empty
+
+                    ngsJSONArray.put(ng);
+
+                }
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
+                // named graph belongs to workspace
+
+                newDirectory = calculateWorkspaceDirectory(currExecStep);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000107")) {
+                // copy from workspace
+
+                oldDirectory = copyFromWorkspace(currExecStep);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000605")) {
+                // update URIs of and in named graphs using namespace of entry ID
+
+                newNS = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000606")) {
+                // update all URIs that share namespace with
+
+                oldNS = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000607")) {
+                // do not update URI of (this entry's specific individual of)
+
+                String classURI = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                localIDsOfIgnoredURIs.put(ResourceFactory.createResource(classURI).getLocalName());
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000628")) {
+                // load from/save to/update in named graphs of this keyword list
+
+                ngsJSONArray = calculateNGListWithMultipleInput(currExecStep.getJSONObject(i).getString("object"), ngsJSONArray);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000644")) {
+                // use ontology IDspace mapping
+
+                idSpaceNamespaceHashMap = useOntologyIDSpaceMapping(currExecStep.getJSONObject(i).getString("object"), idSpaceNamespaceHashMap, connectionToTDB);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000645")) {
+                // save new URIs to workspace
+
+                newcreatedURIsWorkspace = saveNewURIsToWorkspace(currExecStep);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000646")) {
+                // save new URIs to named graph (this entry's specific individual of)
+
+                // swap property URI for calculation
+
+                // todo change to load from/save to/update in named graph
+                coreIndividualsNG = calculateNGWithMultipleInput("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393", currExecStep.getJSONObject(i).getString("object"), currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+                // load from/save to/update in named graph (this entry's specific individual of)
+
+            }
+
+        }
+
+        for (int i = 0; i < ngsJSONArray.length(); i++) {
+
+            Model newModel = ModelFactory.createDefaultModel();
+
+            newModel.add(connectionToTDB.pullNamedModelFromTDB(oldDirectory, ngsJSONArray.getString(i)));
+
+            // handle subject resources
+
+            ResIterator resIterator = newModel.listSubjects();
+
+            while (resIterator.hasNext()) {
+
+                Resource resource = resIterator.next();
+
+                if (resource.isURIResource()) {
+
+                    if (resource.toString().contains(oldNS)) {
+
+                        if (resource.toString().equals(oldNS)) {
+
+                            ResourceUtils.renameResource(resource, newNS);
+
+                        } else {
+
+                            boolean updateResource = true;
+
+                            for (int j=0; j < localIDsOfIgnoredURIs.length(); j++) {
+
+                                if (resource.toString().contains(localIDsOfIgnoredURIs.getString(j))) {
+
+                                    System.out.println("Don't update the resource = " + resource);
+
+                                    updateResource = false;
+
+                                }
+
+                            }
+
+                            if (updateResource) {
+
+                                ResourceUtils.renameResource(resource, newNS + "#" + resource.asResource().getLocalName());
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // handle object resources
+
+            NodeIterator objectIter = newModel.listObjects();
+
+            while (objectIter.hasNext()) {
+
+                RDFNode rdfNode = objectIter.next();
+
+                if (rdfNode.isURIResource()) {
+
+                    Resource resource = rdfNode.asResource();
+
+                    if (resource.toString().contains(oldNS)) {
+
+                        if (resource.toString().equals(oldNS)) {
+
+                            ResourceUtils.renameResource(resource, newNS);
+
+                        } else {
+
+                            boolean updateResource = true;
+
+                            for (int j=0; j < localIDsOfIgnoredURIs.length(); j++) {
+
+                                if (resource.toString().contains(localIDsOfIgnoredURIs.getString(j))) {
+
+                                    System.out.println("Don't update the resource = " + resource);
+
+                                    updateResource = false;
+
+                                }
+
+                            }
+
+                            if (updateResource) {
+
+                                ResourceUtils.renameResource(resource, newNS + "#" + resource.asResource().getLocalName());
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // todo list statements and adds them to currComponentObject with new named graph and new directory all operation s calculate object type
+
+            StmtIterator stmtIter = newModel.listStatements();
+
+            while (stmtIter.hasNext()) {
+
+                Statement stmt = stmtIter.nextStatement();
+
+                currComponentObject.getJSONObject("input_data").append("subject", stmt.getSubject().toString());
+                currComponentObject.getJSONObject("input_data").append("property", stmt.getPredicate().toString());
+                currComponentObject.getJSONObject("input_data").append("ng", newNS + "#" + ResourceFactory.createResource(ngsJSONArray.getString(i)).getLocalName());
+                currComponentObject.getJSONObject("input_data").append("directory", newDirectory);
+                currComponentObject.getJSONObject("input_data").append("object_data", stmt.getObject().toString());
+
+                if (stmt.getObject().isLiteral()) {
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                } else {
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("operation", "s");
+
+            }
+
+            // save new ng in core individuals named graph
+
+            String localIDClass = ResourceFactory.createResource(ngsJSONArray.getString(i)).getLocalName();
+
+            localIDClass = localIDClass.substring(0, localIDClass.lastIndexOf("_"));
+
+            String currIDSpace = localIDClass.substring(0, localIDClass.lastIndexOf("_"));
+
+            if (idSpaceNamespaceHashMap.has(currIDSpace)) {
+
+                String classURI = idSpaceNamespaceHashMap.getString(currIDSpace) + "#" + localIDClass;
+
+                currComponentObject.getJSONObject("input_data").append("subject", newNS + "#" + ResourceFactory.createResource(ngsJSONArray.getString(i)).getLocalName());
+                currComponentObject.getJSONObject("input_data").append("property", RDF.type.toString());
+                currComponentObject.getJSONObject("input_data").append("ng", coreIndividualsNG);
+                currComponentObject.getJSONObject("input_data").append("directory", newcreatedURIsWorkspace);
+                currComponentObject.getJSONObject("input_data").append("object_data", classURI);
+                currComponentObject.getJSONObject("input_data").append("object_type", "r");
+                currComponentObject.getJSONObject("input_data").append("operation", "s");
+
+            }
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
+        return currComponentObject;
+
+    }
+
+
     /**
      * This method add the information for a new hyperlink of a current object
      * @param currComponentObject contains information about the current object
@@ -2683,27 +4588,40 @@ public class MDBJSONObjectFactory {
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return additional modified information about the current object
      */
-    public JSONObject executionStepCreateCompositionForMDBHyperlink(JSONObject currComponentObject,
-                                                                    JSONObject jsonInputObject, JSONArray currExecStep,
-                                                                    JenaIOTDBFactory connectionToTDB) {
+    public JSONObject executionStepSpecificationsAndAllocationsForMDBHyperlink(JSONObject currComponentObject,
+                                                                               JSONObject jsonInputObject, JSONArray currExecStep,
+                                                                               JenaIOTDBFactory connectionToTDB) {
 
-        System.out.println("in method executionStepCreateCompositionForMDBHyperlink");
+        System.out.println("in method executionStepSpecificationsAndAllocationsForMDBHyperlink");
 
         String directory = "", rootComponentOfComposition = "", componentOfOntology = "", compositionFromEntry = "",
                 rootComponentOfUnionComposition = "", propertyForResourcesToShowExpanded = "";
         int position = -1;
-        JSONArray ngs = new JSONArray(), outputDataJSON = new JSONArray(), resourcesToShowExpanded = new JSONArray();
+        JSONArray ngs = new JSONArray(), outputDataJSON = new JSONArray(), resourcesToShowExpanded = new JSONArray(),
+                activeTabComponents = new JSONArray(), activeTargetComponents = new JSONArray();
         boolean useComponentFromComposition = false, useComponentFromOntology = false, useCompositionFromEntry = false,
                 useUnionOfCompositionsWithParentRoot = false, showExpanded = false;
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
-            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")
-                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
-                // load from/save to/update in named graph
-                // load from/save to/update in named graph (this entry's specific individual of)
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000582")) {
+                // use tab
 
-                ngs.put(calculateNG(currExecStep, connectionToTDB));
+                this.useTab = true;
+                this.tabToUse = calculateTabToUse(currExecStep.getJSONObject(i).getString("object"), jsonInputObject);
+
+            }
+
+        }
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")
+                    // load from/save to/update in named graph
+                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
+                    // load from/save to/update in named graph (this entry's specific individual of)
+
+                ngs.put(calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB));
 
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
                 // named graph belongs to workspace
@@ -2752,6 +4670,24 @@ public class MDBJSONObjectFactory {
                 resourcesToShowExpanded.put(currExecStep.getJSONObject(i).getString("object"));
                 propertyForResourcesToShowExpanded = currExecStep.getJSONObject(i).getString("property");
                 showExpanded = true;
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000663")
+                    // with active metadata target
+                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000665")) {
+                    // with active core target
+
+                String activeTargetComponent = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                activeTargetComponents.put(activeTargetComponent);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000664")
+                    // with active metadata tab
+                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000666")) {
+                    // with active core tab
+
+                String activeTabComponent = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                activeTabComponents.put(activeTabComponent);
 
             }
 
@@ -2899,9 +4835,114 @@ public class MDBJSONObjectFactory {
 
             }
 
+            ResIterator subjectIter = entryComponentsModel.listSubjects();
+
+            JSONObject componentsToHide = new JSONObject();
+
+            while (subjectIter.hasNext()) {
+
+                Resource currSubject = subjectIter.nextResource();
+
+                for (int i = 0; i < activeTargetComponents.length(); i++) {
+
+                    if (currSubject.toString().equals(activeTargetComponents.getString(i))) {
+
+                        System.out.println("active component = " + activeTargetComponents.getString(i));
+
+                        ResIterator parentOfSubjectIter = entryComponentsModel.listSubjectsWithProperty(ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"), currSubject);
+                        // has MDB entry component
+
+                        while (parentOfSubjectIter.hasNext()) {
+
+                            Resource currSubjectParent = parentOfSubjectIter.nextResource();
+
+                            NodeIterator childrenIter = entryComponentsModel.listObjectsOfProperty(currSubjectParent, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"));
+                            // has MDB entry component
+
+                            while (childrenIter.hasNext()) {
+
+                                RDFNode currChildNode = childrenIter.nextNode();
+
+                                if (currChildNode.isResource()) {
+
+                                    Resource currChild = currChildNode.asResource();
+
+                                    if (!currChild.toString().equals(currSubject.toString())) {
+
+                                        NodeIterator currSubjectPositionIter = entryComponentsModel.listObjectsOfProperty(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                        // has position in MDB entry component
+
+                                        while (currSubjectPositionIter.hasNext()) {
+
+                                            RDFNode currSubjectPositionNode = currSubjectPositionIter.nextNode();
+
+                                            NodeIterator currChildPositionIter = entryComponentsModel.listObjectsOfProperty(currChild, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                            // has position in MDB entry component
+
+                                            while (currChildPositionIter.hasNext()) {
+
+                                                RDFNode currChildPositionNode = currChildPositionIter.nextNode();
+
+                                                if (currChildPositionNode.toString().equals(currSubjectPositionNode.toString())) {
+
+                                                    componentsToHide.append(currSubjectParent.toString(), currChild.toString());
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                for (int i = 0; i < activeTabComponents.length(); i++) {
+
+                    if (currSubject.toString().equals(activeTabComponents.getString(i))) {
+
+                        entryComponentsModel.add(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667"), ResourceFactory.createPlainLiteral("is-active"));
+                        // is active
+
+                    }
+
+                }
+
+            }
+
+            Iterator<String> componentsToHideKeys = componentsToHide.keys();
+
+            while (componentsToHideKeys.hasNext()) {
+
+                String currKey = componentsToHideKeys.next();
+
+                if (componentsToHide.get(currKey) instanceof JSONArray) {
+
+                    JSONArray currChildrenToHide = componentsToHide.getJSONArray(currKey);
+
+                    for (int i = 0; i < currChildrenToHide.length(); i++) {
+
+                        entryComponentsModel.removeAll(ResourceFactory.createResource(currChildrenToHide.getString(i)), null, null);
+
+                        entryComponentsModel.removeAll(ResourceFactory.createResource(currKey), null, ResourceFactory.createResource(currChildrenToHide.getString(i)));
+
+                    }
+
+                }
+
+            }
+
             StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
 
-            OutputGenerator outputGenerator = new OutputGenerator();
+            OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
             JSONObject entryComponents = this.parentComponents;
 
@@ -2934,35 +4975,50 @@ public class MDBJSONObjectFactory {
 
             }
 
-            if (useCompositionFromEntry) {
-
-                if (compositionFromEntry.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000330")) {
-                    // KEYWORD: this MDB user entry ID
-
-                    IndividualURI individualURI = new IndividualURI(this.mdbUEID);
-
-                    String workspace = calculateWorkspaceDirectory(currExecStep);
-
-                    rootComponentOfUnionComposition = individualURI.getThisURIForAnIndividual(this.parentRoot, workspace, connectionToTDB);
-
-                } else if (compositionFromEntry.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000114")) {
-                    // KEYWORD: this MDB entry ID
-
-                    IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
-
-                    String workspace = calculateWorkspaceDirectory(currExecStep);
-
-                    rootComponentOfUnionComposition = individualURI.getThisURIForAnIndividual(this.parentRoot, workspace, connectionToTDB);
-
-                }
-
-            }
-
-            outputDataJSON = outputGenerator.orderOutputJSON(rootComponentOfUnionComposition, outputDataJSON);
+            outputDataJSON = outputGenerator.orderOutputJSON(this.parentRoot, outputDataJSON);
 
         } else {
 
             if (useComponentFromComposition) {
+
+                if (rootComponentOfComposition.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000545")) {
+                    // KEYWORD: find root element
+
+                    String workspace = calculateWorkspaceDirectory(currExecStep);
+
+                    SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                    PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                    selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                    if (this.useTab && jsonInputObject.getString("value").equals("show_localID")) {
+                        // identify named graph with active tab
+
+                        selectWhereBuilder.addWhere("<" + this.mdbEntryID + "#" + jsonInputObject.getString("localID") + ">", "<http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000706>", "?o");
+                        // has description form with root element
+
+                    } else {
+
+                        selectWhereBuilder.addWhere("<" + this.mdbEntryID + "#" + jsonInputObject.getString("localID") + ">", "?p", "?o");
+
+                    }
+
+                    SelectBuilder selectBuilder = new SelectBuilder();
+
+                    selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                    ExprVar exprVar = new ExprVar("o");
+
+                    selectBuilder.addVar(exprVar);
+
+                    selectBuilder.addGraph("<" + this.previousCalculatedNG + ">", selectWhereBuilder);
+
+                    String sparqlQueryString = selectBuilder.buildString();
+
+                    rootComponentOfComposition = connectionToTDB.pullSingleDataFromTDB(workspace, sparqlQueryString, "?o");
+
+                }
 
                 System.out.println("rootComponentOfComposition = " + rootComponentOfComposition);
 
@@ -3198,10 +5254,114 @@ public class MDBJSONObjectFactory {
                     }
 
                 }
+                ResIterator subjectIter = entryComponentsModel.listSubjects();
+
+                JSONObject componentsToHide = new JSONObject();
+
+                while (subjectIter.hasNext()) {
+
+                    Resource currSubject = subjectIter.nextResource();
+
+                    for (int i = 0; i < activeTargetComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTargetComponents.getString(i))) {
+
+                            System.out.println("active component = " + activeTargetComponents.getString(i));
+
+                            ResIterator parentOfSubjectIter = entryComponentsModel.listSubjectsWithProperty(ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"), currSubject);
+                            // has MDB entry component
+
+                            while (parentOfSubjectIter.hasNext()) {
+
+                                Resource currSubjectParent = parentOfSubjectIter.nextResource();
+
+                                NodeIterator childrenIter = entryComponentsModel.listObjectsOfProperty(currSubjectParent, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"));
+                                // has MDB entry component
+
+                                while (childrenIter.hasNext()) {
+
+                                    RDFNode currChildNode = childrenIter.nextNode();
+
+                                    if (currChildNode.isResource()) {
+
+                                        Resource currChild = currChildNode.asResource();
+
+                                        if (!currChild.toString().equals(currSubject.toString())) {
+
+                                            NodeIterator currSubjectPositionIter = entryComponentsModel.listObjectsOfProperty(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                            // has position in MDB entry component
+
+                                            while (currSubjectPositionIter.hasNext()) {
+
+                                                RDFNode currSubjectPositionNode = currSubjectPositionIter.nextNode();
+
+                                                NodeIterator currChildPositionIter = entryComponentsModel.listObjectsOfProperty(currChild, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                                // has position in MDB entry component
+
+                                                while (currChildPositionIter.hasNext()) {
+
+                                                    RDFNode currChildPositionNode = currChildPositionIter.nextNode();
+
+                                                    if (currChildPositionNode.toString().equals(currSubjectPositionNode.toString())) {
+
+                                                        componentsToHide.append(currSubjectParent.toString(), currChild.toString());
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    for (int i = 0; i < activeTabComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTabComponents.getString(i))) {
+
+                            entryComponentsModel.add(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667"), ResourceFactory.createPlainLiteral("is-active"));
+                            // is active
+
+                        }
+
+                    }
+
+                }
+
+                Iterator<String> componentsToHideKeys = componentsToHide.keys();
+
+                while (componentsToHideKeys.hasNext()) {
+
+                    String currKey = componentsToHideKeys.next();
+
+                    if (componentsToHide.get(currKey) instanceof JSONArray) {
+
+                        JSONArray currChildrenToHide = componentsToHide.getJSONArray(currKey);
+
+                        for (int i = 0; i < currChildrenToHide.length(); i++) {
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currChildrenToHide.getString(i)), null, null);
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currKey), null, ResourceFactory.createResource(currChildrenToHide.getString(i)));
+
+                        }
+
+                    }
+
+                }
 
                 StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 JSONObject entryComponents = new JSONObject();
 
@@ -3255,11 +5415,7 @@ public class MDBJSONObjectFactory {
 
                 }
 
-                System.out.println("outputDataJSON1 = " + outputDataJSON);
-
                 outputDataJSON = outputGenerator.orderOutputJSON(rootComponentOfComposition, outputDataJSON);
-
-                System.out.println("outputDataJSON2 = " + outputDataJSON);
 
             } else if (useUnionOfCompositionsWithParentRoot) {
 
@@ -3272,6 +5428,22 @@ public class MDBJSONObjectFactory {
                     unionNGModel = unionNGModel.union(connectionToTDB.pullNamedModelFromTDB(directory, ngs.getString(j)));
 
                 }
+
+                if (unionNGModel.contains(null, RDF.type, ResourceFactory.createResource(rootComponentOfUnionComposition))) {
+
+                    ResIterator rootComponentIter = unionNGModel.listSubjectsWithProperty(RDF.type, ResourceFactory.createResource(rootComponentOfUnionComposition));
+
+                    while (rootComponentIter.hasNext()) {
+
+                        Resource rootComponentResource = rootComponentIter.nextResource();
+
+                        rootComponentOfUnionComposition = rootComponentResource.toString();
+
+                    }
+
+                }
+
+                System.out.println("Set rootComponentOfUnionComposition to = " + rootComponentOfUnionComposition);
 
                 ResIterator subIter = unionNGModel.listSubjects();
 
@@ -3467,9 +5639,114 @@ public class MDBJSONObjectFactory {
 
                 }
 
+                ResIterator subjectIter = entryComponentsModel.listSubjects();
+
+                JSONObject componentsToHide = new JSONObject();
+
+                while (subjectIter.hasNext()) {
+
+                    Resource currSubject = subjectIter.nextResource();
+
+                    for (int i = 0; i < activeTargetComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTargetComponents.getString(i))) {
+
+                            System.out.println("active component = " + activeTargetComponents.getString(i));
+
+                            ResIterator parentOfSubjectIter = entryComponentsModel.listSubjectsWithProperty(ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"), currSubject);
+                            // has MDB entry component
+
+                            while (parentOfSubjectIter.hasNext()) {
+
+                                Resource currSubjectParent = parentOfSubjectIter.nextResource();
+
+                                NodeIterator childrenIter = entryComponentsModel.listObjectsOfProperty(currSubjectParent, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"));
+                                // has MDB entry component
+
+                                while (childrenIter.hasNext()) {
+
+                                    RDFNode currChildNode = childrenIter.nextNode();
+
+                                    if (currChildNode.isResource()) {
+
+                                        Resource currChild = currChildNode.asResource();
+
+                                        if (!currChild.toString().equals(currSubject.toString())) {
+
+                                            NodeIterator currSubjectPositionIter = entryComponentsModel.listObjectsOfProperty(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                            // has position in MDB entry component
+
+                                            while (currSubjectPositionIter.hasNext()) {
+
+                                                RDFNode currSubjectPositionNode = currSubjectPositionIter.nextNode();
+
+                                                NodeIterator currChildPositionIter = entryComponentsModel.listObjectsOfProperty(currChild, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                                // has position in MDB entry component
+
+                                                while (currChildPositionIter.hasNext()) {
+
+                                                    RDFNode currChildPositionNode = currChildPositionIter.nextNode();
+
+                                                    if (currChildPositionNode.toString().equals(currSubjectPositionNode.toString())) {
+
+                                                        componentsToHide.append(currSubjectParent.toString(), currChild.toString());
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    for (int i = 0; i < activeTabComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTabComponents.getString(i))) {
+
+                            entryComponentsModel.add(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667"), ResourceFactory.createPlainLiteral("is-active"));
+                            // is active
+
+                        }
+
+                    }
+
+                }
+
+                Iterator<String> componentsToHideKeys = componentsToHide.keys();
+
+                while (componentsToHideKeys.hasNext()) {
+
+                    String currKey = componentsToHideKeys.next();
+
+                    if (componentsToHide.get(currKey) instanceof JSONArray) {
+
+                        JSONArray currChildrenToHide = componentsToHide.getJSONArray(currKey);
+
+                        for (int i = 0; i < currChildrenToHide.length(); i++) {
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currChildrenToHide.getString(i)), null, null);
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currKey), null, ResourceFactory.createResource(currChildrenToHide.getString(i)));
+
+                        }
+
+                    }
+
+                }
+
                 StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 JSONObject entryComponents = new JSONObject();
 
@@ -3602,9 +5879,114 @@ public class MDBJSONObjectFactory {
 
                 }
 
+                ResIterator subjectIter = entryComponentsModel.listSubjects();
+
+                JSONObject componentsToHide = new JSONObject();
+
+                while (subjectIter.hasNext()) {
+
+                    Resource currSubject = subjectIter.nextResource();
+
+                    for (int i = 0; i < activeTargetComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTargetComponents.getString(i))) {
+
+                            System.out.println("active component = " + activeTargetComponents.getString(i));
+
+                            ResIterator parentOfSubjectIter = entryComponentsModel.listSubjectsWithProperty(ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"), currSubject);
+                            // has MDB entry component
+
+                            while (parentOfSubjectIter.hasNext()) {
+
+                                Resource currSubjectParent = parentOfSubjectIter.nextResource();
+
+                                NodeIterator childrenIter = entryComponentsModel.listObjectsOfProperty(currSubjectParent, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040"));
+                                // has MDB entry component
+
+                                while (childrenIter.hasNext()) {
+
+                                    RDFNode currChildNode = childrenIter.nextNode();
+
+                                    if (currChildNode.isResource()) {
+
+                                        Resource currChild = currChildNode.asResource();
+
+                                        if (!currChild.toString().equals(currSubject.toString())) {
+
+                                            NodeIterator currSubjectPositionIter = entryComponentsModel.listObjectsOfProperty(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                            // has position in MDB entry component
+
+                                            while (currSubjectPositionIter.hasNext()) {
+
+                                                RDFNode currSubjectPositionNode = currSubjectPositionIter.nextNode();
+
+                                                NodeIterator currChildPositionIter = entryComponentsModel.listObjectsOfProperty(currChild, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042"));
+                                                // has position in MDB entry component
+
+                                                while (currChildPositionIter.hasNext()) {
+
+                                                    RDFNode currChildPositionNode = currChildPositionIter.nextNode();
+
+                                                    if (currChildPositionNode.toString().equals(currSubjectPositionNode.toString())) {
+
+                                                        componentsToHide.append(currSubjectParent.toString(), currChild.toString());
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    for (int i = 0; i < activeTabComponents.length(); i++) {
+
+                        if (currSubject.toString().equals(activeTabComponents.getString(i))) {
+
+                            entryComponentsModel.add(currSubject, ResourceFactory.createProperty("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667"), ResourceFactory.createPlainLiteral("is-active"));
+                            // is active
+
+                        }
+
+                    }
+
+                }
+
+                Iterator<String> componentsToHideKeys = componentsToHide.keys();
+
+                while (componentsToHideKeys.hasNext()) {
+
+                    String currKey = componentsToHideKeys.next();
+
+                    if (componentsToHide.get(currKey) instanceof JSONArray) {
+
+                        JSONArray currChildrenToHide = componentsToHide.getJSONArray(currKey);
+
+                        for (int i = 0; i < currChildrenToHide.length(); i++) {
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currChildrenToHide.getString(i)), null, null);
+
+                            entryComponentsModel.removeAll(ResourceFactory.createResource(currKey), null, ResourceFactory.createResource(currChildrenToHide.getString(i)));
+
+                        }
+
+                    }
+
+                }
+
                 StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 JSONObject entryComponents = new JSONObject();
 
@@ -3666,202 +6048,25 @@ public class MDBJSONObjectFactory {
     }
 
     /**
-     * This method calculates and formats the output for a mdb composition.
-     * @param root contains the URI of a root element
-     * @param ngs contains the URI of a named graph which contains the root element
-     * @param directory contains the path to the directory which contains the root element
-     * @param jsonInputObject contains the information for the calculation
-     * @param connectionToTDB contains a JenaIOTDBFactory object
-     * @return a formatted JSONArray
-     */
-    public JSONArray getCompositionFromStoreForOutput(String root, JSONArray ngs, String directory, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
-
-        Model unionNGModel = ModelFactory.createDefaultModel(), entryComponentsModel = ModelFactory.createDefaultModel();
-
-        for (int j = 0; j < ngs.length(); j++) {
-
-            unionNGModel = unionNGModel.union(connectionToTDB.pullNamedModelFromTDB(directory, ngs.getString(j)));
-
-        }
-
-        ResIterator resIter = unionNGModel.listSubjects();
-
-        while (resIter.hasNext()) {
-
-            Resource entryComponentURI = resIter.next();
-
-            if (unionNGModel.contains(entryComponentURI, RDF.type, OWL2.NamedIndividual)) {
-
-                Selector tripleSelector = new SimpleSelector(entryComponentURI, null, null, "");
-
-                StmtIterator tripleStmts = unionNGModel.listStatements(tripleSelector);
-
-                while (tripleStmts.hasNext()) {
-
-                    Statement stmt = tripleStmts.nextStatement();
-
-                    Resource currSubject = stmt.getSubject();
-
-                    Property currProperty = stmt.getPredicate();
-
-                    Resource currLabelObject;
-
-                    if (stmt.getObject().isURIResource()) {
-
-                        currLabelObject = stmt.getObject().asResource();
-
-                        if (currSubject.equals(entryComponentURI)
-                                && currProperty.equals(RDF.type)
-                                && !currLabelObject.equals(OWL2.NamedIndividual)) {
-
-                            Selector classSelector = new SimpleSelector(currLabelObject, null, null, "");
-
-                            StmtIterator classStmts = unionNGModel.listStatements(classSelector);
-
-                            Resource classSubject = null;
-
-                            while (classStmts.hasNext()) {
-
-                                Statement classStmt = classStmts.nextStatement();
-
-                                classSubject = classStmt.getSubject();
-
-                                if ((!classStmt.getObject().equals(OWL2.Class))
-                                        && (!classStmt.getPredicate().equals(RDFS.label))
-                                        && (!classStmt.getPredicate().equals(RDFS.subClassOf))
-                                        && (!classStmt.getPredicate().equals(OWL2.annotatedTarget))
-                                        && (!classStmt.getPredicate().equals(OWL2.annotatedProperty))) {
-
-                                    entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, classStmt.getPredicate(), classStmt.getObject()));
-
-                                }
-
-                            }
-
-                            if (unionNGModel.contains(null, OWL2.annotatedSource, classSubject)) {
-
-                                ResIterator axiomsForClassSubject = unionNGModel.listSubjectsWithProperty(OWL2.annotatedSource, classSubject);
-
-                                while (axiomsForClassSubject.hasNext()) {
-
-                                    Resource axiomClassSubject = axiomsForClassSubject.next();
-
-                                    Selector axiomClassSelector = new SimpleSelector(axiomClassSubject, null, null, "");
-
-                                    StmtIterator axiomClassStmts = unionNGModel.listStatements(axiomClassSelector);
-
-                                    while (axiomClassStmts.hasNext()) {
-
-                                        Statement axiomClassStmt = axiomClassStmts.nextStatement();
-
-                                        if ((!axiomClassStmt.getObject().equals(OWL2.Axiom))
-                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedSource))
-                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedTarget))
-                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedProperty))) {
-
-                                            entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, axiomClassStmt.getPredicate(), axiomClassStmt.getObject()));
-
-                                        }
-
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-                    entryComponentsModel.add(stmt);
-
-                }
-
-                if (unionNGModel.contains(null, OWL2.annotatedSource, entryComponentURI)) {
-
-                    ResIterator axiomsForSubject = unionNGModel.listSubjectsWithProperty(OWL2.annotatedSource, entryComponentURI);
-
-                    while (axiomsForSubject.hasNext()) {
-
-                        Resource axiomSubject = axiomsForSubject.next();
-
-                        Selector axiomSelector = new SimpleSelector(axiomSubject, null, null, "");
-
-                        StmtIterator axiomStmts = unionNGModel.listStatements(axiomSelector);
-
-                        while (axiomStmts.hasNext()) {
-
-                            Statement axiomStmt = axiomStmts.nextStatement();
-
-                            if ((!axiomStmt.getObject().equals(OWL2.Axiom))
-                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedSource))
-                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedTarget))
-                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedProperty))) {
-
-                                entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, axiomStmt.getPredicate(), axiomStmt.getObject()));
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
-        StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
-
-        OutputGenerator outputGenerator = new OutputGenerator();
-
-        JSONObject entryComponents = new JSONObject();
-
-        while (entryComponentsModelIter.hasNext()) {
-
-            Statement resStmt = entryComponentsModelIter.nextStatement();
-
-            String currSubject = resStmt.getSubject().toString();
-
-            entryComponents = outputGenerator
-                    .manageProperty(currSubject, resStmt, entryComponents, jsonInputObject, connectionToTDB);
-
-        }
-
-        entryComponents = outputGenerator.reorderEntryComponentsValues(entryComponents);
-
-        Iterator<String> iter = entryComponents.keys();
-
-        JSONArray outputDataJSON = new JSONArray();
-
-        while (iter.hasNext()) {
-
-            String currKey = iter.next();
-
-            JSONObject wrapperJSON = new JSONObject();
-
-            wrapperJSON.put(currKey, entryComponents.getJSONObject(currKey));
-
-            outputDataJSON.put(wrapperJSON);
-
-        }
-
-        outputDataJSON = outputGenerator.orderOutputJSON(root, outputDataJSON);
-
-        return outputDataJSON;
-
-    }
-
-
-    /**
      * This method defines variables for a later use.
      * @param currComponentObject contains information about the current object
      * @param jsonInputObject contains the information for the calculation
      * @param currExecStep contains all information from the ontology for the current execution step
      * @param connectionToTDB contains a JenaIOTDBFactory object
      */
-    public JSONObject executionStepDefineVariables(JSONObject currComponentObject, JSONObject jsonInputObject, JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+    public JSONObject executionStepDefineVariables(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                   JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
 
         boolean useInKnownSubsequentWA = false;
 
@@ -3878,61 +6083,114 @@ public class MDBJSONObjectFactory {
 
         }
 
+        String identifiedKey = "", identifiedValue = "", identifiedResourcesKey = "";
+
+        boolean addResourceToList = false;
+
+        JSONArray resourceList = new JSONArray(), resourcesToAdd = new JSONArray();
+
         for (int i = 0; i < currExecStep.length(); i++) {
 
             boolean useAsInput = useObjectAsInput(currExecStep.getJSONObject(i).getString("property"), connectionToTDB);
 
             if (useAsInput) {
 
+                // calculate the corresponding KEYWORD resource for the KEYWORD property
                 String uriOfIndividual = getKeywordIndividualFromProperty(currExecStep.getJSONObject(i).getString("property"), connectionToTDB);
 
-                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000114")) {
+                    // KEYWORD: this MDB entry ID
+
+                    this.infoInput.put(uriOfIndividual, this.mdbEntryID);
+                    this.identifiedResources.put(uriOfIndividual, this.mdbEntryID);
+
+                } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000161")) {
+                    // KEYWORD: this MDB core ID
+
+                    this.infoInput.put(uriOfIndividual, this.mdbCoreID);
+                    this.identifiedResources.put(uriOfIndividual, this.mdbCoreID);
+
+                } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
                     // KEYWORD: empty
 
                     this.infoInput.put(currExecStep.getJSONObject(i).getString("object"), currExecStep.getJSONObject(i).getString("object"));
+                    this.identifiedResources.put(currExecStep.getJSONObject(i).getString("object"), currExecStep.getJSONObject(i).getString("object"));
 
-                }
+                } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000471")) {
+                    // KEYWORD: resource described with this description form composition
 
-                String value = currExecStep.getJSONObject(i).getString("object");
+                    if (jsonInputObject.has("partID")) {
 
-                Iterator<String> keyIterator = this.generatedResources.keys();
+                        this.infoInput.put(uriOfIndividual, jsonInputObject.getString("mdbentryid") + "#" + jsonInputObject.getString("partID"));
+                        this.identifiedResources.put(uriOfIndividual, jsonInputObject.getString("mdbentryid") + "#" + jsonInputObject.getString("partID"));
 
-                while (keyIterator.hasNext()) {
+                    } else {
 
-                    String currKey = keyIterator.next();
-
-                    // get local name of a key
-                    String localNameOfKey = ResourceFactory.createResource(currKey).getLocalName();
-
-                    if (value.contains(localNameOfKey)) {
-                        // get ng from generated resources
-
-                        value = this.generatedResources.getString(currKey);
+                        System.out.println("WARN: There is no partID in Input!");
 
                     }
 
-                }
+                } else {
 
-                if (jsonInputObject.has("localIDs")) {
+                    String value = currExecStep.getJSONObject(i).getString("object");
 
-                    JSONArray currJSONArray = jsonInputObject.getJSONArray("localIDs");
+                    Iterator<String> keyIterator = this.generatedResources.keys();
 
-                    for (int j = 0; j < currJSONArray.length(); j++) {
+                    while (keyIterator.hasNext()) {
 
-                        JSONObject currJSONObject = currJSONArray.getJSONObject(j);
+                        String currKey = keyIterator.next();
 
-                        if (currJSONObject.has("keyword")) {
+                        // get local name of a key
+                        String localNameOfKey = ResourceFactory.createResource(currKey).getLocalName();
 
-                            if (ResourceFactory.createResource(value).getLocalName().equals(currJSONObject.getString("keyword")) &&
-                                    jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
+                        if (value.contains(localNameOfKey)) {
+                            // get ng from generated resources
 
-                                if (EmailValidator.getInstance().isValid(currJSONObject.getString("value"))) {
+                            value = this.generatedResources.getString(currKey);
 
-                                    value = "mailto:" + currJSONObject.getString("value");
+                        }
 
-                                } else {
+                    }
 
-                                    value = currJSONObject.getString("value");
+                    if (jsonInputObject.has("localIDs")) {
+
+                        JSONArray currJSONArray = jsonInputObject.getJSONArray("localIDs");
+
+                        for (int j = 0; j < currJSONArray.length(); j++) {
+
+                            JSONObject currJSONObject = currJSONArray.getJSONObject(j);
+
+                            if (currJSONObject.has("keyword")) {
+
+                                if (ResourceFactory.createResource(value).getLocalName().equals(currJSONObject.getString("keyword")) &&
+                                        jsonInputObject.getString("localID").equals(currJSONObject.getString("localID"))) {
+
+                                    if (EmailValidator.getInstance().isValid(currJSONObject.getString("value"))) {
+
+                                        value = "mailto:" + currJSONObject.getString("value");
+
+                                    } else {
+
+                                        value = currJSONObject.getString("value");
+
+                                    }
+
+                                } else if (ResourceFactory.createResource(value).getLocalName().equals(currJSONObject.getString("keyword")) &&
+                                        jsonInputObject.has("useKeywordsFromComposition")) {
+
+                                    if (jsonInputObject.getString("useKeywordsFromComposition").equals("true")) {
+
+                                        if (currJSONObject.get("value") instanceof JSONObject) {
+
+                                            value = currJSONObject.getJSONObject("value").getString("resource");
+
+                                        } else if (currJSONObject.get("value") instanceof String) {
+
+                                            value = currJSONObject.getString("value");
+
+                                        }
+
+                                    }
 
                                 }
 
@@ -3942,26 +6200,104 @@ public class MDBJSONObjectFactory {
 
                     }
 
+                    this.infoInput.put(uriOfIndividual, value);
+
+                    System.out.println();
+                    System.out.println("uriOfIndividual = " + uriOfIndividual);
+                    System.out.println();
+                    System.out.println("value = " + value);
+
+                    if (useInKnownSubsequentWA) {
+
+                        keywordsToTransfer.put(uriOfIndividual, value);
+
+                    }
+
                 }
 
-                this.infoInput.put(uriOfIndividual, value);
-                this.infoInput.put(value, "");
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000530")) {
+                // identified MDB workflow action
+
+                jsonInputObject.put(ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("property")).getLocalName(), currExecStep.getJSONObject(i).getString("object"));
 
                 System.out.println();
-                System.out.println("uriOfIndividual = " + uriOfIndividual);
+                System.out.println("save keyword for later = " + ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("property")).getLocalName());
                 System.out.println();
 
-                if (useInKnownSubsequentWA) {
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000441")) {
+                // identified individual defines keyword resource
 
-                    keywordsToTransfer.put(uriOfIndividual, value);
+                identifiedKey = currExecStep.getJSONObject(i).getString("object");
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000442")) {
+                // identify this entry's specific individual of
+
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605")) {
+                    // KEYWORD: this MDB entry version
+
+                    if (this.hasExecutionStepFocus) {
+
+                        identifiedValue = this.executionStepFocus.substring((this.executionStepFocus.lastIndexOf("-") + 1));
+
+                    } else {
+
+                        identifiedValue = this.currentFocus.substring((this.currentFocus.lastIndexOf("-") + 1));
+
+                    }
 
                 }
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000661")) {
+                // add resource to list
+
+                addResourceToList = true;
+
+                identifiedResourcesKey = currExecStep.getJSONObject(i).getString("object");
+
+                resourceList = this.identifiedResources.getJSONArray(identifiedResourcesKey);
+
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000662")) {
+                // resource to be added to a list
+
+                String keywordValue = calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                resourcesToAdd.put(keywordValue);
 
             }
 
         }
 
+        if (addResourceToList) {
+
+            for (int i = 0; i < resourcesToAdd.length(); i++) {
+
+                resourceList.put(resourcesToAdd.getString(i));
+
+            }
+
+            System.out.println("Added the following resources to a keyword list: " + resourcesToAdd);
+
+            this.identifiedResources.put(identifiedResourcesKey, resourceList);
+
+        }
+
+        if (identifiedKey.length() > 0) {
+
+            System.out.println("identifiedKey = " + identifiedKey);
+            System.out.println("identifiedValue = " + identifiedValue);
+
+            this.identifiedResources.put(identifiedKey, identifiedValue);
+
+        }
+
         currComponentObject.put("use_in_known_subsequent_WA", keywordsToTransfer);
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
 
         return currComponentObject;
 
@@ -3979,35 +6315,63 @@ public class MDBJSONObjectFactory {
                                                                   JSONObject jsonInputObject, JSONArray currExecStep,
                                                                   JenaIOTDBFactory connectionToTDB) {
 
-        // todo: actualize this method if statements should delete
+        for (int i = 0; i < currExecStep.length(); i++) {
 
-        boolean deleteTriplesWithSubject = false, deleteTriplesWithObject = false, deleteWithProperty = false;
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        boolean deleteWithProperty = false, deleteTriplesSubject = false, deleteTriplesObject = false,
+                deleteTriplesWithCopiedSubject = false, deleteTriplesWithCopiedObject = false;
         String subject = "", property = "", object = "", ng ="", directory = "";
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
-            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")) {
+                // subject
+
+                JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                deleteTriplesSubject = true;
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
                 // subject (copied individual of)
 
                 JSONObject dataToFindObjectInTDB = new JSONObject();
 
                 subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                deleteTriplesWithSubject = true;
+                deleteTriplesWithCopiedSubject = true;
 
-            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                // object
+
+                JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, "r", connectionToTDB);
+
+                deleteTriplesObject = true;
+
+            }else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
                 // object (copied individual of)
 
                 JSONObject dataToFindObjectInTDB = new JSONObject();
 
                 object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, "r", connectionToTDB);
 
-                deleteTriplesWithObject = true;
+                deleteTriplesWithCopiedObject = true;
 
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
                 // load from/save to/update in named graph (this entry's specific individual of)
 
-                ng = calculateNG(currExecStep, connectionToTDB);
+                ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
                 // named graph belongs to workspace
@@ -4025,7 +6389,55 @@ public class MDBJSONObjectFactory {
 
         }
 
-        if (deleteTriplesWithSubject) {
+        if (deleteTriplesSubject) {
+
+            Model mdbCompositionModel = connectionToTDB.pullNamedModelFromTDB(directory, ng);
+
+            Selector subjectSelector;
+
+            if (deleteWithProperty) {
+
+                subjectSelector = new SimpleSelector(ResourceFactory.createResource(subject), ResourceFactory.createProperty(property), null, null);
+
+            } else {
+
+                subjectSelector = new SimpleSelector(ResourceFactory.createResource(subject), null, null, null);
+
+            }
+
+            StmtIterator subjectStmtIter = mdbCompositionModel.listStatements(subjectSelector);
+
+            while (subjectStmtIter.hasNext()) {
+
+                Statement currStmt = subjectStmtIter.nextStatement();
+
+                currComponentObject.getJSONObject("input_data").append("subject", subject);
+
+                currComponentObject.getJSONObject("input_data").append("property", property);
+
+                if (currStmt.getObject().isLiteral()) {
+
+                    currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asLiteral().toString());
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                } else {
+
+                    currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asResource().toString());
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+            }
+
+        } else if (deleteTriplesWithCopiedSubject) {
 
             JSONArray subjectsJSON = currComponentObject.getJSONObject("input_data").getJSONArray("subject");
 
@@ -4071,7 +6483,85 @@ public class MDBJSONObjectFactory {
 
             }
 
-        } else if (deleteTriplesWithObject) {
+        } else if (deleteTriplesObject) {
+
+            Model mdbCompositionModel = connectionToTDB.pullNamedModelFromTDB(directory, ng);
+
+            Selector objectSelector;
+
+            if (deleteWithProperty) {
+
+                objectSelector = new SimpleSelector(null, ResourceFactory.createProperty(property), object, null);
+
+            } else {
+
+                objectSelector = new SimpleSelector(null, null, object, null);
+
+            }
+
+            StmtIterator objectStmtIter = mdbCompositionModel.listStatements(objectSelector);
+
+            while (objectStmtIter.hasNext()) {
+
+                Statement currStmt = objectStmtIter.nextStatement();
+
+                Property currProp = currStmt.getPredicate();
+
+                if (currProp.equals(OWL2.annotatedSource)) {
+                    // delete axioms of the component
+
+                    StmtIterator axiomIter = currStmt.getSubject().listProperties();
+
+                    while (axiomIter.hasNext()) {
+
+                        Statement currAxiomStmt = axiomIter.nextStatement();
+
+                        currComponentObject.getJSONObject("input_data").append("subject", currAxiomStmt.getSubject().toString());
+
+                        currComponentObject.getJSONObject("input_data").append("property", currProp.toString());
+
+                        if (currStmt.getObject().isLiteral()) {
+
+                            currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asLiteral().toString());
+
+                            currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                        } else {
+
+                            currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asResource().toString());
+
+                            currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                        }
+
+                        currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                        currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                        currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+                    }
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("subject", currStmt.getSubject().toString());
+
+                currComponentObject.getJSONObject("input_data").append("property", currStmt.getPredicate().toString());
+
+                currComponentObject.getJSONObject("input_data").append("object_data", object);
+
+                currComponentObject.getJSONObject("input_data").append("object_type", "r");
+                // is definitive a resource, because it is the part to delete
+
+                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+            }
+
+        } else if (deleteTriplesWithCopiedObject) {
 
             JSONArray objectsJSON = currComponentObject.getJSONObject("input_data").getJSONArray("object_data");
 
@@ -4115,6 +6605,452 @@ public class MDBJSONObjectFactory {
                 }
 
             }
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
+        return currComponentObject;
+
+    }
+
+
+    /**
+     * This method removes named graphs in a jena tdb
+     * @param currComponentObject contains information about the current object
+     * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return additional modified information about the current object
+     */
+    private JSONObject deleteNamedGraphs(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                         JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+        String directory = "";
+        JSONArray ngs = new JSONArray();
+        JSONArray deleteNamedGraphs = new JSONArray();
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")
+                    // load from/save to/update in named graph
+                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
+                // load from/save to/update in named graph (this entry's specific individual of)
+
+                String ng = calculateNGWithMultipleInput(currExecStep.getJSONObject(i).getString("property"), currExecStep.getJSONObject(i).getString("object"), currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                if (!ng.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
+                    // KEYWORD: empty
+
+                    ngs.put(ng);
+
+                }
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
+                // named graph belongs to workspace
+
+                directory = calculateWorkspaceDirectory(currExecStep);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000616")) {
+                // load from/save to/update in all named graphs (this entry's specific individual of) of this keyword list
+
+                JSONArray classListJSON = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                String individualDirectory = calculateWorkspaceDirectory(currExecStep);
+
+                for (int j = 0; j  < classListJSON.length(); j++) {
+
+                    IndividualURI individualURI;
+
+                    if (this.hasExecutionStepFocus) {
+
+                        individualURI = new IndividualURI(this.executionStepFocus);
+
+                    } else {
+
+                        individualURI = new IndividualURI(this.currentFocus);
+
+                    }
+
+                    JSONArray currNGSJSON = individualURI.getIndividualURISForAClass(classListJSON.getString(j), individualDirectory, connectionToTDB);
+
+                    if (currNGSJSON.length() > 0) {
+
+                        for (int k = 0; k < currNGSJSON.length(); k++) {
+
+                            ngs.put(currNGSJSON.getString(k));
+
+                        }
+
+                    }
+
+                }
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000617")) {
+                // load from/save to/update in multiple named graphs (this entry's specific individuals of)
+
+                String individualDirectory = calculateWorkspaceDirectory(currExecStep);
+
+                IndividualURI individualURI;
+
+                if (this.hasExecutionStepFocus) {
+
+                    individualURI = new IndividualURI(this.executionStepFocus);
+
+                } else {
+
+                    individualURI = new IndividualURI(this.currentFocus);
+
+                }
+
+                JSONArray currNGSJSON = individualURI.getIndividualURISForAClass(currExecStep.getJSONObject(i).getString("object"), individualDirectory, connectionToTDB);
+
+                if (currNGSJSON.length() > 0) {
+
+                    for (int j = 0; j < currNGSJSON.length(); j++) {
+
+                        ngs.put(currNGSJSON.getString(j));
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        for (int i = 0; i < ngs.length(); i++) {
+
+            JSONObject currNGJSONObject = new JSONObject();
+
+            currNGJSONObject.put("ng", ngs.getString(i));
+
+            currNGJSONObject.put("directory", directory);
+
+            deleteNamedGraphs.put(currNGJSONObject);
+
+        }
+
+        System.out.println("deleteNamedGraphs = " + deleteNamedGraphs);
+
+        if (!currComponentObject.has("input_data")) {
+            // no other statement was generated yet
+
+            JSONObject currInputDataObject = new JSONObject();
+
+            currInputDataObject.put("deleteNamedGraphs", deleteNamedGraphs);
+
+            currComponentObject.put("input_data", currInputDataObject);
+
+        } else {
+
+            if (!currComponentObject.getJSONObject("input_data").has("deleteNamedGraphs")) {
+
+                currComponentObject.getJSONObject("input_data").put("deleteNamedGraphs", deleteNamedGraphs);
+
+            } else {
+
+                for (int i = 0; i < deleteNamedGraphs.length(); i++) {
+
+                    currComponentObject.getJSONObject("input_data").append("deleteNamedGraphs", deleteNamedGraphs.getJSONObject(i));
+
+                }
+
+            }
+
+        }
+
+        return currComponentObject;
+
+    }
+
+    /**
+     * This method removes named graphs in a jena tdb
+     * @param currComponentObject contains information about the current object
+     * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return additional modified information about the current object
+     */
+    public JSONObject executionStepDeleteNamedGraphs(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                     JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        if (this.multipleExecutionStepFocus) {
+
+            if (this.executionStepFocuses.length() > 0) {
+
+                for (int i = 0; i < this.executionStepFocuses.length(); i++) {
+
+                    this.executionStepFocus = this.executionStepFocuses.getString(i);
+
+                    deleteNamedGraphs(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                }
+
+            }
+
+            this.multipleExecutionStepFocus = false;
+
+        } else {
+
+            deleteNamedGraphs(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
+        return currComponentObject;
+
+    }
+
+
+    /**
+     * This method removes statement(s) in a jena tdb
+     * @param currComponentObject contains information about the current object
+     * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return additional modified information about the current object
+     */
+    public JSONObject executionStepDeletePartOfComposition(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                           JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        String ng = "", directory = "";
+        boolean deleteMDBEntryComponentWithChildren = false;
+        JSONArray mdbEntryComponentsListWithChildren = new JSONArray();
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")
+                    || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
+                // load from/save to/update in named graph
+                // load from/save to/update in named graph (this entry's specific individual of)
+
+                ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
+                // named graph belongs to workspace
+
+                directory = calculateWorkspaceDirectory(currExecStep);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000545")) {
+                // delete MDB entry component with all of its children
+
+                if (checkValueOfKeywordIsJSONArray(currExecStep.getJSONObject(i).getString("object"))) {
+
+                    mdbEntryComponentsListWithChildren = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                } else {
+
+                    mdbEntryComponentsListWithChildren.put(calculateValueForKeyword(currExecStep.getJSONObject(i).getString("object")));
+
+                }
+
+                deleteMDBEntryComponentWithChildren = true;
+
+            }
+
+        }
+
+        if (deleteMDBEntryComponentWithChildren) {
+
+            Model mdbComposition = connectionToTDB.pullNamedModelFromTDB(directory, ng);
+
+            int positionOfComponentToDelete = -1;
+
+            String hasMDBEntryComponent = "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040";
+            // has MDB entry component
+
+            String hasMDBPosition = "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000042";
+            // has position in MDB entry component
+
+            for (int i = 0; i < mdbEntryComponentsListWithChildren.length(); i++) {
+
+                String mdbEntryComponentWithChildren = mdbEntryComponentsListWithChildren.getString(i);
+
+                NodeIterator posIter = mdbComposition.listObjectsOfProperty(ResourceFactory.createResource(mdbEntryComponentWithChildren), ResourceFactory.createProperty(hasMDBPosition));
+
+                if (posIter.hasNext()) {
+
+                    positionOfComponentToDelete = posIter.next().asLiteral().getInt();
+
+                }
+
+                ResIterator parentIter = mdbComposition.listSubjectsWithProperty(ResourceFactory.createProperty(hasMDBEntryComponent), ResourceFactory.createResource(mdbEntryComponentWithChildren));
+
+                while (parentIter.hasNext()) {
+
+                    Resource parent = parentIter.nextResource();
+
+                    Selector parentSelector = new SimpleSelector(parent, ResourceFactory.createProperty(hasMDBEntryComponent), null, "");
+
+                    StmtIterator parentComponentsIter = mdbComposition.listStatements(parentSelector);
+
+                    while (parentComponentsIter.hasNext()) {
+
+                        Statement currChildStmt = parentComponentsIter.nextStatement();
+
+                        Resource currChild = currChildStmt.getObject().asResource();
+
+                        if (!(currChild.toString().equals(mdbEntryComponentWithChildren))) {
+
+                            int currPositionOfChild = mdbComposition.listObjectsOfProperty(currChild, ResourceFactory.createProperty(hasMDBPosition)).next().asLiteral().getInt();
+
+                            if (currPositionOfChild > positionOfComponentToDelete) {
+
+                                if (!currComponentObject.has("input_data")) {
+                                    // no other statement was generated yet
+
+                                    // delete old position
+
+                                    JSONObject currInputDataObject = new JSONObject();
+
+                                    currInputDataObject.append("subject", currChild.toString());
+
+                                    currInputDataObject.append("property", hasMDBPosition);
+
+                                    currInputDataObject.append("ng", ng);
+
+                                    currInputDataObject.append("directory", directory);
+
+                                    currInputDataObject.append("object_data", String.valueOf(currPositionOfChild));
+
+                                    currInputDataObject.append("object_type", "l");
+
+                                    currInputDataObject.append("operation", "d");
+
+                                    currComponentObject.put("input_data", currInputDataObject);
+
+                                } else {
+
+                                    // delete old position
+
+                                    currComponentObject.getJSONObject("input_data").append("subject", currChild.toString());
+
+                                    currComponentObject.getJSONObject("input_data").append("property", hasMDBPosition);
+
+                                    currComponentObject.getJSONObject("input_data").append("object_data", String.valueOf(currPositionOfChild));
+
+                                    currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                                    currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                                    currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                                    currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+                                }
+
+                                // add new position
+
+                                currComponentObject.getJSONObject("input_data").append("subject", currChild.toString());
+
+                                currComponentObject.getJSONObject("input_data").append("property", hasMDBPosition);
+
+                                currComponentObject.getJSONObject("input_data").append("object_data", String.valueOf(currPositionOfChild - 1));
+
+                                currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                                currComponentObject.getJSONObject("input_data").append("operation", "s");
+
+                            }
+
+                        } else {
+                            // delete connection parent and component
+
+                            if (!currComponentObject.has("input_data")) {
+                                // no other statement was generated yet
+
+                                // delete old position
+
+                                JSONObject currInputDataObject = new JSONObject();
+
+                                currInputDataObject.append("subject", parent.toString());
+
+                                currInputDataObject.append("property", hasMDBEntryComponent);
+
+                                currInputDataObject.append("object_data", mdbEntryComponentWithChildren);
+
+                                currInputDataObject.append("object_type", "l");
+
+                                currInputDataObject.append("ng", ng);
+
+                                currInputDataObject.append("directory", directory);
+
+                                currInputDataObject.append("operation", "d");
+
+                                currComponentObject.put("input_data", currInputDataObject);
+
+                            } else {
+
+                                currComponentObject.getJSONObject("input_data").append("subject", parent.toString());
+
+                                currComponentObject.getJSONObject("input_data").append("property", hasMDBEntryComponent);
+
+                                currComponentObject.getJSONObject("input_data").append("object_data", mdbEntryComponentWithChildren);
+
+                                currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                                currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                JSONArray componentsToDeleteJSONArray = new JSONArray();
+
+                componentsToDeleteJSONArray.put(mdbEntryComponentWithChildren);
+
+                deleteMDBEntryComponent(currComponentObject, componentsToDeleteJSONArray, ng, directory, mdbComposition);
+
+            }
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
 
         }
 
@@ -4166,14 +7102,84 @@ public class MDBJSONObjectFactory {
 
 
     /**
+     * This method creates a new DOI
+     * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     */
+    public void executionStepGetDOI(JSONObject jsonInputObject, JSONArray currExecStep,
+                                    JenaIOTDBFactory connectionToTDB) {
+
+
+        String newFocusURI = "";
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000185")) {
+                // set new focus on MDB entry ID
+
+                newFocusURI = setFocusOnIndividual(currExecStep.getJSONObject(i).getString("object"), currExecStep, jsonInputObject, newFocusURI, connectionToTDB);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        // todo rebuilt this when we use real DOIs
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000630")) {
+                // DOI defines keyword resource
+
+                System.out.println("Created the following DOI = " + "http://www.morphdbase.de/dummy-doi/" + this.currentFocus.substring(this.currentFocus.lastIndexOf("-") + 1));
+
+                this.identifiedResources.put(currExecStep.getJSONObject(i).getString("object"), "http://www.morphdbase.de/dummy-doi/" + this.currentFocus.substring(this.currentFocus.lastIndexOf("-") + 1));
+
+            }
+
+        }
+
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
+    }
+
+    /**
      * This method search for a resource or value in the jena tdb and save the result in an identified keyword
      * @param currExecStep contains all information from the ontology for the current execution step
      * @param currComponentObject contains the current component information for the output json
      * @param jsonInputObject contains the information for the calculation
      * @param connectionToTDB contains a JenaIOTDBFactory object
      */
-    public void executionStepSearchMDB(JSONArray currExecStep, JSONObject currComponentObject,
-                                       JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+    public void executionStepSearchMDB(JSONObject currComponentObject, JSONObject jsonInputObject,
+                                       JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+
+        String newFocusURI = "";
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000185")) {
+                // set new focus on MDB entry ID
+
+                newFocusURI = setFocusOnIndividual(currExecStep.getJSONObject(i).getString("object"), currExecStep, jsonInputObject, newFocusURI, connectionToTDB);
+
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
 
         boolean executeThisStep = true;
 
@@ -4194,7 +7200,7 @@ public class MDBJSONObjectFactory {
 
 
                     } else if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
-                        // load from/save to/update in named graph (this entry's specific individual of) update store [BOOLEAN]
+                        // load from/save to/update in named graph (this entry's specific individual of)
 
                         if (jsonInputObject.getString("html_form").contains(ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("object")).getLocalName())) {
 
@@ -4218,65 +7224,75 @@ public class MDBJSONObjectFactory {
 
         if (executeThisStep) {
 
-            JSONObject dataToFindObjectInTDB = new JSONObject();
+            boolean multipleHitsSearch = false, subjectIsUnknown = false, propertyIsUnknown = false,
+                    objectIsUnknown = false, ngIsUnknown = false;
 
-            String currSubject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
-
-            //System.out.println("currSubject = " + currSubject);
-
-            String currProperty = calculateProperty(currExecStep);
-
-            //System.out.println("currProperty = " + currProperty);
-
-            String currNG = calculateNG(currExecStep, connectionToTDB);
-
-            //System.out.println("currNG = " + currNG);
-
-            String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
-
-            //System.out.println("currDirectoryPath = " + currDirectoryPath);
-
-            String currObjectType = calculateObjectType(currProperty);
-
-            //System.out.println("currObjectType = " + currObjectType);
-
-            dataToFindObjectInTDB.put("subject", currSubject);
-            dataToFindObjectInTDB.put("property", currProperty);
-            dataToFindObjectInTDB.put("ng", currNG);
-            dataToFindObjectInTDB.put("directory", currDirectoryPath);
-
-            String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
-
-            //System.out.println("currObject = " + currObject);
-
-            String searchTarget = null;
-
-            String searchTargetKeyword = null;
+            String searchTarget = null, searchTargetKeyword = null, searchTargetListKeyword = null;
 
             for (int i = 0; i < currExecStep.length();i++) {
 
-                if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000481")) {
+                if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")) {
+                    // subject
+
+                    if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000220")) {
+                        // KEYWORD: ?
+
+                        subjectIsUnknown = true;
+
+                    }
+
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000041")) {
+                    // property
+
+                    if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000220")) {
+                        // KEYWORD: ?
+
+                        propertyIsUnknown = true;
+
+                    }
+
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                    // object
+
+                    if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000220")) {
+                        // KEYWORD: ?
+
+                        objectIsUnknown = true;
+
+                    }
+
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")) {
+                    // load from/save to/update in named graph
+
+                    if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000220")) {
+                        // KEYWORD: ?
+
+                        ngIsUnknown = true;
+
+                    }
+
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000481")) {
                     // search target
 
                     if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000466")) {
                         // KEYWORD: subject
 
-                        searchTarget = currSubject;
+                        searchTarget = "s";
 
                     } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000467")) {
                         // KEYWORD: property
 
-                        searchTarget = currProperty;
+                        searchTarget = "p";
 
                     } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000468")) {
                         // KEYWORD: object
 
-                        searchTarget = currObject;
+                        searchTarget = "o";
 
                     } else if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000469")) {
                         // KEYWORD: named graph
 
-                        searchTarget = currNG;
+                        searchTarget = "ng";
 
                     }
 
@@ -4285,11 +7301,173 @@ public class MDBJSONObjectFactory {
 
                     searchTargetKeyword = currExecStep.getJSONObject(i).getString("object");
 
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000588")) {
+                    // multiple-hits-search [BOOLEAN]
+
+                    multipleHitsSearch = true;
+
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000589")) {
+                    // search target saved to 'list of URIs named graph' keyword
+
+                    searchTargetListKeyword = currExecStep.getJSONObject(i).getString("object");
+
                 }
 
             }
 
-            this.identifiedResources.put(searchTargetKeyword, searchTarget);
+            if (multipleHitsSearch) {
+
+                JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                switch (searchTarget) {
+
+                    case "o":
+
+                        String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+
+                        System.out.println("currDirectoryPath = " + currDirectoryPath);
+
+                        dataToFindObjectInTDB.put("directory", currDirectoryPath);
+
+                        String currSubject = subjectIsUnknown ? "?s" : calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        System.out.println("currSubject = " + currSubject);
+
+                        String currProperty = propertyIsUnknown ? "?p" : calculateProperty(currExecStep);
+
+                        System.out.println("currProperty = " + currProperty);
+
+                        String currNG = ngIsUnknown ? "?ng" : calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        System.out.println("currNG = " + currNG);
+
+                        String currObjectType = calculateObjectType(currProperty);
+
+                        System.out.println("currObjectType = " + currObjectType);
+
+                        dataToFindObjectInTDB.put("subject", currSubject);
+                        dataToFindObjectInTDB.put("property", currProperty);
+                        dataToFindObjectInTDB.put("ng", currNG);
+
+                        JSONArray currObjectList = calculateObjectList(dataToFindObjectInTDB, connectionToTDB);
+
+                        System.out.println("currObjectList = " + currObjectList);
+
+                        this.identifiedResources.put(searchTargetListKeyword, currObjectList);
+
+                        break;
+
+                    case "s":
+
+                        currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+
+                        System.out.println("currDirectoryPath = " + currDirectoryPath);
+
+                        dataToFindObjectInTDB.put("directory", currDirectoryPath);
+
+                        currProperty = propertyIsUnknown ? "?p" : calculateProperty(currExecStep);
+
+                        System.out.println("currProperty = " + currProperty);
+
+                        currNG = ngIsUnknown ? "?ng" : calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        System.out.println("currNG = " + currNG);
+
+                        currObjectType = calculateObjectType(currProperty);
+
+                        System.out.println("currObjectType = " + currObjectType);
+
+                        String currObject = objectIsUnknown ? "?o" : calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+
+                        System.out.println("currObject = " + currObject);
+
+                        dataToFindObjectInTDB.put("property", currProperty);
+                        dataToFindObjectInTDB.put("ng", currNG);
+                        dataToFindObjectInTDB.put("object", currObject);
+
+                        JSONArray currSubjectList = calculateSubjectList(dataToFindObjectInTDB, connectionToTDB);
+
+                        System.out.println("currSubjectList = " + currSubjectList);
+
+                        this.identifiedResources.put(searchTargetListKeyword, currSubjectList);
+
+                        break;
+
+                }
+
+            } else {
+
+                JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                String currSubject = subjectIsUnknown ? "?s" : calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                //System.out.println("currSubject = " + currSubject);
+
+                String currProperty = calculateProperty(currExecStep);
+
+                //System.out.println("currProperty = " + currProperty);
+
+                String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                //System.out.println("currNG = " + currNG);
+
+                String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+
+                //System.out.println("currDirectoryPath = " + currDirectoryPath);
+
+                String currObjectType = calculateObjectType(currProperty);
+
+                //System.out.println("currObjectType = " + currObjectType);
+
+                dataToFindObjectInTDB.put("subject", currSubject);
+                dataToFindObjectInTDB.put("property", currProperty);
+                dataToFindObjectInTDB.put("ng", currNG);
+                dataToFindObjectInTDB.put("directory", currDirectoryPath);
+
+                String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+
+                //System.out.println("currObject = " + currObject);
+
+                switch (searchTarget) {
+
+                    case "s":
+
+                        searchTarget = currSubject;
+
+                        break;
+
+                    case "p":
+
+                        searchTarget = currProperty;
+
+                        break;
+
+                    case "o":
+
+                        searchTarget = currObject;
+
+                        break;
+
+                    case "ng":
+
+                        searchTarget = currNG;
+
+                        break;
+
+                }
+
+                System.out.println("searchTargetKeyword = " + searchTargetKeyword);
+                System.out.println("searchTarget = " + searchTarget);
+
+                this.identifiedResources.put(searchTargetKeyword, searchTarget);
+
+            }
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
 
         }
 
@@ -4299,11 +7477,24 @@ public class MDBJSONObjectFactory {
      * This method copies and modifies statements from the default composition to a specific composition
      * @param currExecStep contains all information from the ontology for the current execution step
      * @param currComponentObject contains the current component information for the output json
+     * @param jsonInputObject contains the information for the calculation
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return input information for a jena tdb
      */
     public JSONObject executionStepCopyAndSaveTripleStatements(JSONArray currExecStep, JSONObject currComponentObject,
+                                                               JSONObject jsonInputObject,
                                                                JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
 
         for (int i = 0; i < currExecStep.length();i++) {
 
@@ -4332,9 +7523,11 @@ public class MDBJSONObjectFactory {
 
                 String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
 
-                String ng = calculateNG(currExecStep, connectionToTDB);
+                String ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                 boolean modelExistInTDB = connectionToTDB.modelExistInTDB(currDirectoryPath, ng);
+
+                Model modelFromTDB = ModelFactory.createDefaultModel();
 
                 if (!modelExistInTDB) {
 
@@ -4411,6 +7604,10 @@ public class MDBJSONObjectFactory {
 
                     }
 
+                } else {
+
+                    modelFromTDB = connectionToTDB.pullNamedModelFromTDB(currDirectoryPath, ng);
+
                 }
 
                 StmtIterator stmtIterator = defaultCompositionModel.listStatements();
@@ -4472,9 +7669,51 @@ public class MDBJSONObjectFactory {
                                 } else if (this.mdbEntryIDNotEmpty
                                         && this.mdbUEIDNotEmpty) {
 
-                                    IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
+                                    if (this.entrySpecificAndDefaultResourcesMap.has(currSubject)) {
 
-                                    currSubject = individualURI.createURIForAnIndividual(currSubject, ng, currDirectoryPath, connectionToTDB);
+                                        currSubject = this.entrySpecificAndDefaultResourcesMap.getString(currSubject);
+
+                                    } else {
+
+                                        IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
+
+                                        if (defaultCompositionModel.contains(currStmt.getSubject(), RDF.type)) {
+
+                                            Selector potentialNewIndividualsSelector = new SimpleSelector(currStmt.getSubject(), RDF.type, null, "");
+
+                                            StmtIterator potentialNewIndividualIter = defaultCompositionModel.listStatements(potentialNewIndividualsSelector);
+
+                                            while (potentialNewIndividualIter.hasNext()) {
+
+                                                Statement potentialNewIndividualStmt = potentialNewIndividualIter.next();
+
+                                                if (!potentialNewIndividualStmt.getObject().equals(OWL2.NamedIndividual)) {
+
+                                                    if (modelFromTDB.contains(null, RDF.type, potentialNewIndividualStmt.getObject())) {
+
+                                                        currSubject = individualURI.createURIForAnIndividual(potentialNewIndividualStmt.getObject().toString(), ng, currDirectoryPath, connectionToTDB);
+
+                                                        this.entrySpecificAndDefaultResourcesMap.put(potentialNewIndividualStmt.getSubject().toString(), currSubject);
+
+                                                    } else {
+
+                                                        currSubject = individualURI.createURIForAnIndividualForANewNamespace(potentialNewIndividualStmt.getObject().toString());
+
+                                                        this.entrySpecificAndDefaultResourcesMap.put(potentialNewIndividualStmt.getSubject().toString(), currSubject);
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        } else {
+
+                                            currSubject = individualURI.createURIForAnIndividual(currSubject, ng, currDirectoryPath, connectionToTDB);
+
+                                        }
+
+                                    }
 
                                 } else if (mdbUEIDNotEmpty) {
 
@@ -4534,9 +7773,55 @@ public class MDBJSONObjectFactory {
 
                                     } else {
 
-                                        IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
+                                        if (this.entrySpecificAndDefaultResourcesMap.has(currObject)) {
 
-                                        currObject = individualURI.createURIForAnIndividual(currObject, ng, currDirectoryPath, connectionToTDB);
+                                            currObject = this.entrySpecificAndDefaultResourcesMap.getString(currObject);
+
+                                        } else {
+
+                                            IndividualURI individualURI = new IndividualURI(this.mdbEntryID);
+
+                                            if (!this.classSet.classExist(this.classModel, currStmt.getObject().toString())) {
+
+                                                if (defaultCompositionModel.contains(currStmt.getObject().asResource(), RDF.type)) {
+
+                                                    Selector potentialNewIndividualsSelector = new SimpleSelector(currStmt.getObject().asResource(), RDF.type, null, "");
+
+                                                    StmtIterator potentialNewIndividualIter = defaultCompositionModel.listStatements(potentialNewIndividualsSelector);
+
+                                                    while (potentialNewIndividualIter.hasNext()) {
+
+                                                        Statement potentialNewIndividualStmt = potentialNewIndividualIter.next();
+
+                                                        if (!potentialNewIndividualStmt.getObject().equals(OWL2.NamedIndividual)) {
+
+                                                            if (modelFromTDB.contains(null, RDF.type, potentialNewIndividualStmt.getObject())) {
+
+                                                                currObject = individualURI.createURIForAnIndividual(potentialNewIndividualStmt.getObject().toString(), ng, currDirectoryPath, connectionToTDB);
+
+                                                                this.entrySpecificAndDefaultResourcesMap.put(potentialNewIndividualStmt.getSubject().toString(), currObject);
+
+                                                            } else {
+
+                                                                currObject = individualURI.createURIForAnIndividualForANewNamespace(potentialNewIndividualStmt.getObject().toString());
+
+                                                                this.entrySpecificAndDefaultResourcesMap.put(potentialNewIndividualStmt.getSubject().toString(), currObject);
+
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                } else if (!currStmt.getPredicate().toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000193")) {
+
+                                                    currObject = individualURI.createURIForAnIndividual(currObject, ng, currDirectoryPath, connectionToTDB);
+
+                                                }
+
+                                            }
+
+                                        }
 
                                     }
 
@@ -4595,36 +7880,78 @@ public class MDBJSONObjectFactory {
 
                         }
 
-                        currComponentObject.getJSONObject("input_data").append("subject", currSubject);
+                        if (!currComponentObject.has("input_data")) {
+                            // no other statement was generated yet
 
-                        String currProperty = currStmt.getPredicate().toString();
+                            JSONObject currInputDataObject = new JSONObject();
 
-                        currComponentObject.getJSONObject("input_data").append("property", currProperty);
+                            currInputDataObject.append("subject", currSubject);
 
-                        String currObjectType = calculateObjectType(currProperty);
+                            String currProperty = currStmt.getPredicate().toString();
 
-                        currComponentObject.getJSONObject("input_data").append("object_data", currObject);
+                            currInputDataObject.append("property", currProperty);
 
-                        currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
+                            String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                        currComponentObject.getJSONObject("input_data").append("object_type", currObjectType);
+                            currInputDataObject.append("ng", currNG);
 
-                        String currNG = calculateNG(currExecStep, connectionToTDB);
+                            currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
 
-                        currComponentObject.getJSONObject("input_data").append("ng", currNG);
+                            currInputDataObject.append("directory", currDirectoryPath);
 
-                        currComponentObject.getJSONObject("input_data").append("directory", currDirectoryPath);
+                            String currObjectType = calculateObjectType(currProperty);
 
-                        String currOperation = "s";
+                            currInputDataObject.append("object_data", currObject);
 
-                        currComponentObject.getJSONObject("input_data").append("operation", currOperation);
+                            currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
+
+                            currInputDataObject.append("object_type", currObjectType);
+
+                            String currOperation = calculateOperation(currExecStep);
+
+                            currInputDataObject.append("operation", currOperation);
+
+                            currComponentObject.put("input_data", currInputDataObject);
+
+                        } else {
+
+                            currComponentObject.getJSONObject("input_data").append("subject", currSubject);
+
+                            String currProperty = currStmt.getPredicate().toString();
+
+                            currComponentObject.getJSONObject("input_data").append("property", currProperty);
+
+                            String currObjectType = calculateObjectType(currProperty);
+
+                            currComponentObject.getJSONObject("input_data").append("object_data", currObject);
+
+                            currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
+
+                            currComponentObject.getJSONObject("input_data").append("object_type", currObjectType);
+
+                            String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                            currComponentObject.getJSONObject("input_data").append("ng", currNG);
+
+                            currComponentObject.getJSONObject("input_data").append("directory", currDirectoryPath);
+
+                            String currOperation = "s";
+
+                            currComponentObject.getJSONObject("input_data").append("operation", currOperation);
+
+                        }
 
                     }
-
 
                 }
 
             }
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
 
         }
 
@@ -4635,13 +7962,28 @@ public class MDBJSONObjectFactory {
     /**
      * This method deletes a named graph from a jena tdb.
      * @param currExecStep contains all information from the ontology for the current execution step
+     * @param currComponentObject contains the current component information for the output json
+     * @param jsonInputObject contains the information for the calculation
      * @param connectionToTDB contains a JenaIOTDBFactory object
      */
-    public void executionStepDeleteAllTriplesOfNamedGraph(JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
+    public void executionStepDeleteAllTriplesOfNamedGraph(JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                          JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
 
         String workspace = calculateWorkspaceDirectory(currExecStep);
 
-        String namedGraph = calculateNG(currExecStep, connectionToTDB);
+        String namedGraph = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
         if (connectionToTDB.modelExistInTDB(workspace, namedGraph)) {
 
@@ -4653,22 +7995,30 @@ public class MDBJSONObjectFactory {
 
         }
 
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
     }
 
     /**
      * This method extracts a MDB Entry Composition in a new generated named graph
      * @param currExecStep contains all information from the ontology for the current execution step
+     * @param jsonInputObject contains the information for the calculation
      * @param currComponentObject contains the current component information for the output json
      * @param connectionToTDB contains a JenaIOTDBFactory object
      */
     public void executionStepExtractAndSaveMDBEntryComposition(JSONArray currExecStep, JSONObject currComponentObject,
-                                                          JenaIOTDBFactory connectionToTDB){
+                                                               JSONObject jsonInputObject,
+                                                               JenaIOTDBFactory connectionToTDB){
 
         JSONArray classToCheck = new JSONArray();
 
         String directoryPath = calculateWorkspaceDirectory(currExecStep);
 
-        String ng = calculateNG(currExecStep, connectionToTDB);
+        String ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
@@ -4699,6 +8049,17 @@ public class MDBJSONObjectFactory {
      */
     public JSONObject executionStepGenerateResources(JSONArray currExecStep, JSONObject currComponentObject,
                                                      JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
 
         boolean executeThisStep = true;
 
@@ -4873,7 +8234,7 @@ public class MDBJSONObjectFactory {
                 }
 
                 // the named graph must calculate afterwards
-                String currNG = calculateNG(currExecStep, connectionToTDB);
+                String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                 for (String currResource : sortedResources) {
 
@@ -4917,13 +8278,72 @@ public class MDBJSONObjectFactory {
 
                     //System.out.println("numberIndividualsOfClass = " + numberIndividualsOfClass);
 
+                    if (this.infoInput.has(currResource)) {
+                        // get class from info input
+
+                        currResource = this.infoInput.getString(currResource);
+
+                    } else if (this.identifiedResources.has(currResource)) {
+                        // get class from identified resources
+
+                        currResource = this.identifiedResources.getString(currResource);
+
+                    } else {
+                        // get class from input
+
+                        JSONArray arrayToCheck = jsonInputObject.getJSONArray("localIDs");
+
+                        for (int k = 0; k < arrayToCheck.length(); k++) {
+
+                            if (arrayToCheck.getJSONObject(k).has("keyword")) {
+
+                                // check if current value Resource
+                                if (arrayToCheck.getJSONObject(k).getString("keyword").equals(ResourceFactory.createResource(currResource).getLocalName()) &&
+                                        jsonInputObject.getString("localID").equals(arrayToCheck.getJSONObject(k).getString("localID"))) {
+                                    // add the current value for the if operation
+
+                                    if (arrayToCheck.getJSONObject(k).get("value") instanceof JSONObject) {
+
+                                        currResource = arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource");
+
+                                    } else if (arrayToCheck.getJSONObject(k).get("value") instanceof String) {
+
+                                        currResource = arrayToCheck.getJSONObject(k).getString("value");
+
+                                    }
+
+                                } else if (((arrayToCheck.getJSONObject(k).getString("keyword").equals(ResourceFactory.createResource(currResource).getLocalName()) &&
+                                        jsonInputObject.has("useKeywordsFromComposition")))) {
+
+                                    if (jsonInputObject.getString("useKeywordsFromComposition").equals("true")) {
+
+                                        if (arrayToCheck.getJSONObject(k).get("value") instanceof JSONObject) {
+
+                                            currResource = arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource");
+
+                                        } else if (arrayToCheck.getJSONObject(k).get("value") instanceof String) {
+
+                                            currResource = arrayToCheck.getJSONObject(k).getString("value");
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
                     if (!currResource.equals(generateResourceFor)&&
                             !currResource.equals("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000575") &&
                             // MDB user entry ID
                             !currResource.equals("http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000029") &&
                             // MDB core ID
                             !currResource.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
-                        // KEYWORD: empty
+                            // KEYWORD: empty
 
                         // don't calculate for already known individual
 
@@ -4996,7 +8416,7 @@ public class MDBJSONObjectFactory {
                 System.out.println("generatedResources = " + this.generatedResources);
 
                 // the named graph must calculate afterwards
-                String currNG = calculateNG(currExecStep, connectionToTDB);
+                String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                 for (String currResource : sortedObjectResources) {
 
@@ -5090,7 +8510,7 @@ public class MDBJSONObjectFactory {
                 //System.out.println("generatedResources = " + generatedResources);
 
                 // the named graph must calculate afterwards
-                String currNG = calculateNG(currExecStep, connectionToTDB);
+                String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
                 for (String currResource : sortedResources) {
 
@@ -5118,6 +8538,12 @@ public class MDBJSONObjectFactory {
 
         }
 
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
         return currComponentObject;
 
     }
@@ -5132,6 +8558,17 @@ public class MDBJSONObjectFactory {
      */
     public String executionStepIfThenElseStatement(JSONObject jsonInputObject, JSONArray currExecStep,
                                                    JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
 
         String ifOperation = "";
 
@@ -5158,168 +8595,236 @@ public class MDBJSONObjectFactory {
                     // has IF input value
                     // get the if input values from the ontology
 
-                    Resource inputValueRes = ResourceFactory.createResource(currExecStep.getJSONObject(j).getString("object"));
+                    // todo differ uri and string
 
-                    if (inputValueRes.toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000415")) {
-                        // KEYWORD: number of active MDB sessions of this user
+                    MDBURLEncoder mdbLEncoderSomeValue = new MDBURLEncoder();
 
-                        if (this.mdbUEIDNotEmpty) {
+                    UrlValidator urlValidatorSomeValue = new UrlValidator();
 
-                            // get the number of interval start date from store
+                    if (urlValidatorSomeValue.isValid(mdbLEncoderSomeValue.encodeUrl(currExecStep.getJSONObject(j).getString("object"), "UTF-8"))
+                            || (EmailValidator.getInstance().isValid(currExecStep.getJSONObject(j).getString("object")))) {
 
-                            String timeIntervalURIWithoutNumber = this.mdbUEID + "#TimeInterval";
+                        Resource inputValueRes = ResourceFactory.createResource(currExecStep.getJSONObject(j).getString("object"));
 
-                            SelectBuilder selectWhereBuilder = new SelectBuilder();
+                        System.out.println("inputValueRes = " + inputValueRes);
 
-                            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+                        if (inputValueRes.toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000415")) {
+                            // KEYWORD: number of active MDB sessions of this user
 
-                            selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+                            if (this.mdbUEIDNotEmpty) {
 
-                            selectWhereBuilder.addWhere("?s", "<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalStartDate>","?o");
+                                // get the number of interval start date from store
 
-                            FilterBuilder filterBuilder = new FilterBuilder();
+                                String timeIntervalURIWithoutNumber = this.mdbUEID + "#TimeInterval";
 
-                            SPARQLFilter sparqlFilter = new SPARQLFilter();
+                                SelectBuilder selectWhereBuilder = new SelectBuilder();
 
-                            // create an array list to collect the filter parts
-                            ArrayList<String> filterCollection= new ArrayList<>();
+                                PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
 
-                            // add a part to the collection
-                            filterCollection.add(timeIntervalURIWithoutNumber);
+                                selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
 
-                            // generate a filter string
-                            ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
+                                selectWhereBuilder.addWhere("?s", "<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalStartDate>","?o");
 
-                            selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
+                                FilterBuilder filterBuilder = new FilterBuilder();
 
-                            SelectBuilder selectBuilder = new SelectBuilder();
+                                SPARQLFilter sparqlFilter = new SPARQLFilter();
 
-                            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+                                // create an array list to collect the filter parts
+                                ArrayList<String> filterCollection= new ArrayList<>();
 
-                            ExprVar exprVar = new ExprVar("s");
+                                // add a part to the collection
+                                filterCollection.add(timeIntervalURIWithoutNumber);
 
-                            Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+                                // generate a filter string
+                                ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
 
-                            ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+                                selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
 
-                            selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+                                SelectBuilder selectBuilder = new SelectBuilder();
 
-                            selectBuilder.addGraph("?g", selectWhereBuilder);
+                                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
 
-                            String sparqlQueryString = selectBuilder.buildString();
+                                ExprVar exprVar = new ExprVar("s");
 
-                            TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
+                                Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
 
-                            String numberOfStartDate = connectionToTDB
-                                    .pullSingleDataFromTDB(
-                                            tdbPath
-                                                    .getPathToTDB(
-                                                            "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"),
-                                            sparqlQueryString,
-                                            "?count");
+                                ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
 
-                            // get the number of interval end date from store
+                                selectBuilder.addVar(exprAggregator.getExpr(), "?count");
 
-                            selectWhereBuilder = new SelectBuilder();
+                                selectBuilder.addGraph("?g", selectWhereBuilder);
 
-                            selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+                                String sparqlQueryString = selectBuilder.buildString();
 
-                            selectWhereBuilder.addWhere("?s", "<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalEndDate>","?o");
+                                TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
 
-                            filterBuilder = new FilterBuilder();
+                                String numberOfStartDate = connectionToTDB
+                                        .pullSingleDataFromTDB(
+                                                tdbPath
+                                                        .getPathToTDB(
+                                                                "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"),
+                                                sparqlQueryString,
+                                                "?count");
 
-                            sparqlFilter = new SPARQLFilter();
+                                // get the number of interval end date from store
 
-                            // create an array list to collect the filter parts
-                            filterCollection= new ArrayList<>();
+                                selectWhereBuilder = new SelectBuilder();
 
-                            // add a part to the collection
-                            filterCollection.add(timeIntervalURIWithoutNumber);
+                                selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
 
-                            // generate a filter string
-                            filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
+                                selectWhereBuilder.addWhere("?s", "<http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalEndDate>","?o");
 
-                            selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
+                                filterBuilder = new FilterBuilder();
+
+                                sparqlFilter = new SPARQLFilter();
+
+                                // create an array list to collect the filter parts
+                                filterCollection= new ArrayList<>();
+
+                                // add a part to the collection
+                                filterCollection.add(timeIntervalURIWithoutNumber);
+
+                                // generate a filter string
+                                filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
+
+                                selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
+
+                                selectBuilder = new SelectBuilder();
+
+                                selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                                selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+                                selectBuilder.addGraph("?g", selectWhereBuilder);
+
+                                sparqlQueryString = selectBuilder.buildString();
+
+                                String numberOfEndDate = connectionToTDB
+                                        .pullSingleDataFromTDB(
+                                                tdbPath
+                                                        .getPathToTDB(
+                                                                "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"),
+                                                sparqlQueryString,
+                                                "?count");
+
+                                System.out.println("inputValues: " + (Integer.parseInt(numberOfStartDate) - Integer.parseInt(numberOfEndDate)));
+
+                                // calculate input value(input = #start - #end)
+                                inputValues.add(String.valueOf(Integer.parseInt(numberOfStartDate) - Integer.parseInt(numberOfEndDate)));
+
+                            }
 
 
-                            selectBuilder = new SelectBuilder();
+                        } else if (inputValueRes.toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000404")) {
+                            // KEYWORD: user input
 
-                            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+                            inputValues.add(jsonInputObject.getString("value"));
+                            System.out.println("inputValues: " + jsonInputObject.getString("value"));
 
-                            selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+                        } else if (this.infoInput.has(inputValueRes.toString())) {
+                            // use info input as value
 
-                            selectBuilder.addGraph("?g", selectWhereBuilder);
+                            if ((this.infoInput.getString(inputValueRes.toString()).equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423"))) {
+                                // KEYWORD: empty
 
-                            sparqlQueryString = selectBuilder.buildString();
+                                return getNextStepFromJSONArray(currExecStep, "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000098");
 
-                            String numberOfEndDate = connectionToTDB
-                                    .pullSingleDataFromTDB(
-                                            tdbPath
-                                                    .getPathToTDB(
-                                                            "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000354"),
-                                            sparqlQueryString,
-                                            "?count");
+                            } else {
 
-                            System.out.println("inputValues: " + (Integer.parseInt(numberOfStartDate) - Integer.parseInt(numberOfEndDate)));
+                                inputValues.add(this.infoInput.getString(inputValueRes.toString()));
+                                System.out.println("inputValues: " + this.infoInput.getString(inputValueRes.toString()));
 
-                            // calculate input value(input = #start - #end)
-                            inputValues.add(String.valueOf(Integer.parseInt(numberOfStartDate) - Integer.parseInt(numberOfEndDate)));
+                            }
 
-                        }
+                        } else if (this.identifiedResources.has(inputValueRes.toString())) {
+                            // associated keyword from tdb
 
-
-                    } else if (inputValueRes.toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000404")) {
-                        // KEYWORD: user input
-
-                        inputValues.add(jsonInputObject.getString("value"));
-                        System.out.println("inputValues: " + jsonInputObject.getString("value"));
-
-                    } else if (this.infoInput.has(inputValueRes.toString())) {
-                        // use info input as value
-
-                        if ((this.infoInput.getString(inputValueRes.toString()).equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423"))) {
-                            // KEYWORD: empty
-
-                            return getNextStepFromJSONArray(currExecStep, "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000098");
+                            inputValues.add(this.identifiedResources.getString(inputValueRes.toString()));
+                            System.out.println("inputValues: " + this.identifiedResources.getString(inputValueRes.toString()));
 
                         } else {
+                            // use user input as value
 
-                            inputValues.add(this.infoInput.getString(inputValueRes.toString()));
-                            System.out.println("inputValues: " + this.infoInput.getString(inputValueRes.toString()));
+                            JSONArray arrayToCheck = jsonInputObject.getJSONArray("localIDs");
 
-                        }
+                            //System.out.println("arrayToCheck = " + arrayToCheck);
 
-                    } else if (this.identifiedResources.has(inputValueRes.toString())) {
-                        // associated keyword from tdb
+                            boolean valueWasFound = false;
 
-                        inputValues.add(this.identifiedResources.getString(inputValueRes.toString()));
-                        System.out.println("inputValues: " + this.identifiedResources.getString(inputValueRes.toString()));
+                            for (int k = 0; k < arrayToCheck.length(); k++) {
 
-                    } else {
-                        // use user input as value
+                                if (arrayToCheck.getJSONObject(k).has("keyword")) {
 
-                        JSONArray arrayToCheck = jsonInputObject.getJSONArray("localIDs");
+                                    // check if current value Resource
+                                    if (arrayToCheck.getJSONObject(k).getString("keyword").equals(inputValueRes.getLocalName()) &&
+                                            jsonInputObject.getString("localID").equals(arrayToCheck.getJSONObject(k).getString("localID"))) {
+                                        // add the current value for the if operation
 
-                        for (int k = 0; k < arrayToCheck.length(); k++) {
+                                        if (arrayToCheck.getJSONObject(k).get("value") instanceof JSONObject) {
 
-                            if (arrayToCheck.getJSONObject(k).has("keyword")) {
+                                            inputValues.add(arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource"));
 
-                                // check if current value Resource
-                                if ((arrayToCheck.getJSONObject(k).getString("keyword").equals(inputValueRes.getLocalName()) &&
-                                        jsonInputObject.getString("localID").equals(arrayToCheck.getJSONObject(k).getString("localID"))) ||
-                                        ((arrayToCheck.getJSONObject(k).getString("keyword").equals(inputValueRes.getLocalName()) &&
-                                                jsonInputObject.getString("html_form").equals("Ontologies/GUIComponent#GUI_COMPONENT_0000000143")))) {
-                                    // add the current value for the if operation
+                                            valueWasFound = true;
 
-                                    inputValues.add(arrayToCheck.getJSONObject(k).getString("value"));
+                                            System.out.println("inputValues: " + arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource"));
 
-                                    System.out.println("inputValues: " + arrayToCheck.getJSONObject(k).getString("value"));
+                                        } else if (arrayToCheck.getJSONObject(k).get("value") instanceof String) {
+
+                                            inputValues.add(arrayToCheck.getJSONObject(k).getString("value"));
+
+                                            valueWasFound = true;
+
+                                            System.out.println("inputValues: " + arrayToCheck.getJSONObject(k).getString("value"));
+
+                                        }
+
+                                    } else if (((arrayToCheck.getJSONObject(k).getString("keyword").equals(inputValueRes.getLocalName()) &&
+                                            jsonInputObject.has("useKeywordsFromComposition")))) {
+
+                                        if (jsonInputObject.getString("useKeywordsFromComposition").equals("true")) {
+
+                                            if (arrayToCheck.getJSONObject(k).get("value") instanceof JSONObject) {
+
+                                                inputValues.add(arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource"));
+
+                                                valueWasFound = true;
+
+                                                System.out.println("inputValues: " + arrayToCheck.getJSONObject(k).getJSONObject("value").getString("resource"));
+
+                                            } else if (arrayToCheck.getJSONObject(k).get("value") instanceof String) {
+
+                                                inputValues.add(arrayToCheck.getJSONObject(k).getString("value"));
+
+                                                valueWasFound = true;
+
+                                                System.out.println("inputValues: " + arrayToCheck.getJSONObject(k).getString("value"));
+
+                                            }
+
+                                        }
+
+                                    }
 
                                 }
 
                             }
 
+                            if (!valueWasFound) {
+                                // use resource as input value
+
+                                inputValues.add(inputValueRes.toString());
+
+                                System.out.println("inputValues: " + inputValueRes.toString());
+
+                            }
+
                         }
+
+                    } else {
+
+                        inputValues.add(currExecStep.getJSONObject(j).getString("object"));
+
+                        System.out.println("inputValues: " + currExecStep.getJSONObject(j).getString("object"));
 
                     }
 
@@ -5337,7 +8842,46 @@ public class MDBJSONObjectFactory {
 
                 String potentialTarget = currExecStep.getJSONObject(j).getString("object");
 
-                if (potentialTarget.contains("__MDB_UIAP_")) {
+                if (potentialTarget.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000518")) {
+                    // KEYWORD: check known keywords
+
+                    Iterator<String> infoInputIter = this.infoInput.keys();
+
+                    while (infoInputIter.hasNext()) {
+
+                        String currKey = infoInputIter.next();
+
+                        targetValues.add(currKey);
+
+                        System.out.println("targetValues: " + currKey);
+
+                    }
+
+                    Iterator<String> generatedResourcesIter = this.generatedResources.keys();
+
+                    while (generatedResourcesIter.hasNext()) {
+
+                        String currKey = generatedResourcesIter.next();
+
+                        targetValues.add(currKey);
+
+                        System.out.println("targetValues: " + currKey);
+
+                    }
+
+                    Iterator<String> identifiedResourcesIter = this.identifiedResources.keys();
+
+                    while (identifiedResourcesIter.hasNext()) {
+
+                        String currKey = identifiedResourcesIter.next();
+
+                        targetValues.add(currKey);
+
+                        System.out.println("targetValues: " + currKey);
+
+                    }
+
+                } else if (potentialTarget.contains("__MDB_UIAP_")) {
 
                     String localNamePropertyInObject = potentialTarget.substring(potentialTarget.indexOf("__") + 2);
 
@@ -5390,13 +8934,15 @@ public class MDBJSONObjectFactory {
 
                     targetValues.add(potentialTarget);
 
+                    System.out.println("targetValues: " + potentialTarget);
+
                 } else {
 
                     targetValues.add(potentialTarget);
 
-                }
+                    System.out.println("targetValues: " + potentialTarget);
 
-                System.out.println("targetValues: " + potentialTarget);
+                }
 
             }
 
@@ -5405,6 +8951,12 @@ public class MDBJSONObjectFactory {
         MDBIfThenElse mdbIfThenElse = new MDBIfThenElse();
 
         boolean ifDecision = mdbIfThenElse.checkCondition(ifOperation, inputValues, targetValues, connectionToTDB);
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
 
         if (ifDecision) {
             // case ifDecision is true
@@ -5432,17 +8984,29 @@ public class MDBJSONObjectFactory {
     public JSONObject executionStepMDBHyperlink(JSONObject currComponentObject, JSONObject jsonInputObject,
                                                 JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
 
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
         System.out.println("Hyperlink case");
 
         String ng = "", directory = "", selectedPart = "", switchToPageURI = "", switchToOverlayURI = "";
-        Boolean switchToPageExist = false, switchToOverlayExist = false, hasSelectedPartExist = false;
+        Boolean switchToPageExist = false, switchToOverlayExist = false, hasSelectedPartExist = false,
+                isGeneralApplicationPage = false, updateComposition = false;
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
             if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
                 // load from/save to/update in named graph (this entry's specific individual of)
 
-                ng = calculateNG(currExecStep, connectionToTDB);
+                ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
             } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
                 // named graph belongs to workspace
@@ -5471,6 +9035,16 @@ public class MDBJSONObjectFactory {
                 // MDB info-message
 
                 currComponentObject.put(ResourceFactory.createProperty(currExecStep.getJSONObject(i).getString("property")).getLocalName(), ResourceFactory.createPlainLiteral(currExecStep.getJSONObject(i).getString("object")).asLiteral().getLexicalForm());
+
+            } else if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000573")) {
+                // is general application page [BOOLEAN]
+
+                isGeneralApplicationPage = true;
+
+            } else if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000583")) {
+                // update composition
+
+                updateComposition = true;
 
             }
 
@@ -5542,7 +9116,7 @@ public class MDBJSONObjectFactory {
 
                 }
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 outputGenerator.getOutputJSONObject(currComponentObject.getString("load_page_localID"), jsonInputObject, currComponentObject.getJSONArray("data"));
 
@@ -5610,9 +9184,93 @@ public class MDBJSONObjectFactory {
 
                 currComponentObject.put("load_overlay_localID", loadOverlayLocalID);
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 outputGenerator.getOutputJSONObject(currComponentObject.getString("load_overlay_localID"), jsonInputObject, currComponentObject.getJSONArray("data"));
+
+            } else if (updateComposition) {
+
+                currComponentObject.put("data", currComponentObject.getJSONArray("compositionForMDBHyperlink"));
+
+                currComponentObject.remove("compositionForMDBHyperlink");
+
+                if (hasSelectedPartExist) {
+
+                    if (selectedPart.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000546")) {
+                        // KEYWORD: new selected part
+
+                        currComponentObject.put("partID", jsonInputObject.getString("localID"));
+
+                    } else {
+
+                        String resultVarLabel = "?s";
+
+                        PrefixesBuilder prefixesBuilderLabel = new PrefixesBuilder();
+
+                        SelectBuilder selectBuilderLabel = new SelectBuilder();
+
+                        selectBuilderLabel = prefixesBuilderLabel.addPrefixes(selectBuilderLabel);
+
+                        SelectBuilder tripleSPOConstructLabel = new SelectBuilder();
+
+                        tripleSPOConstructLabel.addWhere( "?s", RDF.type, "<" + selectedPart + ">");
+
+                        selectBuilderLabel.addVar(selectBuilderLabel.makeVar(resultVarLabel));
+
+                        selectBuilderLabel.addGraph("<" + ng + ">", tripleSPOConstructLabel);
+
+                        String sparqlQueryStringLabel = selectBuilderLabel.buildString();
+
+                        String partID = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryStringLabel, resultVarLabel);
+
+                        currComponentObject.put("partID", ResourceFactory.createResource(partID).getLocalName());
+
+                    }
+
+                }
+
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
+
+                outputGenerator.getOutputJSONObject(jsonInputObject.getString("html_form"), jsonInputObject, currComponentObject.getJSONArray("data"));
+
+                JSONObject updatePartInnerJSONObject = new JSONObject();
+
+                JSONArray updatePartInnerJSONArray = new JSONArray();
+
+                for (int i = 0; i < currComponentObject.getJSONArray("data").length(); i++) {
+
+                    String currIndex = String.valueOf(i + 1);
+
+                    updatePartInnerJSONArray.put(currIndex);
+
+                    updatePartInnerJSONObject.put(currIndex, currComponentObject.getJSONArray("data").get(i));
+
+                }
+
+                if (updatePartInnerJSONArray.length() > 0) {
+
+                    // this means the input is correct
+                    updatePartInnerJSONObject.put("valid", "true");
+
+                    updatePartInnerJSONObject.put("update_position", updatePartInnerJSONArray);
+
+
+                } else {
+
+                    // this means the input is correct
+                    updatePartInnerJSONObject.put("valid", "false");
+
+                }
+
+                JSONObject updatePartJSONObject = new JSONObject();
+
+                updatePartJSONObject.put(jsonInputObject.getString("localID"), updatePartInnerJSONObject);
+
+                JSONArray updatePartJSONArray = new JSONArray();
+
+                updatePartJSONArray.put(updatePartJSONObject);
+
+                currComponentObject.put("data", updatePartJSONArray);
 
             }
 
@@ -5622,15 +9280,15 @@ public class MDBJSONObjectFactory {
 
             if (this.mdbCoreIDNotEmpty && this.mdbEntryIDNotEmpty && this.mdbUEIDNotEmpty) {
 
-                operationManager = new OperationManager(this.mdbCoreID, this.mdbEntryID, this.mdbUEID);
+                operationManager = new OperationManager(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.mongoDBConnection);
 
             } else if(this.mdbUEIDNotEmpty) {
 
-                operationManager = new OperationManager(this.mdbUEID);
+                operationManager = new OperationManager(this.mdbUEID, this.mongoDBConnection);
 
             } else {
 
-                operationManager = new OperationManager();
+                operationManager = new OperationManager(this.mongoDBConnection);
 
             }
 
@@ -6015,7 +9673,6 @@ public class MDBJSONObjectFactory {
                 System.out.println("switchToEntry = " + entryID);
                 System.out.println();*/
 
-
                     TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
 
                     FilterBuilder filterBuilder = new FilterBuilder();
@@ -6116,7 +9773,8 @@ public class MDBJSONObjectFactory {
 
                 currComponentObject.put("load_page", classID);
 
-                if (classID.contains("http://www.morphdbase.de/resource/")) {
+                if (classID.contains("http://www.morphdbase.de/resource/")
+                        || isGeneralApplicationPage) {
 
                     try {
 
@@ -6139,6 +9797,18 @@ public class MDBJSONObjectFactory {
                 }
 
             }
+
+        }
+
+        if (this.useTab) {
+
+            currComponentObject.put("active_tab", this.tabToUse);
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
 
         }
 
@@ -6226,18 +9896,16 @@ public class MDBJSONObjectFactory {
 
     }
 
-
     /**
      * This method generate new triples. This triples must be save in a jena tdb
-     * @param currExecStep contains all information from the ontology for the current execution step
-     * @param currComponentObject contains the current component information for the output json
+     * @param currComponentObject contains information about the current object
      * @param jsonInputObject contains the information for the calculation
+     * @param currExecStep contains all information from the ontology for the current execution step
      * @param connectionToTDB contains a JenaIOTDBFactory object
      * @return input information for a jena tdb
      */
-    public JSONObject executionStepSaveDeleteTripleStatements(JSONArray currExecStep, JSONObject currComponentObject,
-                                                              JSONObject jsonInputObject,
-                                                              JenaIOTDBFactory connectionToTDB) {
+    private JSONObject saveDeleteTripleStatements (JSONObject currComponentObject, JSONObject jsonInputObject,
+                                                   JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
 
         boolean executeThisStep = true;
 
@@ -6282,12 +9950,46 @@ public class MDBJSONObjectFactory {
 
         if (executeThisStep) {
 
-            for (int i = 0; i < currExecStep.length(); i++) {
+            boolean saveToStoreExist = false, listExist = false;
+            JSONArray objectsJSONArray = new JSONArray(), subjectsJSONArray = new JSONArray();
+
+            for (int i = currExecStep.length() - 1; i >= 0; i--) {
+
+                boolean removeCurrID = false;
 
                 if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000394")) {
                     // set new focus on MDB entry ID (individual of)
 
                     setFocusOnClass(jsonInputObject, connectionToTDB, currExecStep.getJSONObject(i).getString("object"));
+
+                }
+
+                if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000390")) {
+                    // update store [BOOLEAN]
+
+                    saveToStoreExist = true;
+
+                }
+
+                if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000651")) {
+                    // subject list
+
+                    subjectsJSONArray = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                    listExist = true;
+
+                    removeCurrID = true;
+
+                }
+
+                if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000652")) {
+                    // object list
+
+                    objectsJSONArray = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                    listExist = true;
+
+                    removeCurrID = true;
 
                 }
 
@@ -6330,105 +10032,172 @@ public class MDBJSONObjectFactory {
 
                 }
 
+                if (removeCurrID) {
+                    // remove the list information
+
+                    currExecStep.remove(i);
+
+                }
+
             }
 
-            JSONObject dataToFindObjectInTDB = new JSONObject();
+            if (listExist) {
+
+                if (subjectsJSONArray.length() > 0) {
+
+                    System.out.println("length of currSubjectList = " + subjectsJSONArray.length());
+
+                    for (int i = 0; i < subjectsJSONArray.length(); i++) {
+
+                        JSONObject currSubjectJSONObject = new JSONObject();
+
+                        currSubjectJSONObject.put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042");
+                        // subject
+
+                        currSubjectJSONObject.put("object", subjectsJSONArray.getString(i));
+
+                        currExecStep.put(currSubjectJSONObject);
+
+                        currComponentObject = saveDeleteTripleStatements(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                        currExecStep.remove(currExecStep.length() - 1);
+
+                    }
 
 
-            if (!currComponentObject.has("input_data")) {
-                // no other statement was generated yet
+                } else if (objectsJSONArray.length() > 0) {
 
-                JSONObject currInputDataObject = new JSONObject();
+                    System.out.println("length of currObjectList = " + objectsJSONArray.length());
 
-                String currSubject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+                    for (int i = 0; i < objectsJSONArray.length(); i++) {
 
-                currInputDataObject.append("subject", currSubject);
+                        JSONObject currObjectJSONObject = new JSONObject();
 
-                String currProperty = calculateProperty(currExecStep);
+                        currObjectJSONObject.put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040");
+                        // object
+                        currObjectJSONObject.put("object", objectsJSONArray.getString(i));
 
-                currInputDataObject.append("property", currProperty);
+                        currExecStep.put(currObjectJSONObject);
 
-                String currNG = calculateNG(currExecStep, connectionToTDB);
+                        currComponentObject = saveDeleteTripleStatements(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
 
-                currInputDataObject.append("ng", currNG);
+                        currExecStep.remove(currExecStep.length() - 1);
 
-                String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+                    }
 
-                currInputDataObject.append("directory", currDirectoryPath);
+                } else {
 
-                String currObjectType = calculateObjectType(currProperty);
+                    System.out.println("WARN: The object list and the subject list is empty.");
 
-                dataToFindObjectInTDB.put("subject", currSubject);
-                dataToFindObjectInTDB.put("property", currProperty);
-                dataToFindObjectInTDB.put("ng", currNG);
-                dataToFindObjectInTDB.put("directory", currDirectoryPath);
-
-                String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
-
-                currInputDataObject.append("object_data", currObject);
-
-                currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
-
-                currInputDataObject.append("object_type", currObjectType);
-
-                String currOperation = calculateOperation(currExecStep);
-
-                currInputDataObject.append("operation", currOperation);
-
-                currComponentObject.put("input_data", currInputDataObject);
+                }
 
             } else {
 
-                String currSubject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+                JSONObject dataToFindObjectInTDB = new JSONObject();
 
-                System.out.println("currSubject = " + currSubject);
 
-                currComponentObject.getJSONObject("input_data").append("subject", currSubject);
+                if (!currComponentObject.has("input_data")) {
+                    // no other statement was generated yet
 
-                String currProperty = calculateProperty(currExecStep);
+                    JSONObject currInputDataObject = new JSONObject();
 
-                System.out.println("currProperty = " + currProperty);
+                    String currSubject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                currComponentObject.getJSONObject("input_data").append("property", currProperty);
+                    currInputDataObject.append("subject", currSubject);
 
-                String currNG = calculateNG(currExecStep, connectionToTDB);
+                    String currProperty = calculateProperty(currExecStep);
 
-                currComponentObject.getJSONObject("input_data").append("ng", currNG);
+                    currInputDataObject.append("property", currProperty);
 
-                System.out.println("currNG = " + currNG);
+                    String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+                    currInputDataObject.append("ng", currNG);
 
-                currComponentObject.getJSONObject("input_data").append("directory", currDirectoryPath);
+                    String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
 
-                System.out.println("currDirectoryPath = " + currDirectoryPath);
+                    currInputDataObject.append("directory", currDirectoryPath);
 
-                String currObjectType = calculateObjectType(currProperty);
+                    String currObjectType = calculateObjectType(currProperty);
 
-                System.out.println("currObjectType = " + currObjectType);
+                    dataToFindObjectInTDB.put("subject", currSubject);
+                    dataToFindObjectInTDB.put("property", currProperty);
+                    dataToFindObjectInTDB.put("ng", currNG);
+                    dataToFindObjectInTDB.put("directory", currDirectoryPath);
 
-                dataToFindObjectInTDB.put("subject", currSubject);
-                dataToFindObjectInTDB.put("property", currProperty);
-                dataToFindObjectInTDB.put("ng", currNG);
-                dataToFindObjectInTDB.put("directory", currDirectoryPath);
+                    String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
 
-                String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+                    currInputDataObject.append("object_data", currObject);
 
-                System.out.println("currObject = " + currObject);
+                    currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
 
-                currComponentObject.getJSONObject("input_data").append("object_data", currObject);
+                    currInputDataObject.append("object_type", currObjectType);
 
-                currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
+                    String currOperation = calculateOperation(currExecStep);
 
-                System.out.println("currObjectType = " + currObjectType);
+                    currInputDataObject.append("operation", currOperation);
 
-                currComponentObject.getJSONObject("input_data").append("object_type", currObjectType);
+                    currComponentObject.put("input_data", currInputDataObject);
 
-                String currOperation = calculateOperation(currExecStep);
+                } else {
 
-                System.out.println("currOperation = " + currOperation);
+                    String currSubject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                currComponentObject.getJSONObject("input_data").append("operation", currOperation);
+                    System.out.println("currSubject = " + currSubject);
+
+                    currComponentObject.getJSONObject("input_data").append("subject", currSubject);
+
+                    String currProperty = calculateProperty(currExecStep);
+
+                    System.out.println("currProperty = " + currProperty);
+
+                    currComponentObject.getJSONObject("input_data").append("property", currProperty);
+
+                    String currNG = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                    currComponentObject.getJSONObject("input_data").append("ng", currNG);
+
+                    System.out.println("currNG = " + currNG);
+
+                    String currDirectoryPath = calculateWorkspaceDirectory(currExecStep);
+
+                    currComponentObject.getJSONObject("input_data").append("directory", currDirectoryPath);
+
+                    System.out.println("currDirectoryPath = " + currDirectoryPath);
+
+                    String currObjectType = calculateObjectType(currProperty);
+
+                    System.out.println("currObjectType = " + currObjectType);
+
+                    dataToFindObjectInTDB.put("subject", currSubject);
+                    dataToFindObjectInTDB.put("property", currProperty);
+                    dataToFindObjectInTDB.put("ng", currNG);
+                    dataToFindObjectInTDB.put("directory", currDirectoryPath);
+
+                    String currObject = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+
+                    System.out.println("currObject = " + currObject);
+
+                    currComponentObject.getJSONObject("input_data").append("object_data", currObject);
+
+                    currObjectType = calculateObjectTypeForAnnotationProperty(currObject, currObjectType);
+
+                    System.out.println("currObjectType = " + currObjectType);
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", currObjectType);
+
+                    String currOperation = calculateOperation(currExecStep);
+
+                    System.out.println("currOperation = " + currOperation);
+
+                    currComponentObject.getJSONObject("input_data").append("operation", currOperation);
+
+                }
+
+                if (saveToStoreExist) {
+
+                    saveToStores(currComponentObject, jsonInputObject, connectionToTDB);
+
+                }
 
             }
 
@@ -6443,6 +10212,193 @@ public class MDBJSONObjectFactory {
         return currComponentObject;
 
     }
+
+    /**
+     * This method coordinates the generation of new triples. This triples must be save in a jena tdb
+     * @param currExecStep contains all information from the ontology for the current execution step
+     * @param currComponentObject contains the current component information for the output json
+     * @param jsonInputObject contains the information for the calculation
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return input information for a jena tdb
+     */
+    public JSONObject executionStepSaveDeleteTripleStatements(JSONArray currExecStep, JSONObject currComponentObject,
+                                                              JSONObject jsonInputObject,
+                                                              JenaIOTDBFactory connectionToTDB) {
+
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
+        if (this.multipleExecutionStepFocus) {
+
+            if (this.executionStepFocuses.length() > 0) {
+
+                for (int i = 0; i < this.executionStepFocuses.length(); i++) {
+
+                    this.executionStepFocus = this.executionStepFocuses.getString(i);
+
+                    currComponentObject = saveDeleteTripleStatements(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+                }
+
+            }
+
+            this.multipleExecutionStepFocus = false;
+
+        } else {
+
+            currComponentObject = saveDeleteTripleStatements(currComponentObject, jsonInputObject, currExecStep, connectionToTDB);
+
+        }
+
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
+        return currComponentObject;
+
+    }
+
+
+    /**
+     * This method adds statements to the currComponentObject, which must be deleted at a later execution step in the
+     * transition/workflow.
+     * @param currComponentObject contains information about the current object
+     * @param componentsToDeleteJSONArray contains a list of URI which must be deleted from the composition
+     * @param ng contains the URI of a named model
+     * @param directory contains the path to the jena tdb
+     * @param mdbCompositionModel contains a composition model from the jena tdb
+     * @return additional modified information about the current object
+     */
+    private JSONObject deleteMDBEntryComponent (JSONObject currComponentObject,JSONArray componentsToDeleteJSONArray,
+                                                String ng, String directory, Model mdbCompositionModel) {
+
+        for (int i = 0; i < componentsToDeleteJSONArray.length(); i++) {
+
+            String currPartToDelete = componentsToDeleteJSONArray.getString(i);
+
+            Selector subjectSelector = new SimpleSelector(ResourceFactory.createResource(currPartToDelete), null, null, null);
+
+            Selector objectSelector = new SimpleSelector(null, null, currPartToDelete, null);
+
+            StmtIterator subjectStmtIter = mdbCompositionModel.listStatements(subjectSelector);
+
+            StmtIterator objectStmtIter = mdbCompositionModel.listStatements(objectSelector);
+
+            while (subjectStmtIter.hasNext()) {
+
+                Statement currStmt = subjectStmtIter.nextStatement();
+
+                Property property = currStmt.getPredicate();
+
+                if (property.toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040")) {
+                    // has MDB entry component
+
+                    componentsToDeleteJSONArray.put(currStmt.getObject().asResource().toString());
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("subject", currPartToDelete);
+
+                currComponentObject.getJSONObject("input_data").append("property", property.toString());
+
+                if (currStmt.getObject().isLiteral()) {
+
+                    currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asLiteral().toString());
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                } else {
+
+                    currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asResource().toString());
+
+                    currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+            }
+
+            while (objectStmtIter.hasNext()) {
+
+                Statement currStmt = objectStmtIter.nextStatement();
+
+                Property property = currStmt.getPredicate();
+
+                if (property.equals(OWL2.annotatedSource)) {
+                    // delete axioms of the component
+
+                    StmtIterator axiomIter = currStmt.getSubject().listProperties();
+
+                    while (axiomIter.hasNext()) {
+
+                        Statement currAxiomStmt = axiomIter.nextStatement();
+
+                        currComponentObject.getJSONObject("input_data").append("subject", currAxiomStmt.getSubject().toString());
+
+                        currComponentObject.getJSONObject("input_data").append("property", property.toString());
+
+                        if (currStmt.getObject().isLiteral()) {
+
+                            currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asLiteral().toString());
+
+                            currComponentObject.getJSONObject("input_data").append("object_type", "l");
+
+                        } else {
+
+                            currComponentObject.getJSONObject("input_data").append("object_data", currStmt.getObject().asResource().toString());
+
+                            currComponentObject.getJSONObject("input_data").append("object_type", "r");
+
+                        }
+
+                        currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                        currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                        currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+                    }
+
+                }
+
+                currComponentObject.getJSONObject("input_data").append("subject", currStmt.getSubject().toString());
+
+                currComponentObject.getJSONObject("input_data").append("property", currStmt.getPredicate().toString());
+
+                currComponentObject.getJSONObject("input_data").append("object_data", currPartToDelete);
+
+                currComponentObject.getJSONObject("input_data").append("object_type", "r");
+                // is definitive a resource, because it is the part to delete
+
+                currComponentObject.getJSONObject("input_data").append("ng", ng);
+
+                currComponentObject.getJSONObject("input_data").append("directory", directory);
+
+                currComponentObject.getJSONObject("input_data").append("operation", "d");
+
+            }
+
+        }
+
+        return  currComponentObject;
+
+    }
+
 
 
     /**
@@ -6507,6 +10463,195 @@ public class MDBJSONObjectFactory {
 
 
     /**
+     * This method calculates and formats the output for a mdb composition.
+     * @param root contains the URI of a root element
+     * @param ngs contains the URI of a named graph which contains the root element
+     * @param directory contains the path to the directory which contains the root element
+     * @param jsonInputObject contains the information for the calculation
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return a formatted JSONArray
+     */
+    public JSONArray getCompositionFromStoreForOutput(String root, JSONArray ngs, String directory, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
+
+        Model unionNGModel = ModelFactory.createDefaultModel(), entryComponentsModel = ModelFactory.createDefaultModel();
+
+        for (int j = 0; j < ngs.length(); j++) {
+
+            unionNGModel = unionNGModel.union(connectionToTDB.pullNamedModelFromTDB(directory, ngs.getString(j)));
+
+        }
+
+        ResIterator resIter = unionNGModel.listSubjects();
+
+        while (resIter.hasNext()) {
+
+            Resource entryComponentURI = resIter.next();
+
+            if (unionNGModel.contains(entryComponentURI, RDF.type, OWL2.NamedIndividual)) {
+
+                Selector tripleSelector = new SimpleSelector(entryComponentURI, null, null, "");
+
+                StmtIterator tripleStmts = unionNGModel.listStatements(tripleSelector);
+
+                while (tripleStmts.hasNext()) {
+
+                    Statement stmt = tripleStmts.nextStatement();
+
+                    Resource currSubject = stmt.getSubject();
+
+                    Property currProperty = stmt.getPredicate();
+
+                    Resource currLabelObject;
+
+                    if (stmt.getObject().isURIResource()) {
+
+                        currLabelObject = stmt.getObject().asResource();
+
+                        if (currSubject.equals(entryComponentURI)
+                                && currProperty.equals(RDF.type)
+                                && !currLabelObject.equals(OWL2.NamedIndividual)) {
+
+                            Selector classSelector = new SimpleSelector(currLabelObject, null, null, "");
+
+                            StmtIterator classStmts = unionNGModel.listStatements(classSelector);
+
+                            Resource classSubject = null;
+
+                            while (classStmts.hasNext()) {
+
+                                Statement classStmt = classStmts.nextStatement();
+
+                                classSubject = classStmt.getSubject();
+
+                                if ((!classStmt.getObject().equals(OWL2.Class))
+                                        && (!classStmt.getPredicate().equals(RDFS.label))
+                                        && (!classStmt.getPredicate().equals(RDFS.subClassOf))
+                                        && (!classStmt.getPredicate().equals(OWL2.annotatedTarget))
+                                        && (!classStmt.getPredicate().equals(OWL2.annotatedProperty))) {
+
+                                    entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, classStmt.getPredicate(), classStmt.getObject()));
+
+                                }
+
+                            }
+
+                            if (unionNGModel.contains(null, OWL2.annotatedSource, classSubject)) {
+
+                                ResIterator axiomsForClassSubject = unionNGModel.listSubjectsWithProperty(OWL2.annotatedSource, classSubject);
+
+                                while (axiomsForClassSubject.hasNext()) {
+
+                                    Resource axiomClassSubject = axiomsForClassSubject.next();
+
+                                    Selector axiomClassSelector = new SimpleSelector(axiomClassSubject, null, null, "");
+
+                                    StmtIterator axiomClassStmts = unionNGModel.listStatements(axiomClassSelector);
+
+                                    while (axiomClassStmts.hasNext()) {
+
+                                        Statement axiomClassStmt = axiomClassStmts.nextStatement();
+
+                                        if ((!axiomClassStmt.getObject().equals(OWL2.Axiom))
+                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedSource))
+                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedTarget))
+                                                && (!axiomClassStmt.getPredicate().equals(OWL2.annotatedProperty))) {
+
+                                            entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, axiomClassStmt.getPredicate(), axiomClassStmt.getObject()));
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    entryComponentsModel.add(stmt);
+
+                }
+
+                if (unionNGModel.contains(null, OWL2.annotatedSource, entryComponentURI)) {
+
+                    ResIterator axiomsForSubject = unionNGModel.listSubjectsWithProperty(OWL2.annotatedSource, entryComponentURI);
+
+                    while (axiomsForSubject.hasNext()) {
+
+                        Resource axiomSubject = axiomsForSubject.next();
+
+                        Selector axiomSelector = new SimpleSelector(axiomSubject, null, null, "");
+
+                        StmtIterator axiomStmts = unionNGModel.listStatements(axiomSelector);
+
+                        while (axiomStmts.hasNext()) {
+
+                            Statement axiomStmt = axiomStmts.nextStatement();
+
+                            if ((!axiomStmt.getObject().equals(OWL2.Axiom))
+                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedSource))
+                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedTarget))
+                                    && (!axiomStmt.getPredicate().equals(OWL2.annotatedProperty))) {
+
+                                entryComponentsModel.add(ResourceFactory.createStatement(entryComponentURI, axiomStmt.getPredicate(), axiomStmt.getObject()));
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        StmtIterator entryComponentsModelIter = entryComponentsModel.listStatements();
+
+        OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
+
+        JSONObject entryComponents = new JSONObject();
+
+        while (entryComponentsModelIter.hasNext()) {
+
+            Statement resStmt = entryComponentsModelIter.nextStatement();
+
+            String currSubject = resStmt.getSubject().toString();
+
+            entryComponents = outputGenerator
+                    .manageProperty(currSubject, resStmt, entryComponents, jsonInputObject, connectionToTDB);
+
+        }
+
+        entryComponents = outputGenerator.reorderEntryComponentsValues(entryComponents);
+
+        Iterator<String> iter = entryComponents.keys();
+
+        JSONArray outputDataJSON = new JSONArray();
+
+        while (iter.hasNext()) {
+
+            String currKey = iter.next();
+
+            JSONObject wrapperJSON = new JSONObject();
+
+            wrapperJSON.put(currKey, entryComponents.getJSONObject(currKey));
+
+            outputDataJSON.put(wrapperJSON);
+
+        }
+
+        outputDataJSON = outputGenerator.orderOutputJSON(root, outputDataJSON);
+
+        return outputDataJSON;
+
+    }
+
+
+    /**
      * This method is a getter for the overlay named graph.
      * @return a jena model for a MDB overlay
      */
@@ -6515,6 +10660,7 @@ public class MDBJSONObjectFactory {
         return this.overlayModel;
 
     }
+
 
     /**
      * This method calculates the URIs for tracking procedures of a parent transition and save them in an JSONArray
@@ -6598,9 +10744,46 @@ public class MDBJSONObjectFactory {
 
                         for (int j = 0; j < inputLocalIDs.length(); j++) {
 
-                            if ((inputLocalIDs.getJSONObject(j).getString("keyword")).equals(localNameKeyword)) {
+                            if (inputLocalIDs.getJSONObject(j).has("keyword")) {
 
-                                localIdentifiedResources.put(currExecStep.getJSONObject(i).getString("object"), inputLocalIDs.getJSONObject(j).getString("value"));
+                                if ((inputLocalIDs.getJSONObject(j).getString("keyword")).equals(localNameKeyword)) {
+
+                                    if (inputLocalIDs.getJSONObject(j).get("value") instanceof JSONObject) {
+
+                                        localIdentifiedResources.put(currExecStep.getJSONObject(i).getString("object"), inputLocalIDs.getJSONObject(j).getJSONObject("value").getString("resource"));
+
+                                    } else if (inputLocalIDs.getJSONObject(j).get("value") instanceof String) {
+
+                                        localIdentifiedResources.put(currExecStep.getJSONObject(i).getString("object"), inputLocalIDs.getJSONObject(j).getString("value"));
+
+                                    }
+
+                                }
+
+                            }
+
+                            if (inputLocalIDs.getJSONObject(j).has("keywordLabel")) {
+
+                                if ((inputLocalIDs.getJSONObject(j).getString("keywordLabel")).equals(localNameKeyword)) {
+
+                                    localIdentifiedResources.put(currExecStep.getJSONObject(i).getString("object"), inputLocalIDs.getJSONObject(j).getString("valueLabel"));
+
+                                }
+
+                            }
+
+                            if (inputLocalIDs.getJSONObject(j).has("keywordDefinition")) {
+
+                                if ((inputLocalIDs.getJSONObject(j).getString("keywordDefinition")).equals(localNameKeyword)) {
+
+                                    if (inputLocalIDs.getJSONObject(j).has("valueDefinition")) {
+                                        // todo remove the if condition if keyword for valueDefinition is implemented!
+
+                                        localIdentifiedResources.put(currExecStep.getJSONObject(i).getString("object"), inputLocalIDs.getJSONObject(j).getString("valueDefinition"));
+
+                                    }
+
+                                }
 
                             }
 
@@ -6697,7 +10880,6 @@ public class MDBJSONObjectFactory {
                     }
 
                     this.infoInput.put(uriOfIndividual, currExecStep.getJSONObject(i).getString("object"));
-                    this.infoInput.put(currExecStep.getJSONObject(i).getString("object"), "");
 
                     System.out.println();
                     System.out.println("uriOfIndividual = " + uriOfIndividual);
@@ -6777,11 +10959,11 @@ public class MDBJSONObjectFactory {
 
                         if (this.infoInput.length() != 0) {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.identifiedResources, this.infoInput, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.identifiedResources, this.infoInput, this.overlayModel, this.mongoDBConnection);
 
                         } else {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.identifiedResources, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbCoreID, this.mdbEntryID, this.mdbUEID, this.identifiedResources, this.overlayModel, this.mongoDBConnection);
 
                         }
 
@@ -6789,11 +10971,11 @@ public class MDBJSONObjectFactory {
 
                         if (this.infoInput.length() != 0) {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbUEID, this.identifiedResources, this.infoInput, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbUEID, this.identifiedResources, this.infoInput, this.overlayModel, this.mongoDBConnection);
 
                         } else {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbUEID, this.identifiedResources, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mdbUEID, this.identifiedResources, this.overlayModel, this.mongoDBConnection);
 
                         }
 
@@ -6801,11 +10983,11 @@ public class MDBJSONObjectFactory {
 
                         if (this.infoInput.length() != 0) {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.identifiedResources, this.infoInput, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.identifiedResources, this.infoInput, this.overlayModel, this.mongoDBConnection);
 
                         } else {
 
-                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.identifiedResources, this.overlayModel);
+                            mdbjsonObjectFactory = new MDBJSONObjectFactory(this.identifiedResources, this.overlayModel, this.mongoDBConnection);
 
                         }
 
@@ -6868,6 +11050,17 @@ public class MDBJSONObjectFactory {
                                                            JSONObject jsonInputObject,
                                                            JenaIOTDBFactory connectionToTDB) {
 
+        for (int i = 0; i < currExecStep.length(); i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000407")) {
+                // set new focus on MDB entry ID for this execution step
+
+                calculateFocusForExecutionStep(currExecStep.getJSONObject(i).getString("object"));
+
+            }
+
+        }
+
         boolean executeThisStep = true;
 
         if (jsonInputObject.has("mdbcoreid")) {
@@ -6883,11 +11076,11 @@ public class MDBJSONObjectFactory {
 
 
                     } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000392")) {
-                        // load from/save to/update in named graph (individual of)
+                        // load from/save to/update in named graph (copied individual of)
 
 
                     } else if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393")) {
-                        // load from/save to/update in named graph (this entry's specific individual of) update store [BOOLEAN]
+                        // load from/save to/update in named graph (this entry's specific individual of)
 
                         if (jsonInputObject.getString("html_form").contains(ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("object")).getLocalName())) {
 
@@ -6913,9 +11106,17 @@ public class MDBJSONObjectFactory {
 
             boolean saveToStoreExist = false;
 
+
             for (int i = 0; i < currExecStep.length(); i++) {
 
-                if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000390")) {
+                if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000185")) {
+                    // set new focus on MDB entry ID
+
+                    String newFocusURI = "";
+
+                    newFocusURI = setFocusOnIndividual(currExecStep.getJSONObject(i).getString("object"), currExecStep, jsonInputObject, newFocusURI, connectionToTDB);
+
+                } else if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000390")) {
                     // update store [BOOLEAN]
 
                     saveToStoreExist = true;
@@ -6940,6 +11141,12 @@ public class MDBJSONObjectFactory {
 
         }
 
+        if (this.hasExecutionStepFocus) {
+
+            this.hasExecutionStepFocus = false;
+
+        }
+
         return currComponentObject;
 
     }
@@ -6954,7 +11161,7 @@ public class MDBJSONObjectFactory {
      */
     private Model findRootIndividual(String defaultCompositionNGURI, JSONArray currExecStep, JenaIOTDBFactory connectionToTDB) {
 
-        String currDirectoryPath = calculateWorkspaceDirectoryForDefaultComposition(currExecStep);
+        String currDirectoryPath = copyFromWorkspace(currExecStep);
 
         Model defaultCompositionModel;
 
@@ -7127,209 +11334,617 @@ public class MDBJSONObjectFactory {
      */
     private JSONObject getStatementToUpdate(JSONArray currExecStep, JSONObject currComponentObject, JSONObject jsonInputObject, JenaIOTDBFactory connectionToTDB) {
 
+
+        boolean listExist = false;
+        JSONArray objectsJSONArray = new JSONArray(), subjectsJSONArray = new JSONArray();
+
+        for (int i = 0; i  < currExecStep.length(); i++) {
+
+            boolean removeCurrID = false;
+
+            if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000651")) {
+                // subject list
+
+                subjectsJSONArray = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                listExist = true;
+
+                removeCurrID = true;
+
+            }
+
+            if ((currExecStep.getJSONObject(i).getString("property")).equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000652")) {
+                // object list
+
+                objectsJSONArray = calculateValueListForKeyword(currExecStep.getJSONObject(i).getString("object"));
+
+                listExist = true;
+
+                removeCurrID = true;
+
+            }
+
+            if (removeCurrID) {
+                // remove the list information
+
+                currExecStep.remove(i);
+
+            }
+
+        }
+
+        if (listExist) {
+
+            if (subjectsJSONArray.length() > 0) {
+
+                System.out.println("length of currSubjectList = " + subjectsJSONArray.length());
+
+                for (int i = 0; i < subjectsJSONArray.length(); i++) {
+
+                    JSONObject currSubjectJSONObject = new JSONObject();
+
+                    currSubjectJSONObject.put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042");
+                    // subject
+
+                    currSubjectJSONObject.put("object", subjectsJSONArray.getString(i));
+
+                    currExecStep.put(currSubjectJSONObject);
+
+                    currComponentObject = getStatementToUpdate(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                    currExecStep.remove(currExecStep.length() - 1);
+
+                }
+
+            } else if (objectsJSONArray.length() > 0) {
+
+                System.out.println("length of currObjectList = " + objectsJSONArray.length());
+
+                for (int i = 0; i < objectsJSONArray.length(); i++) {
+
+                    JSONObject currObjectJSONObject = new JSONObject();
+
+                    currObjectJSONObject.put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040");
+                    // object
+                    currObjectJSONObject.put("object", objectsJSONArray.getString(i));
+
+                    currExecStep.put(currObjectJSONObject);
+
+                    currComponentObject = getStatementToUpdate(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                    currExecStep.remove(currExecStep.length() - 1);
+
+                }
+
+            } else {
+
+                System.out.println("WARN: The object list and the subject list is empty.");
+
+            }
+
+            return currComponentObject;
+
+        }
+
         JSONObject updateStatement = new JSONObject();
         JSONObject updateAxiomStatement = new JSONObject();
 
-        boolean axiomStatement = false;
-        boolean calculateNewResourceForInput = false;
-        boolean calculateNewObjectInput = false;
-        boolean calculateNewSubjectInput = false;
+        boolean copiedIndividualNG = false, copiedSubject = false, copiedObject = false;
+        String ngIndividual = "";
 
         for (int i = 0; i < currExecStep.length(); i++) {
 
-            if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000221")) {
-                // KEYWORD: to be updated
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000392")) {
+                // load from/save to/update in named graph (copied individual of)
 
-                String resultVar;
+                copiedIndividualNG = true;
+                ngIndividual = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
-                    // object
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
+                // object (copied individual of)
 
-                    JSONObject dataToFindObjectInTDB = new JSONObject();
+                copiedObject = true;
 
-                    String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+            } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+                // subject (copied individual of)
 
-                    String property = calculateProperty(currExecStep);
+                copiedSubject = true;
 
-                    String currObjectType = calculateObjectType(property);
+            }
 
-                    String ng = calculateNG(currExecStep, connectionToTDB);
+        }
 
-                    String directory = calculateWorkspaceDirectory(currExecStep);
+        if (copiedIndividualNG
+                || copiedSubject
+                || copiedObject) {
 
-                    resultVar = "?o";
+            boolean updateObjectInput = false;
+            boolean updateSubjectInput = false;
 
-                    SelectBuilder selectBuilder = new SelectBuilder();
+            String  updateWithResourceOrValue = "", subject = "", property = "", object = "", directory = "";
 
-                    PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+            JSONObject dataToFindSubjectInTDB = new JSONObject(), dataToFindObjectInTDB = new JSONObject();
 
-                    selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+            for (int i = 0; i < currExecStep.length(); i++) {
 
-                    SelectBuilder tripleSPO = new SelectBuilder();
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000221")) {
+                    // KEYWORD: to be updated
 
-                    tripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+                    if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                        // object
 
-                    selectBuilder.addVar(selectBuilder.makeVar(resultVar));
+                        updateObjectInput = true;
 
-                    selectBuilder.addGraph("<" + ng + ">", tripleSPO);
+                    } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")) {
+                        // subject
 
-                    String sparqlQueryString = selectBuilder.buildString();
+                        updateSubjectInput = true;
 
-                    String object = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, resultVar);
+                    }
 
-                    if (!object.equals("")) {
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
+                    // update with resource/value
 
-                        updateStatement.put("subject", subject);
+                    updateWithResourceOrValue = currExecStep.getJSONObject(i).getString("object");
 
-                        updateStatement.put("property", property);
+                    if (updateWithResourceOrValue.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000111")) {
+                        // GUI_COMPONENT_INPUT_TYPE: date time stamp
 
-                        updateStatement.put("ng", ng);
+                        updateWithResourceOrValue = this.mdbDate.getDate();
 
-                        updateStatement.put("directory", directory);
+                    } if (updateWithResourceOrValue.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605")) {
+                        // KEYWORD: this MDB entry version number
 
-                        currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
+                        updateWithResourceOrValue =  this.currentFocus.substring((this.currentFocus.lastIndexOf("-") + 1));
 
-                        updateStatement.put("object_type", currObjectType);
+                    }  else {
 
-                        if (currObjectType.equals("l")) {
-                            // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+                        updateWithResourceOrValue = calculateValueForKeyword(updateWithResourceOrValue);
 
-                            String literalDatatypeResultVar = "?o";
+                    }
 
-                            SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")
+                        // object
+                        || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000228")) {
+                        // object (copied individual of)
 
-                            PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+                    object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, "a", connectionToTDB);
 
-                            literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000041")) {
+                    // property
 
-                            SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+                    property = calculateProperty(currExecStep);
 
-                            literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")
+                        // subject
+                        || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000229")) {
+                        // subject (copied individual of)
 
-                            literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+                    subject = calculateSubject(dataToFindSubjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                            literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078")) {
+                    // named graph belongs to workspace
 
-                            String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+                    directory = calculateWorkspaceDirectory(currExecStep);
 
-                            updateStatement.put("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
+                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000392")
+                        // load from/save to/update in named graph (copied individual of)
+                        || currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077")) {
+                        // load from/save to/update in named graph
 
-                        } else {
+                    ngIndividual = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                            updateStatement.put("object_data", object);
+                }
+
+            }
+
+            if (updateObjectInput) {
+
+                JSONArray ngsInJSONArray = currComponentObject.getJSONObject("input_data").getJSONArray("ng");
+
+                boolean copiedDidNotExist = true;
+
+                // check if object already was generated in execution step 'copy and save triple statement(s)'
+                for (int i = 0; i < ngsInJSONArray.length(); i++) {
+
+                    if (ngsInJSONArray.getString(i).equals(ngIndividual)) {
+
+                        if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(i).equals(property)
+                               && currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(i).equals(subject)
+                               && currComponentObject.getJSONObject("input_data").getJSONArray("directory").getString(i).equals(directory)) {
+
+                            currComponentObject.getJSONObject("input_data").getJSONArray("object_data").put(i, updateWithResourceOrValue);
+
+                            System.out.println("currSubject = " + currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(i));
+                            System.out.println("currProperty = " + currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(i));
+                            System.out.println("currNG = " + currComponentObject.getJSONObject("input_data").getJSONArray("ng").getString(i));
+                            System.out.println("currDirectoryPath = " + currComponentObject.getJSONObject("input_data").getJSONArray("directory").getString(i));
+                            System.out.println("currObjectType = " + currComponentObject.getJSONObject("input_data").getJSONArray("object_type").getString(i));
+                            System.out.println("currObject = " + currComponentObject.getJSONObject("input_data").getJSONArray("object_data").getString(i));
+                            System.out.println("currOperation = " + currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(i));
+
+                            copiedDidNotExist = false;
 
                         }
 
-                        updateStatement.put("operation", "d");
+                   }
 
-                        calculateNewResourceForInput = true;
+                }
 
-                        calculateNewObjectInput = true;
+                if (copiedDidNotExist) {
 
-                    } else {
+                    currComponentObject.getJSONObject("input_data").getJSONArray("subject").put(subject);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("property").put(property);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("ng").put(ngIndividual);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("directory").put(directory);
 
-                        PrefixesBuilder prefixesAxiomBuilder = new PrefixesBuilder();
+                    String objectType = calculateObjectType(property);
 
-                        ConstructBuilder constructAxiomBuilder = new ConstructBuilder();
+                    currComponentObject.getJSONObject("input_data").getJSONArray("object_type").put(objectType);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("object_data").put(updateWithResourceOrValue);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("operation").put("s");
 
-                        constructAxiomBuilder = prefixesAxiomBuilder.addPrefixes(constructAxiomBuilder);
+                    System.out.println("currSubject = " + subject);
+                    System.out.println("currProperty = " + property);
+                    System.out.println("currNG = " + ngIndividual);
+                    System.out.println("currDirectoryPath = " + directory);
+                    System.out.println("currObjectType = " + objectType);
+                    System.out.println("currObject = " + updateWithResourceOrValue);
+                    System.out.println("currOperation = " + "s");
 
-                        constructAxiomBuilder.addConstruct("?s", "?p", "?o");
+                }
 
-                        SelectBuilder tripleAxiomSPOConstruct = new SelectBuilder();
+            } else if (updateSubjectInput) {
 
-                        tripleAxiomSPOConstruct.addWhere("?s", "?p", "?o");
-                        tripleAxiomSPOConstruct.addWhere("?s", "<http://www.w3.org/2002/07/owl#annotatedSource>", "<" + subject + ">");
+                JSONArray ngsInJSONArray = currComponentObject.getJSONObject("input_data").getJSONArray("ng");
 
-                        constructAxiomBuilder.addGraph("<" + ng + ">", tripleAxiomSPOConstruct);
+                boolean copiedDidNotExist = true;
 
-                        sparqlQueryString = constructAxiomBuilder.buildString();
+                // check if object already was generated in execution step 'copy and save triple statement(s)'
+                for (int i = 0; i < ngsInJSONArray.length(); i++) {
 
-                        Model individualAxiomModel = connectionToTDB.pullDataFromTDB(directory, sparqlQueryString);
+                    if (ngsInJSONArray.getString(i).equals(ngIndividual)) {
 
-                        StmtIterator stmtIterator = individualAxiomModel.listStatements();
+                        if (currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(i).equals(property)
+                                && currComponentObject.getJSONObject("input_data").getJSONArray("object_data").getString(i).equals(object)
+                                && currComponentObject.getJSONObject("input_data").getJSONArray("directory").getString(i).equals(directory)) {
 
-                        while (stmtIterator.hasNext()) {
+                            currComponentObject.getJSONObject("input_data").getJSONArray("subject").put(i, updateWithResourceOrValue);
 
-                            Statement currStatement = stmtIterator.next();
+                            System.out.println("currSubject = " + currComponentObject.getJSONObject("input_data").getJSONArray("subject").getString(i));
+                            System.out.println("currProperty = " + currComponentObject.getJSONObject("input_data").getJSONArray("property").getString(i));
+                            System.out.println("currNG = " + currComponentObject.getJSONObject("input_data").getJSONArray("ng").getString(i));
+                            System.out.println("currDirectoryPath = " + currComponentObject.getJSONObject("input_data").getJSONArray("directory").getString(i));
+                            System.out.println("currObjectType = " + currComponentObject.getJSONObject("input_data").getJSONArray("object_type").getString(i));
+                            System.out.println("currObject = " + currComponentObject.getJSONObject("input_data").getJSONArray("object_data").getString(i));
+                            System.out.println("currOperation = " + currComponentObject.getJSONObject("input_data").getJSONArray("operation").getString(i));
 
-                            if (currStatement.getSubject().isAnon()) {
+                            copiedDidNotExist = false;
 
-                                if (currStatement.getObject().isResource()) {
+                        }
 
-                                    object =  currStatement.getObject().asResource().toString();
+                    }
 
-                                    currObjectType = "r";
+                }
 
-                                } else if (currStatement.getObject().isLiteral()) {
+                if (copiedDidNotExist) {
 
-                                    object = currStatement.getObject().asLiteral().getLexicalForm();
+                    currComponentObject.getJSONObject("input_data").getJSONArray("subject").put(subject);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("property").put(property);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("ng").put(ngIndividual);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("directory").put(directory);
 
-                                    currObjectType = "l";
+                    String objectType = calculateObjectType(property);
 
-                                }
+                    currComponentObject.getJSONObject("input_data").getJSONArray("object_type").put(objectType);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("object_data").put(updateWithResourceOrValue);
+                    currComponentObject.getJSONObject("input_data").getJSONArray("operation").put("s");
 
-                                // old statements
-                                updateAxiomStatement.append("subject", currStatement.getSubject().toString());
-                                updateAxiomStatement.append("property", currStatement.getPredicate().toString());
-                                updateAxiomStatement.append("ng", ng);
-                                updateAxiomStatement.append("directory", directory);
+                    System.out.println("currSubject = " + subject);
+                    System.out.println("currProperty = " + property);
+                    System.out.println("currNG = " + ngIndividual);
+                    System.out.println("currDirectoryPath = " + directory);
+                    System.out.println("currObjectType = " + objectType);
+                    System.out.println("currObject = " + updateWithResourceOrValue);
+                    System.out.println("currOperation = " + "s");
 
-                                if (currObjectType.equals("l")) {
-                                    // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+                }
 
-                                    String literalDatatypeResultVar = "?o";
+            }
 
-                                    SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+        } else {
 
-                                    PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+            boolean axiomStatement = false;
+            boolean calculateNewResourceForInput = false;
+            boolean calculateNewObjectInput = false;
+            boolean calculateNewSubjectInput = false;
 
-                                    literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+            String objectFromStore = "";
 
-                                    SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+            for (int i = 0; i < currExecStep.length(); i++) {
 
-                                    literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+                if (currExecStep.getJSONObject(i).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000221")) {
+                    // KEYWORD: to be updated
 
-                                    literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+                    String resultVar;
 
-                                    literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+                    if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")) {
+                        // object
 
-                                    String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+                        JSONObject dataToFindObjectInTDB = new JSONObject();
 
-                                    updateAxiomStatement.append("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
+                        String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                                } else {
+                        String property = calculateProperty(currExecStep);
 
-                                    updateAxiomStatement.append("object_data", object);
+                        String currObjectType = calculateObjectType(property);
 
-                                }
+                        String ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                                updateAxiomStatement.append("object_type", currObjectType);
-                                updateAxiomStatement.append("operation", "d");
+                        String directory = calculateWorkspaceDirectory(currExecStep);
 
-                                for (int j = 0; j < currExecStep.length(); j++) {
+                        resultVar = "?o";
 
-                                    if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000041")) {
-                                        // property
+                        SelectBuilder selectBuilder = new SelectBuilder();
 
-                                        if (currStatement.getPredicate().toString().equals(currExecStep.getJSONObject(j).getString("object"))) {
+                        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
 
-                                            for (int k = 0; k < currExecStep.length(); k++) {
+                        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
 
-                                                if (currExecStep.getJSONObject(k).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
-                                                    // update with resource/value
+                        SelectBuilder tripleSPO = new SelectBuilder();
 
-                                                    currObjectType = calculateObjectTypeForAnnotationProperty(currExecStep.getJSONObject(k).getString("object"), currObjectType);
+                        tripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
 
-                                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(k).getString("object"));
+                        selectBuilder.addVar(selectBuilder.makeVar(resultVar));
+
+                        selectBuilder.addGraph("<" + ng + ">", tripleSPO);
+
+                        String sparqlQueryString = selectBuilder.buildString();
+
+                        String object = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, resultVar);
+
+                        if (!object.equals("")) {
+
+                            updateStatement.put("subject", subject);
+
+                            updateStatement.put("property", property);
+
+                            updateStatement.put("ng", ng);
+
+                            updateStatement.put("directory", directory);
+
+                            currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
+
+                            updateStatement.put("object_type", currObjectType);
+
+                            if (currObjectType.equals("l")) {
+                                // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+
+                                String literalDatatypeResultVar = "?o";
+
+                                SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+
+                                PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+
+                                literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+
+                                SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+
+                                literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+
+                                literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+
+                                literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+
+                                String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+
+                                objectFromStore = connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar);
+
+                                updateStatement.put("object_data", objectFromStore);
+
+                            } else {
+
+                                updateStatement.put("object_data", object);
+
+                            }
+
+                            updateStatement.put("operation", "d");
+
+                            calculateNewResourceForInput = true;
+
+                            calculateNewObjectInput = true;
+
+                        } else {
+
+                            PrefixesBuilder prefixesAxiomBuilder = new PrefixesBuilder();
+
+                            ConstructBuilder constructAxiomBuilder = new ConstructBuilder();
+
+                            constructAxiomBuilder = prefixesAxiomBuilder.addPrefixes(constructAxiomBuilder);
+
+                            constructAxiomBuilder.addConstruct("?s", "?p", "?o");
+
+                            SelectBuilder tripleAxiomSPOConstruct = new SelectBuilder();
+
+                            tripleAxiomSPOConstruct.addWhere("?s", "?p", "?o");
+                            tripleAxiomSPOConstruct.addWhere("?s", "<http://www.w3.org/2002/07/owl#annotatedSource>", "<" + subject + ">");
+
+                            constructAxiomBuilder.addGraph("<" + ng + ">", tripleAxiomSPOConstruct);
+
+                            sparqlQueryString = constructAxiomBuilder.buildString();
+
+                            Model individualAxiomModel = connectionToTDB.pullDataFromTDB(directory, sparqlQueryString);
+
+                            StmtIterator stmtIterator = individualAxiomModel.listStatements();
+
+                            while (stmtIterator.hasNext()) {
+
+                                Statement currStatement = stmtIterator.next();
+
+                                if (currStatement.getSubject().isAnon()) {
+
+                                    if (currStatement.getObject().isResource()) {
+
+                                        object = currStatement.getObject().asResource().toString();
+
+                                        currObjectType = "r";
+
+                                    } else if (currStatement.getObject().isLiteral()) {
+
+                                        object = currStatement.getObject().asLiteral().getLexicalForm();
+
+                                        currObjectType = "l";
+
+                                    }
+
+                                    // old statements
+                                    updateAxiomStatement.append("subject", currStatement.getSubject().toString());
+                                    updateAxiomStatement.append("property", currStatement.getPredicate().toString());
+                                    updateAxiomStatement.append("ng", ng);
+                                    updateAxiomStatement.append("directory", directory);
+
+                                    if (currObjectType.equals("l")) {
+                                        // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+
+                                        String literalDatatypeResultVar = "?o";
+
+                                        SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+
+                                        PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+
+                                        literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+
+                                        SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+
+                                        literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+
+                                        literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+
+                                        literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+
+                                        String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+
+                                        updateAxiomStatement.append("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
+
+                                    } else {
+
+                                        updateAxiomStatement.append("object_data", object);
+
+                                    }
+
+                                    updateAxiomStatement.append("object_type", currObjectType);
+                                    updateAxiomStatement.append("operation", "d");
+
+                                    for (int j = 0; j < currExecStep.length(); j++) {
+
+                                        if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000041")) {
+                                            // property
+
+                                            if (currStatement.getPredicate().toString().equals(currExecStep.getJSONObject(j).getString("object"))) {
+
+                                                for (int k = 0; k < currExecStep.length(); k++) {
+
+                                                    if (currExecStep.getJSONObject(k).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
+                                                        // update with resource/value
+
+                                                        currObjectType = calculateObjectTypeForAnnotationProperty(currExecStep.getJSONObject(k).getString("object"), currObjectType);
+
+                                                        currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(k).getString("object"));
+
+                                                    }
 
                                                 }
 
+                                                dataToFindObjectInTDB = new JSONObject();
+                                                dataToFindObjectInTDB.put("subject", currStatement.getSubject().toString());
+                                                dataToFindObjectInTDB.put("property", currStatement.getPredicate().toString());
+                                                dataToFindObjectInTDB.put("ng", ng);
+                                                dataToFindObjectInTDB.put("directory", directory);
+
+                                                object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+
+                                                currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
+
                                             }
 
+                                        }
+
+                                    }
+
+                                    String newSubjectName;
+
+                                    // create new blank node and allocate the corresponding old bNode with the new bNode
+                                    if (this.bNodeIdentifier.has(currStatement.getSubject().toString())) {
+
+                                        newSubjectName = this.bNodeIdentifier.getString(currStatement.getSubject().toString());
+
+                                    } else {
+
+                                        newSubjectName = ResourceFactory.createResource().toString();
+
+                                        this.bNodeIdentifier.put(currStatement.getSubject().toString(), newSubjectName);
+
+                                    }
+
+                                    // new statements
+                                    updateAxiomStatement.append("subject", newSubjectName);
+                                    updateAxiomStatement.append("property", currStatement.getPredicate().toString());
+                                    updateAxiomStatement.append("ng", ng);
+                                    updateAxiomStatement.append("directory", directory);
+                                    updateAxiomStatement.append("object_data", object);
+                                    updateAxiomStatement.append("object_type", currObjectType);
+                                    updateAxiomStatement.append("operation", "s");
+
+                                    axiomStatement = true;
+
+                                }
+
+                                System.out.println();
+                                System.out.println("updateStatement a = " + updateStatement);
+                                System.out.println();
+
+                            }
+
+                            if (!axiomStatement) {
+
+                                for (int j = 0; j < currExecStep.length(); j++) {
+
+                                    if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
+                                        // update with resource/value
+
+                                        // count value in jena tdb
+                                        SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+                                        selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+                                        selectWhereBuilder.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+
+                                        SelectBuilder countSelectBuilder = new SelectBuilder();
+
+                                        countSelectBuilder = prefixesBuilder.addPrefixes(countSelectBuilder);
+
+                                        ExprVar exprVar = new ExprVar("o");
+
+                                        Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
+
+                                        ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
+
+                                        countSelectBuilder.addVar(exprAggregator.getExpr(), "?count");
+
+                                        countSelectBuilder.addGraph("<" + ng + ">", selectWhereBuilder);
+
+                                        sparqlQueryString = countSelectBuilder.buildString();
+
+                                        int count = Integer.parseInt(connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, "?count"));
+
+                                        if (count <= 0 || !object.equals("")) {
+                                            // no data exist in store
+
+                                            currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
                                             dataToFindObjectInTDB = new JSONObject();
-                                            dataToFindObjectInTDB.put("subject", currStatement.getSubject().toString());
-                                            dataToFindObjectInTDB.put("property", currStatement.getPredicate().toString());
+                                            dataToFindObjectInTDB.put("subject", subject);
+                                            dataToFindObjectInTDB.put("property", property);
                                             dataToFindObjectInTDB.put("ng", ng);
                                             dataToFindObjectInTDB.put("directory", directory);
 
@@ -7339,92 +11954,169 @@ public class MDBJSONObjectFactory {
 
                                         }
 
+                                        updateStatement.put("subject", subject);
+
+                                        updateStatement.put("property", property);
+
+                                        updateStatement.put("ng", ng);
+
+                                        updateStatement.put("directory", directory);
+
+                                        updateStatement.put("object_type", currObjectType);
+
+                                        if (currObjectType.equals("l")) {
+                                            // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+
+                                            String literalDatatypeResultVar = "?o";
+
+                                            SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+
+                                            PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+
+                                            literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+
+                                            SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+
+                                            literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+
+                                            literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+
+                                            literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+
+                                            String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+
+                                            updateStatement.put("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
+
+                                        } else {
+
+                                            updateStatement.put("object_data", object);
+
+                                        }
+
+                                        updateStatement.put("operation", "d");
+
+                                        calculateNewResourceForInput = true;
+
+                                        calculateNewObjectInput = true;
+
                                     }
 
                                 }
 
-                                String newSubjectName;
-
-                                // create new blank node and allocate the corresponding old bNode with the new bNode
-                                if (this.bNodeIdentifier.has(currStatement.getSubject().toString())) {
-
-                                    newSubjectName = this.bNodeIdentifier.getString(currStatement.getSubject().toString());
-
-                                } else {
-
-                                    newSubjectName = ResourceFactory.createResource().toString();
-
-                                    this.bNodeIdentifier.put(currStatement.getSubject().toString(), newSubjectName);
-
-                                }
-
-                                // new statements
-                                updateAxiomStatement.append("subject", newSubjectName);
-                                updateAxiomStatement.append("property", currStatement.getPredicate().toString());
-                                updateAxiomStatement.append("ng", ng);
-                                updateAxiomStatement.append("directory", directory);
-                                updateAxiomStatement.append("object_data", object);
-                                updateAxiomStatement.append("object_type", currObjectType);
-                                updateAxiomStatement.append("operation", "s");
-
-                                axiomStatement = true;
-
                             }
-
-                            System.out.println();
-                            System.out.println("updateStatement a = " + updateStatement);
-                            System.out.println();
 
                         }
 
-                        if (!axiomStatement) {
+                        System.out.println();
+                        System.out.println("updateStatement b = " + updateStatement);
+                        System.out.println();
+
+                    } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")) {
+                        // subject
+
+                        String property = calculateProperty(currExecStep);
+
+                        String ng = calculateNG(currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                        String directory = calculateWorkspaceDirectory(currExecStep);
+
+                        String currObjectType = calculateObjectType(property);
+
+                        JSONObject dataToFindObjectInTDB = new JSONObject();
+                        dataToFindObjectInTDB.put("subject", "?s");
+                        dataToFindObjectInTDB.put("property", property);
+                        dataToFindObjectInTDB.put("ng", ng);
+                        dataToFindObjectInTDB.put("directory", directory);
+
+                        String object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
+
+                        resultVar = "?s";
+
+                        SelectBuilder selectBuilder = new SelectBuilder();
+
+                        PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+                        selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+                        SelectBuilder tripleSPO = new SelectBuilder();
+
+                        tripleSPO.addWhere("?s", "<" + property + ">", "<" + object + ">");
+
+                        selectBuilder.addVar(selectBuilder.makeVar(resultVar));
+
+                        selectBuilder.addGraph("<" + ng + ">", tripleSPO);
+
+                        String sparqlQueryString = selectBuilder.buildString();
+
+                        String subject = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, resultVar);
+
+                        if (!subject.equals("")) {
+
+                            updateStatement.put("subject", subject);
+
+                            updateStatement.put("property", property);
+
+                            updateStatement.put("ng", ng);
+
+                            updateStatement.put("directory", directory);
+
+                            currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
+
+                            updateStatement.put("object_type", currObjectType);
+
+                            if (currObjectType.equals("l")) {
+                                // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
+
+                                String literalDatatypeResultVar = "?o";
+
+                                SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
+
+                                PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
+
+                                literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
+
+                                SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
+
+                                literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+
+                                literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
+
+                                literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
+
+                                String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
+
+                                updateStatement.put("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
+
+                            } else {
+
+                                updateStatement.put("object_data", object);
+
+                            }
+
+                            updateStatement.put("operation", "d");
+
+                            calculateNewResourceForInput = true;
+
+                            calculateNewSubjectInput = true;
+
+                        } else {
 
                             for (int j = 0; j < currExecStep.length(); j++) {
 
                                 if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
                                     // update with resource/value
 
-                                    // count value in jena tdb
-                                    SelectBuilder selectWhereBuilder = new SelectBuilder();
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
 
-                                    selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+                                    dataToFindObjectInTDB = new JSONObject();
+                                    dataToFindObjectInTDB.put("object", object);
+                                    dataToFindObjectInTDB.put("property", property);
+                                    dataToFindObjectInTDB.put("ng", ng);
+                                    dataToFindObjectInTDB.put("directory", directory);
 
-                                    selectWhereBuilder.addWhere("<" + subject + ">", "<" + property + ">", "?o");
+                                    subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                                    SelectBuilder countSelectBuilder = new SelectBuilder();
-
-                                    countSelectBuilder = prefixesBuilder.addPrefixes(countSelectBuilder);
-
-                                    ExprVar exprVar = new ExprVar("o");
-
-                                    Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
-
-                                    ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
-
-                                    countSelectBuilder.addVar(exprAggregator.getExpr(), "?count");
-
-                                    countSelectBuilder.addGraph("<" + ng + ">", selectWhereBuilder);
-
-                                    sparqlQueryString = countSelectBuilder.buildString();
-
-                                    int count = Integer.parseInt(connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, "?count"));
-
-                                    if (count <= 0 || !object.equals("")) {
-                                        // no data exist in store
-
-                                        currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
-
-                                        dataToFindObjectInTDB = new JSONObject();
-                                        dataToFindObjectInTDB.put("subject", subject);
-                                        dataToFindObjectInTDB.put("property", property);
-                                        dataToFindObjectInTDB.put("ng", ng);
-                                        dataToFindObjectInTDB.put("directory", directory);
-
-                                        object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
-
-                                        currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
-
-                                    }
+                                    currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
 
                                     updateStatement.put("subject", subject);
 
@@ -7467,182 +12159,7 @@ public class MDBJSONObjectFactory {
 
                                     updateStatement.put("operation", "d");
 
-                                    calculateNewResourceForInput = true;
-
-                                    calculateNewObjectInput = true;
-
                                 }
-
-                            }
-
-                        }
-
-                    }
-
-                    System.out.println();
-                    System.out.println("updateStatement b = " + updateStatement);
-                    System.out.println();
-
-                } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")) {
-                    // subject
-
-                    String property = calculateProperty(currExecStep);
-
-                    String ng = calculateNG(currExecStep, connectionToTDB);
-
-                    String directory = calculateWorkspaceDirectory(currExecStep);
-
-                    String currObjectType = calculateObjectType(property);
-
-                    JSONObject dataToFindObjectInTDB = new JSONObject();
-                    dataToFindObjectInTDB.put("subject", "?s");
-                    dataToFindObjectInTDB.put("property", property);
-                    dataToFindObjectInTDB.put("ng", ng);
-                    dataToFindObjectInTDB.put("directory", directory);
-
-                    String object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, currObjectType, connectionToTDB);
-
-                    resultVar = "?s";
-
-                    FilterBuilder filterBuilder = new FilterBuilder();
-
-                    SelectBuilder selectBuilder = new SelectBuilder();
-
-                    PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
-
-                    selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
-
-                    SelectBuilder tripleSPO = new SelectBuilder();
-
-                    tripleSPO.addWhere("?s", "?p", "?o");
-
-                    selectBuilder.addVar(selectBuilder.makeVar(resultVar));
-
-                    selectBuilder.addGraph("<" + ng + ">", tripleSPO);
-
-                    SPARQLFilter sparqlFilter = new SPARQLFilter();
-
-                    ArrayList<ArrayList<String>> filterItems = new ArrayList<>();
-
-                    filterItems = filterBuilder.addItems(filterItems, "?p", "<" + property + ">");
-                    filterItems = filterBuilder.addItems(filterItems, "?o", "<" + object + ">");
-
-                    ArrayList<String> filter = sparqlFilter.getINFilter(filterItems);
-
-                    selectBuilder = filterBuilder.addFilter(selectBuilder, filter);
-
-                    String sparqlQueryString = selectBuilder.buildString();
-
-                    String subject = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryString, resultVar);
-
-                    if (!subject.equals("")) {
-
-                        updateStatement.put("subject", subject);
-
-                        updateStatement.put("property", property);
-
-                        updateStatement.put("ng", ng);
-
-                        updateStatement.put("directory", directory);
-
-                        currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
-
-                        updateStatement.put("object_type", currObjectType);
-
-                        if (currObjectType.equals("l")) {
-                            // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
-
-                            String literalDatatypeResultVar = "?o";
-
-                            SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
-
-                            PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
-
-                            literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
-
-                            SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
-
-                            literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
-
-                            literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
-
-                            literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
-
-                            String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
-
-                            updateStatement.put("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
-
-                        } else {
-
-                            updateStatement.put("object_data", object);
-
-                        }
-
-                        updateStatement.put("operation", "d");
-
-                        calculateNewResourceForInput = true;
-
-                        calculateNewSubjectInput = true;
-
-                    } else {
-
-                        for (int j = 0; j < currExecStep.length(); j++) {
-
-                            if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
-                                // update with resource/value
-
-                                currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
-
-                                dataToFindObjectInTDB = new JSONObject();
-                                dataToFindObjectInTDB.put("object", object);
-                                dataToFindObjectInTDB.put("property", property);
-                                dataToFindObjectInTDB.put("ng", ng);
-                                dataToFindObjectInTDB.put("directory", directory);
-
-                                subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
-
-                                currObjectType = calculateObjectTypeForAnnotationProperty(object, currObjectType);
-
-                                updateStatement.put("subject", subject);
-
-                                updateStatement.put("property", property);
-
-                                updateStatement.put("ng", ng);
-
-                                updateStatement.put("directory", directory);
-
-                                updateStatement.put("object_type", currObjectType);
-
-                                if (currObjectType.equals("l")) {
-                                    // delete initial object from the jena tdb e.g. "true"^^http://www.w3.org/2001/XMLSchema#boolean
-
-                                    String literalDatatypeResultVar = "?o";
-
-                                    SelectBuilder literalDatatypeSelectBuilder = new SelectBuilder();
-
-                                    PrefixesBuilder literalDatatypePrefixesBuilder = new PrefixesBuilder();
-
-                                    literalDatatypeSelectBuilder = literalDatatypePrefixesBuilder.addPrefixes(literalDatatypeSelectBuilder);
-
-                                    SelectBuilder literalDatatypeTripleSPO = new SelectBuilder();
-
-                                    literalDatatypeTripleSPO.addWhere("<" + subject + ">", "<" + property + ">", "?o");
-
-                                    literalDatatypeSelectBuilder.addVar(literalDatatypeSelectBuilder.makeVar(literalDatatypeResultVar));
-
-                                    literalDatatypeSelectBuilder.addGraph("<" + ng + ">", literalDatatypeTripleSPO);
-
-                                    String literalDatatypeSparqlQueryString = literalDatatypeSelectBuilder.buildString();
-
-                                    updateStatement.put("object_data", connectionToTDB.pullSingleLiteralWithDatatypeFromTDB(directory, literalDatatypeSparqlQueryString, literalDatatypeResultVar));
-
-                                } else {
-
-                                    updateStatement.put("object_data", object);
-
-                                }
-
-                                updateStatement.put("operation", "d");
 
                             }
 
@@ -7654,94 +12171,180 @@ public class MDBJSONObjectFactory {
 
                     }
 
-
                 }
 
             }
 
-        }
+            if (axiomStatement) {
 
-        if (axiomStatement) {
+                JSONArray jsonArrayForTheAxiomInput = updateAxiomStatement.getJSONArray("subject");
 
-            JSONArray jsonArrayForTheAxiomInput = updateAxiomStatement.getJSONArray("subject");
+                for (int i = 0; i < jsonArrayForTheAxiomInput.length(); i++) {
 
-            for (int i = 0; i < jsonArrayForTheAxiomInput.length(); i++) {
-
-                currComponentObject.getJSONObject("input_data").append("subject", updateAxiomStatement.getJSONArray("subject").getString(i));
-                currComponentObject.getJSONObject("input_data").append("property", updateAxiomStatement.getJSONArray("property").getString(i));
-                currComponentObject.getJSONObject("input_data").append("ng", updateAxiomStatement.getJSONArray("ng").getString(i));
-                currComponentObject.getJSONObject("input_data").append("directory", updateAxiomStatement.getJSONArray("directory").getString(i));
-                currComponentObject.getJSONObject("input_data").append("object_data", updateAxiomStatement.getJSONArray("object_data").getString(i));
-                currComponentObject.getJSONObject("input_data").append("object_type", updateAxiomStatement.getJSONArray("object_type").getString(i));
-                currComponentObject.getJSONObject("input_data").append("operation", updateAxiomStatement.getJSONArray("operation").getString(i));
-
-            }
-
-        } else {
-
-            Iterator stmtIter = updateStatement.keys();
-
-            while (stmtIter.hasNext()) {
-
-                String currKey = stmtIter.next().toString();
-
-                if (!currComponentObject.has("input_data")) {
-
-                    currComponentObject.put("input_data", new JSONObject());
+                    currComponentObject.getJSONObject("input_data").append("subject", updateAxiomStatement.getJSONArray("subject").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("property", updateAxiomStatement.getJSONArray("property").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("ng", updateAxiomStatement.getJSONArray("ng").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("directory", updateAxiomStatement.getJSONArray("directory").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("object_data", updateAxiomStatement.getJSONArray("object_data").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("object_type", updateAxiomStatement.getJSONArray("object_type").getString(i));
+                    currComponentObject.getJSONObject("input_data").append("operation", updateAxiomStatement.getJSONArray("operation").getString(i));
 
                 }
 
-                currComponentObject.getJSONObject("input_data").append(currKey, updateStatement.get(currKey));
+            } else if (updateStatement.keys().hasNext()) {
 
-            }
+                Iterator stmtIter = updateStatement.keys();
 
-            if (calculateNewResourceForInput) {
+                while (stmtIter.hasNext()) {
 
-                for (int i = 0; i < currExecStep.length(); i++) {
+                    String currKey = stmtIter.next().toString();
 
-                    if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040") &&
-                            calculateNewObjectInput) {
-                        // object
+                    if (!currComponentObject.has("input_data")) {
 
-                        for (int j = 0; j < currExecStep.length(); j++) {
+                        currComponentObject.put("input_data", new JSONObject());
 
-                            if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
-                                // update with resource/value
+                    }
 
-                                currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+                    currComponentObject.getJSONObject("input_data").append(currKey, updateStatement.get(currKey));
 
-                                JSONObject dataToFindObjectInTDB = new JSONObject();
+                }
 
-                                String object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, updateStatement.getString("object_type"), connectionToTDB);
+                if (calculateNewResourceForInput) {
 
-                                updateStatement.put("object_data", object);
+                    for (int i = 0; i < currExecStep.length(); i++) {
 
-                                String objectType = calculateObjectType(updateStatement.getString("property"));
+                        if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000040")
+                                && calculateNewObjectInput) {
+                            // object
 
-                                objectType = calculateObjectTypeForAnnotationProperty(object, objectType);
+                            for (int j = 0; j < currExecStep.length(); j++) {
 
-                                updateStatement.put("object_type", objectType);
+                                if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
+                                    // update with resource/value
+
+                                    String object;
+
+                                    if (currExecStep.getJSONObject(j).getString("object").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000592")) {
+                                        // KEYWORD: position +1
+
+                                        object = String.valueOf(Integer.parseInt(objectFromStore) + 1);
+
+                                        updateStatement.put("object_data", object);
+
+                                    } else {
+
+                                        currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
+                                        JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                                        object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, updateStatement.getString("object_type"), connectionToTDB);
+
+                                        updateStatement.put("object_data", object);
+
+                                    }
+
+                                    String objectType = calculateObjectType(updateStatement.getString("property"));
+
+                                    objectType = calculateObjectTypeForAnnotationProperty(object, objectType);
+
+                                    updateStatement.put("object_type", objectType);
+
+                                } else if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000234")) {
+                                    // update with (this entry's specific individual of)
+
+                                    // update triple statement for the object
+
+                                    currExecStep.getJSONObject(i).put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000231");
+                                    // object (this entry's specific individual of)
+
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
+                                    JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                                    String object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, updateStatement.getString("object_type"), connectionToTDB);
+
+                                    updateStatement.put("object_data", object);
+
+                                    String objectType = calculateObjectType(updateStatement.getString("property"));
+
+                                    objectType = calculateObjectTypeForAnnotationProperty(object, objectType);
+
+                                    updateStatement.put("object_type", objectType);
+
+                                } else if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000660")) {
+                                    // update with (unique individual of)
+
+                                    // update triple statement for the object
+
+                                    currExecStep.getJSONObject(i).put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000659");
+                                    // object (unique individual of)
+
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
+                                    JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                                    String object = calculateObject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, updateStatement.getString("object_type"), connectionToTDB);
+
+                                    updateStatement.put("object_data", object);
+
+                                    String objectType = calculateObjectType(updateStatement.getString("property"));
+
+                                    objectType = calculateObjectTypeForAnnotationProperty(object, objectType);
+
+                                    updateStatement.put("object_type", objectType);
+
+                                }
 
                             }
 
-                        }
+                        } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042")
+                                    // subject
+                                && calculateNewSubjectInput) {
 
-                    } else if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042") &&
-                            calculateNewSubjectInput) {
-                        // subject
+                            for (int j = 0; j < currExecStep.length(); j++) {
 
-                        for (int j = 0; j < currExecStep.length(); j++) {
+                                if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
+                                    // update with resource/value
 
-                            if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104")) {
-                                // update with resource/value
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
 
-                                currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+                                    JSONObject dataToFindObjectInTDB = new JSONObject();
 
-                                JSONObject dataToFindObjectInTDB = new JSONObject();
+                                    String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
 
-                                String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+                                    updateStatement.put("subject", subject);
 
-                                updateStatement.put("subject", subject);
+                                } else if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000234")) {
+                                    // update with (this entry's specific individual of)
+
+                                    // update triple statement for the subject
+
+                                    currExecStep.getJSONObject(i).put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000230");
+                                    // subject (this entry's specific individual of)
+
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
+                                    JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                                    String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                                    updateStatement.put("subject", subject);
+
+                                } else if (currExecStep.getJSONObject(j).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000660")) {
+                                    // update with (unique individual of)
+
+                                    currExecStep.getJSONObject(i).put("property", "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000658");
+                                    // subject (unique individual of)
+
+                                    currExecStep.getJSONObject(i).put("object", currExecStep.getJSONObject(j).getString("object"));
+
+                                    JSONObject dataToFindObjectInTDB = new JSONObject();
+
+                                    String subject = calculateSubject(dataToFindObjectInTDB, currExecStep, currComponentObject, jsonInputObject, connectionToTDB);
+
+                                    updateStatement.put("subject", subject);
+
+                                }
 
                             }
 
@@ -7751,79 +12354,79 @@ public class MDBJSONObjectFactory {
 
                 }
 
-            }
+                updateStatement.put("operation", "s");
 
-            updateStatement.put("operation", "s");
+                System.out.println();
+                System.out.println("updateStatement d = " + updateStatement);
+                System.out.println();
 
-            System.out.println();
-            System.out.println("updateStatement d = " + updateStatement);
-            System.out.println();
+                if (updateStatement.getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204")
+                        // hidden store[BOOLEAN]
+                        && updateStatement.getString("object_data").equals("false")) {
 
-            if (updateStatement.getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204")
-                    // hidden store[BOOLEAN]
-                    && updateStatement.getString("object_data").equals("false")) {
+                    this.updateComposition = true;
 
-                this.updateComposition = true;
+                    if (this.compositionUpdateJSON.has("children")
+                            && this.compositionUpdateJSON.has("ngs")
+                            && this.compositionUpdateJSON.has("directories")) {
 
-                if (this.compositionUpdateJSON.has("children")
-                        && this.compositionUpdateJSON.has("ngs")
-                        && this.compositionUpdateJSON.has("directories") ) {
+                        JSONArray childrenJSON = this.compositionUpdateJSON.getJSONArray("children");
+                        JSONArray ngsJSON = this.compositionUpdateJSON.getJSONArray("ngs");
+                        JSONArray directoriesJSON = this.compositionUpdateJSON.getJSONArray("directories");
 
-                    JSONArray childrenJSON = this.compositionUpdateJSON.getJSONArray("children");
-                    JSONArray ngsJSON = this.compositionUpdateJSON.getJSONArray("ngs");
-                    JSONArray directoriesJSON = this.compositionUpdateJSON.getJSONArray("directories");
+                        childrenJSON.put(updateStatement.getString("subject"));
+                        ngsJSON.put(updateStatement.getString("ng"));
+                        directoriesJSON.put(updateStatement.getString("directory"));
 
-                    childrenJSON.put(updateStatement.getString("subject"));
-                    ngsJSON.put(updateStatement.getString("ng"));
-                    directoriesJSON.put(updateStatement.getString("directory"));
+                        this.compositionUpdateJSON.put("children", childrenJSON);
+                        this.compositionUpdateJSON.put("ngs", ngsJSON);
+                        this.compositionUpdateJSON.put("directories", directoriesJSON);
 
-                    this.compositionUpdateJSON.put("children", childrenJSON);
-                    this.compositionUpdateJSON.put("ngs", ngsJSON);
-                    this.compositionUpdateJSON.put("directories", directoriesJSON);
+                    } else {
 
-                } else {
+                        JSONArray childrenJSON = new JSONArray();
+                        JSONArray ngsJSON = new JSONArray();
+                        JSONArray directoriesJSON = new JSONArray();
 
-                    JSONArray childrenJSON = new JSONArray();
-                    JSONArray ngsJSON = new JSONArray();
-                    JSONArray directoriesJSON = new JSONArray();
+                        childrenJSON.put(updateStatement.getString("subject"));
+                        ngsJSON.put(updateStatement.getString("ng"));
+                        directoriesJSON.put(updateStatement.getString("directory"));
 
-                    childrenJSON.put(updateStatement.getString("subject"));
-                    ngsJSON.put(updateStatement.getString("ng"));
-                    directoriesJSON.put(updateStatement.getString("directory"));
+                        this.compositionUpdateJSON.put("children", childrenJSON);
+                        this.compositionUpdateJSON.put("ngs", ngsJSON);
+                        this.compositionUpdateJSON.put("directories", directoriesJSON);
 
-                    this.compositionUpdateJSON.put("children", childrenJSON);
-                    this.compositionUpdateJSON.put("ngs", ngsJSON);
-                    this.compositionUpdateJSON.put("directories", directoriesJSON);
+                    }
+
+                } else if (updateStatement.getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204")
+                        // hidden store[BOOLEAN]
+                        && updateStatement.getString("object_data").equals("true")) {
+
+                    if (currComponentObject.has("delete_uri")) {
+
+                        currComponentObject.getJSONArray("delete_uri").put(ResourceFactory.createResource(updateStatement.getString("subject")).getLocalName());
+
+                    } else {
+
+                        JSONArray updateURIsJSON = new JSONArray();
+
+                        updateURIsJSON.put(ResourceFactory.createResource(updateStatement.getString("subject")).getLocalName());
+
+                        currComponentObject.put("delete_uri", updateURIsJSON);
+
+                    }
 
                 }
 
-            } else if (updateStatement.getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204")
-                    // hidden store[BOOLEAN]
-                    && updateStatement.getString("object_data").equals("true")) {
+                stmtIter = updateStatement.keys();
 
-                if (currComponentObject.has("delete_uri")) {
+                while (stmtIter.hasNext()) {
 
-                    currComponentObject.getJSONArray("delete_uri").put(ResourceFactory.createResource(updateStatement.getString("subject")).getLocalName());
+                    String currKey = stmtIter.next().toString();
 
-                } else {
-
-                    JSONArray updateURIsJSON = new JSONArray();
-
-                    updateURIsJSON.put(ResourceFactory.createResource(updateStatement.getString("subject")).getLocalName());
-
-                    currComponentObject.put("delete_uri", updateURIsJSON);
+                    currComponentObject.getJSONObject("input_data").append(currKey, updateStatement.get(currKey));
 
                 }
-
-            }
-
-            stmtIter = updateStatement.keys();
-
-            while (stmtIter.hasNext()) {
-
-                String currKey = stmtIter.next().toString();
-
-                currComponentObject.getJSONObject("input_data").append(currKey, updateStatement.get(currKey));
 
             }
 
@@ -7847,6 +12450,17 @@ public class MDBJSONObjectFactory {
         System.out.println("saveToStore");
         System.out.println();
 
+        JSONArray deleteNamedGraphs = new JSONArray();
+
+        if (inputData.has("deleteNamedGraphs")) {
+            // remove deleteNamedGraphs from inputData for other calculation
+
+            deleteNamedGraphs = inputData.getJSONArray("deleteNamedGraphs");
+
+            inputData.remove("deleteNamedGraphs");
+
+        }
+
         DataFactory dataFactory = new DataFactory();
 
         ArrayList<ArrayList<String>> generatedCoreIDData = dataFactory.generateCoreIDNGData(inputData);
@@ -7854,6 +12468,13 @@ public class MDBJSONObjectFactory {
         inputData = convertArrayListToJSONObject(generatedCoreIDData);
 
         JSONInputInterpreter jsonInputInterpreter = new JSONInputInterpreter();
+
+        if (deleteNamedGraphs.length() > 0) {
+            // put deleteNamedGraphs back to inputData
+
+            inputData.put("deleteNamedGraphs", deleteNamedGraphs);
+
+        }
 
         ArrayList<String> dummyArrayList = jsonInputInterpreter.interpretObject(inputData, connectionToTDB);
 
@@ -8066,7 +12687,7 @@ public class MDBJSONObjectFactory {
 
                 StmtIterator entryComponentsModelIter = subCompositionUpdateModel.listStatements();
 
-                OutputGenerator outputGenerator = new OutputGenerator();
+                OutputGenerator outputGenerator = new OutputGenerator(this.mongoDBConnection);
 
                 JSONObject entryComponents = new JSONObject();
 
@@ -8233,81 +12854,168 @@ public class MDBJSONObjectFactory {
     private String setFocusOnIndividual(String newFocusKey, JSONArray currExecStep, JSONObject jsonInputObject,
                                         String generateResourceFor, JenaIOTDBFactory connectionToTDB) {
 
+        String changeVersionIDToStatus = "";
+
+        for (int i = 0; i < currExecStep.length();i++) {
+
+            if (currExecStep.getJSONObject(i).getString("property").equals("http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000603")) {
+                // change version ID to status
+
+                changeVersionIDToStatus = currExecStep.getJSONObject(i).getString("object");
+
+            }
+
+        }
+
         if (newFocusKey.contains("__MDB_UIAP_")) {
 
             newFocusKey = newFocusKey.substring(newFocusKey.indexOf("__") + 2);
 
-            for (int i = 0; i < currExecStep.length();i++) {
+            boolean newFocusWasSet = false;
 
-                String localNameOfProperty = ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("property")).getLocalName();
+            Iterator<String> generatedKeys = this.generatedResources.keys();
 
-                if (localNameOfProperty.equals(newFocusKey)) {
+            while (generatedKeys.hasNext()
+                    && !newFocusWasSet) {
 
-                    generateResourceFor = currExecStep.getJSONObject(i).getString("object");
+                String currKey = generatedKeys.next();
 
-                    if (generateResourceFor.contains("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000575")) {
-                        // MDB user entry ID
+                if (currKey.contains(newFocusKey)) {
 
-                        MDBResourceFactory mdbResourceFactory = new MDBResourceFactory();
+                    String potentialIndividualURI = this.generatedResources.getString(currKey).contains("#")
+                            ? this.generatedResources.getString(currKey)
+                            : this.generatedResources.getString(currKey) + "#Dummy_0000000000";
 
-                        this.mdbUEID = mdbResourceFactory.createMDBUserEntryID(jsonInputObject.getString("mdbueid"));
+                    MDBIDFinder mdbidFinder = new MDBIDFinder(potentialIndividualURI, connectionToTDB);
+
+                    if (mdbidFinder.hasMDBCoreID() &&
+                            mdbidFinder.hasMDBEntryID() &&
+                            mdbidFinder.hasMDBUEID()) {
+
+                        this.mdbUEID = mdbidFinder.getMDBUEID();
 
                         this.mdbUEIDNotEmpty = true;
 
-                        this.currentFocus = this.mdbUEID;
+                        this.mdbCoreID = mdbidFinder.getMDBCoreID();
 
-                        System.out.println("mdbUEID = " + mdbUEID);
+                        this.mdbCoreIDNotEmpty = true;
 
-                    } else if (generateResourceFor.contains("http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000030")) {
-                        // MDB entry ID
+                        this.mdbEntryID = mdbidFinder.getMDBEntryID();
 
-                        MDBResourceFactory mdbResourceFactory = new MDBResourceFactory();
-
-                        System.out.println();
-
-                        boolean newCoreIDWasGenerated = false;
-
-                        if (!this.mdbCoreIDNotEmpty) {
-
-                            this.mdbCoreID = mdbResourceFactory.createMDBCoreID(currExecStep, this.infoInput, jsonInputObject, this.pathToOntologies, connectionToTDB);
-
-                            this.mdbCoreIDNotEmpty = true;
-
-                            newCoreIDWasGenerated = true;
-
-                            System.out.println("MDBCoreID = " + this.mdbCoreID);
-
-                        }
-
-                        System.out.println();
-
-                        if (newCoreIDWasGenerated) {
-                            // if a new MDBCoreID was generated >>> this new MDBEntryID starts with the minimum
-
-                            this.mdbEntryID = this.mdbCoreID + "-d_1_1";
-
-                        } else {
-
-                            this.mdbEntryID = mdbResourceFactory.createMDBEntryID(currExecStep, this.mdbCoreID, 'd', connectionToTDB);
-
-                        }
+                        this.mdbEntryIDNotEmpty = true;
 
                         // add info for later calculation
                         jsonInputObject.put("mdbentryid", this.mdbEntryID);
 
-                        this.mdbEntryIDNotEmpty = true;
+                        if (mdbidFinder.getMDBEntryID().equals(this.generatedResources.getString(currKey))) {
 
-                        this.currentFocus = this.mdbEntryID;
+                            this.currentFocus = this.mdbEntryID;
 
-                        this.focusHasNewNS = true;
+                            this.focusHasNewNS = true;
 
-                        System.out.println("MDBEntryID = " + this.mdbEntryID);
+                            generateResourceFor = this.generatedResources.getString(currKey);
 
-                        if (jsonInputObject.has("mdbueid_uri")) {
+                            System.out.println("INFO: The focus was changed to " + this.currentFocus);
 
-                            if (!(jsonInputObject.getString("mdbueid_uri").equals(""))) {
+                        }
 
-                                this.mdbUEID = jsonInputObject.getString("mdbueid_uri");
+                    }
+
+                    newFocusWasSet = true;
+
+                }
+
+            }
+
+            if (!newFocusWasSet) {
+
+                for (int i = 0; i < currExecStep.length();i++) {
+
+                    String localNameOfProperty = ResourceFactory.createResource(currExecStep.getJSONObject(i).getString("property")).getLocalName();
+
+                    if (localNameOfProperty.equals(newFocusKey)) {
+
+                        generateResourceFor = currExecStep.getJSONObject(i).getString("object");
+
+                        if (generateResourceFor.contains("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000575")) {
+                            // MDB user entry ID
+
+                            MDBResourceFactory mdbResourceFactory = new MDBResourceFactory();
+
+                            this.mdbUEID = mdbResourceFactory.createMDBUserEntryID(jsonInputObject.getString("mdbueid"));
+
+                            this.mdbUEIDNotEmpty = true;
+
+                            this.currentFocus = this.mdbUEID;
+
+                            System.out.println("mdbUEID = " + mdbUEID);
+
+                        } else if (generateResourceFor.contains("http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000030")) {
+                            // MDB entry ID
+
+                            MDBResourceFactory mdbResourceFactory = new MDBResourceFactory();
+
+                            System.out.println();
+
+                            boolean newCoreIDWasGenerated = false;
+
+                            if (!this.mdbCoreIDNotEmpty) {
+
+                                this.mdbCoreID = mdbResourceFactory.createMDBCoreID(currExecStep, this.infoInput, jsonInputObject, this.pathToOntologies, connectionToTDB);
+
+                                this.mdbCoreIDNotEmpty = true;
+
+                                newCoreIDWasGenerated = true;
+
+                                System.out.println("MDBCoreID = " + this.mdbCoreID);
+
+                            }
+
+                            System.out.println();
+
+                            if (newCoreIDWasGenerated) {
+                                // if a new MDBCoreID was generated >>> this new MDBEntryID starts with the minimum
+
+                                this.mdbEntryID = this.mdbCoreID + "-d_1_1";
+
+                            } else {
+
+                                if (changeVersionIDToStatus.equals("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000116")) {
+                                    // MDB_ENTRY_STATUS_BASIC: current published
+
+                                    this.mdbEntryID = mdbResourceFactory.createMDBEntryID(currExecStep, this.mdbCoreID, 'p', connectionToTDB);
+
+                                } else if (changeVersionIDToStatus.equals("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000115")) {
+                                    // MDB_ENTRY_STATUS_BASIC: current draft
+
+                                    this.mdbEntryID = mdbResourceFactory.createMDBEntryID(currExecStep, this.mdbCoreID, 'd', connectionToTDB);
+
+                                }
+
+                            }
+
+                            // add info for later calculation
+                            jsonInputObject.put("mdbentryid", this.mdbEntryID);
+
+                            this.mdbEntryIDNotEmpty = true;
+
+                            this.currentFocus = this.mdbEntryID;
+
+                            this.focusHasNewNS = true;
+
+                            System.out.println("MDBEntryID = " + this.mdbEntryID);
+
+                            if (jsonInputObject.has("mdbueid_uri")) {
+
+                                if (!(jsonInputObject.getString("mdbueid_uri").equals(""))) {
+
+                                    this.mdbUEID = jsonInputObject.getString("mdbueid_uri");
+
+                                } else {
+
+                                    this.mdbUEID = mdbResourceFactory.findMDBUserEntryID(jsonInputObject.getString("mdbueid"), connectionToTDB);
+
+                                }
 
                             } else {
 
@@ -8315,17 +13023,13 @@ public class MDBJSONObjectFactory {
 
                             }
 
-                        } else {
+                            this.mdbUEIDNotEmpty = true;
 
-                            this.mdbUEID = mdbResourceFactory.findMDBUserEntryID(jsonInputObject.getString("mdbueid"), connectionToTDB);
+                            System.out.println("mdbUEID = " + this.mdbUEID);
+
+                            System.out.println();
 
                         }
-
-                        this.mdbUEIDNotEmpty = true;
-
-                        System.out.println("mdbUEID = " + this.mdbUEID);
-
-                        System.out.println();
 
                     }
 
@@ -8367,6 +13071,56 @@ public class MDBJSONObjectFactory {
                     this.focusHasNewNS = true;
 
                     generateResourceFor = this.identifiedResources.getString(newFocusKey);
+
+                    System.out.println("INFO: The focus was changed to " + this.currentFocus);
+
+                }
+
+            }
+
+        } else if (this.infoInput.has(newFocusKey)) {
+
+            String potentialIndividualURI = this.infoInput.getString(newFocusKey).contains("#")
+                    ? this.infoInput.getString(newFocusKey)
+                    : this.infoInput.getString(newFocusKey) + "#Dummy_0000000000";
+
+            if (potentialIndividualURI.equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000423")) {
+                // KEYWORD: empty
+
+                this.currentFocus = potentialIndividualURI;
+
+            }
+
+            MDBIDFinder mdbidFinder = new MDBIDFinder(potentialIndividualURI, connectionToTDB);
+
+            if (mdbidFinder.hasMDBCoreID() &&
+                    mdbidFinder.hasMDBEntryID() &&
+                    mdbidFinder.hasMDBUEID()) {
+
+                this.mdbUEID = mdbidFinder.getMDBUEID();
+
+                this.mdbUEIDNotEmpty = true;
+
+                this.mdbCoreID = mdbidFinder.getMDBCoreID();
+
+                this.mdbCoreIDNotEmpty = true;
+
+                this.mdbEntryID = mdbidFinder.getMDBEntryID();
+
+                this.mdbEntryIDNotEmpty = true;
+
+                // add info for later calculation
+                jsonInputObject.put("mdbentryid", this.mdbEntryID);
+
+                if (mdbidFinder.getMDBEntryID().equals(this.infoInput.getString(newFocusKey))) {
+
+                    this.currentFocus = this.mdbEntryID;
+
+                    this.focusHasNewNS = true;
+
+                    generateResourceFor = this.infoInput.getString(newFocusKey);
+
+                    System.out.println("INFO: The focus was changed to " + this.currentFocus);
 
                 }
 

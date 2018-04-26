@@ -48,7 +48,7 @@
             // send the query to the Java class as a JSON String with specific keywords
             socket.send(JSON.stringify(
                     {'type' : "query", 'query' : inputData.value, 'format' : inputFormat.value,
-                        'operation' : "l", 'dataset' : "/home/path/to/tdb/mdb_core_workspace/"}));
+                        'operation' : "l", 'dataset' : "/home/YOUR_HOME_DIR/tdb/mdb_core_workspace/"}));
         }
 
         // receive the query result and write the result in the output textarea

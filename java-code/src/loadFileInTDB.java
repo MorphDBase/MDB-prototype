@@ -28,6 +28,43 @@ import java.util.Date;
 public class loadFileInTDB {
 
 
+    private static void calculateOWLFiles(String pathToFile, File currFile) throws IOException {
+
+        System.out.println("File: " + currFile.getName() + " is a directory.");
+
+        File innerFolder = new File(pathToFile + currFile.getName());
+
+        // save all files of the folder in a list
+        File[] innerListOfFiles = innerFolder.listFiles();
+
+        Model directoryModel = ModelFactory.createDefaultModel();
+
+        for (File currInnerFile : innerListOfFiles) {
+
+            if (currInnerFile.isFile()
+                    && ((FilenameUtils.getExtension(currInnerFile.getName()).equals("owl"))
+                    || (FilenameUtils.getExtension(currInnerFile.getName()).equals("rdf"))
+                    || (FilenameUtils.getExtension(currInnerFile.getName()).equals("xrdf")))) {
+
+                // create the default model/graph
+                Model tdb = ModelFactory.createDefaultModel();
+                // load model to the Jena TDB
+                TDBLoader.loadModel(tdb, currInnerFile.toString());
+
+                directoryModel.add(tdb);
+
+                System.out.println("The directory " + currFile + " contains the inner File: " + currInnerFile.getName());
+
+            }
+
+        }
+
+        // create the outputStream
+        directoryModel.write(new FileWriter(currFile.toString() + ".owl"), "RDF/XML");
+
+    }
+
+
     public static void main(String[] args) throws IOException, ParseException {
 
         // hide the first 3 rows
@@ -171,6 +208,36 @@ public class loadFileInTDB {
         // iterate the file list
         assert listOfFilesExternalOntologies != null;
 
+        for (File currFile : listOfFilesExternalOntologies) {
+
+            if (currFile.isDirectory()) {
+
+                if (new File(pathToExternalOntologiesInputFolder, currFile.getName() + ".owl").exists()) {
+
+                    Date currDate = df.parse(df.format(new File(pathToExternalOntologiesInputFolder, currFile.getName() + ".owl").lastModified()));
+
+                    if (currDate.compareTo(externalOntologiesLastUpdatedOn) > 0) {
+
+                        //calculateOWLFiles(pathToExternalOntologiesInputFolder, currFile);
+
+                    }
+
+                } else {
+
+                    //calculateOWLFiles(pathToExternalOntologiesInputFolder, currFile);
+
+                }
+
+            }
+
+        }
+
+        listOfFilesExternalOntologies = inputFolderExternalOntologies.listFiles();
+
+        String basicPathToLucene = "/home/YOUR_HOME_DIR/tdb-lucene/";
+
+        ArrayList<String> basicPathsToLucene = new ArrayList<>();
+
         for (File listOfFile : listOfFilesExternalOntologies) {
 
             if (listOfFile.isFile() & (FilenameUtils.getExtension(listOfFile.getName()).equals("owl"))) {
@@ -192,9 +259,13 @@ public class loadFileInTDB {
 
                         basicNG += currNG.replace("0v1", "");
 
+                        basicPathsToLucene.add(basicPathToLucene + FilenameUtils.removeExtension(currNG.replace("0v1", "")));
+
                     } else {
 
                         basicNG += FilenameUtils.getBaseName(listOfFile.getName());
+
+                        basicPathsToLucene.add(basicPathToLucene + FilenameUtils.removeExtension(listOfFile.getName()));
 
                     }
 
@@ -228,6 +299,8 @@ public class loadFileInTDB {
         System.out.println("modelNameExternalOntologiesArList " + modelNameExternalOntologiesArList.size());
         System.out.println("addedModelExternalOntologiesArList " + addedModelExternalOntologiesArList.size());
 
+        pathToOntologies = OntologiesPath.mainDirectory + "external-ontologies/";
+
         System.out.println("pathToOntologies " + pathToOntologies);
 
         if (newUpdateDate.compareTo(externalOntologiesLastUpdatedOn) > 0) {
@@ -237,7 +310,9 @@ public class loadFileInTDB {
             // todo write a method which deletes the data from the jena tdb and the corresponding lucene index
             //mdbFactory.removeNamedModelsFromTDB(pathToOntologies, modelNameArList);
 
-            System.out.println("addedmodels " + mdbFactory.addModelsInTDBLucene(pathToOntologies, modelNameExternalOntologiesArList, addedModelExternalOntologiesArList));
+            basicPathToLucene = "/home/YOUR_HOME_DIR/tdb-lucene/external-ontologies/";
+
+            mdbFactory.addModelsInTDBLucene(pathToOntologies, basicPathToLucene, modelNameExternalOntologiesArList, addedModelExternalOntologiesArList);
 
             PrintWriter writer = new PrintWriter(pathToExternalOntologiesInputFolder + "TDBLastUpdatedOn", "UTF-8");
             writer.println(df.format(newUpdateDate));

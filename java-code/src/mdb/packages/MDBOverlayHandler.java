@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 27.04.17.
- * Last modified by Roman Baum on 04.07.17.
+ * Last modified by Roman Baum on 29.11.17.
  */
 
 package mdb.packages;
@@ -22,8 +22,16 @@ public class MDBOverlayHandler {
 
     private String overlayOverviewNGURI = "http://www.morphdbase.de/resource/dummy-overlay#GUI_COMPONENT_0000000185";
     private String pathToTDB = OntologiesPath.mainDirectory + "mdb_draft_workspace/";
-    private MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
+    private MongoDBConnection mongoDBConnection;
 
+    /**
+     * Default constructor
+     */
+    public MDBOverlayHandler(MongoDBConnection mongoDBConnection) {
+
+        this.mongoDBConnection = mongoDBConnection;
+
+    }
 
     /**
      * This method create a named graph for an overlay in a jena tdb.

@@ -377,9 +377,7 @@ This property is intended for relating a versioned MDB entry ID resource to its 
 
     <!-- http://xmlns.com/foaf/0.1/skypeID -->
 
-    <ObjectProperty rdf:about="&foaf;skypeID">
-        <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    </ObjectProperty>
+    <ObjectProperty rdf:about="&foaf;skypeID"/>
     
 
 
@@ -516,10 +514,9 @@ This property is intended for relating a versioned MDB entry ID resource to its 
 
     <DatatypeProperty rdf:about="&mdbentry;MDB_ENTRY_0000000023">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB published</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB published</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_ENTRY_0000000023</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This is the relase date of a MDB Entry</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="&mdbentry;MDB_ENTRY_0000000027"/>
         <rdfs:domain rdf:resource="&mdbentry;MDB_ENTRY_0000000030"/>
         <rdfs:range rdf:resource="&xsd;dateTimeStamp"/>
     </DatatypeProperty>
@@ -574,7 +571,9 @@ This property is intended for relating a versioned MDB entry ID resource to its 
 
     <!-- http://xmlns.com/foaf/0.1/skypeID -->
 
-    <DatatypeProperty rdf:about="&foaf;skypeID"/>
+    <DatatypeProperty rdf:about="&foaf;skypeID">
+        <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    </DatatypeProperty>
     
 
 

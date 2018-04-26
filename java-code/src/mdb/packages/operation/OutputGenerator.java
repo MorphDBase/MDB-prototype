@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 11.12.15.
- * Last modified by Roman Baum on 20.09.17.
+ * Last modified by Roman Baum on 07.03.18.
  */
 
 package mdb.packages.operation;
@@ -36,7 +36,7 @@ public class OutputGenerator {
 
     private String mdbCoreID = "", mdbEntryID = "", mdbUEID = "";
 
-    private MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
+    private MongoDBConnection mongoDBConnection;
 
     private JSONArray resourcesToCheck = new JSONArray();
 
@@ -44,7 +44,9 @@ public class OutputGenerator {
     /**
      * Default constructor
      */
-    public OutputGenerator() {
+    public OutputGenerator(MongoDBConnection mongoDBConnection) {
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -53,9 +55,11 @@ public class OutputGenerator {
      * A constructor which provide a specific MDBUserEntryID for further calculations
      * @param mdbUEID contains the uri of the MDBUserEntryID
      */
-    public OutputGenerator(String mdbUEID) {
+    public OutputGenerator(String mdbUEID, MongoDBConnection mongoDBConnection) {
 
         this.mdbUEID = mdbUEID;
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -66,13 +70,15 @@ public class OutputGenerator {
      * @param mdbEntryID contains the uri of the MDBEntryID
      * @param mdbUEID contains the uri of the MDBUserEntryID
      */
-    public OutputGenerator(String mdbCoreID, String mdbEntryID, String mdbUEID) {
+    public OutputGenerator(String mdbCoreID, String mdbEntryID, String mdbUEID, MongoDBConnection mongoDBConnection) {
 
         this.mdbCoreID = mdbCoreID;
 
         this.mdbEntryID = mdbEntryID;
 
         this.mdbUEID = mdbUEID;
+
+        this.mongoDBConnection = mongoDBConnection;
 
     }
 
@@ -469,7 +475,7 @@ public class OutputGenerator {
      * @param JSONToCheckForResources contains a JSONArray with potential identified Resources
      * @return an JSONArray with identified Resources as values
      */
-    private JSONArray getIdentifiedResources(JSONArray JSONToCheckForResources, JSONArray identifiedResources) {
+    private JSONArray getIdentifiedResources(JSONArray JSONToCheckForResources, boolean deleteSomeKeys, JSONArray identifiedResources) {
 
         int startLength = JSONToCheckForResources.length();
 
@@ -477,15 +483,33 @@ public class OutputGenerator {
 
             if (JSONToCheckForResources.get(i) instanceof JSONObject) {
 
-                if (JSONToCheckForResources.getJSONObject(i).has("MDB_GUI_0000000040")) {
-                    // has MDB entry component
+                if (JSONToCheckForResources.getJSONObject(i).has("MDB_GUI_0000000040")
+                        // has MDB entry component
+                        || JSONToCheckForResources.getJSONObject(i).has("MDB_CORE_0000000727")
+                        // has editable label in named graph
+                        || JSONToCheckForResources.getJSONObject(i).has("BFO_0000051")) {
+                        // has part)
 
-                    identifiedResources = getIdentifiedResources(JSONToCheckForResources.getJSONObject(i).getJSONArray("MDB_GUI_0000000040"), identifiedResources);
+                    if (JSONToCheckForResources.getJSONObject(i).has("MDB_GUI_0000000040")) {
+                        // has MDB entry component
 
-                } else if(JSONToCheckForResources.getJSONObject(i).has("MDB_CORE_0000000727")) {
-                    // has editable label in named graph
+                        identifiedResources = getIdentifiedResources(JSONToCheckForResources.getJSONObject(i).getJSONArray("MDB_GUI_0000000040"), true, identifiedResources);
 
-                    identifiedResources = getIdentifiedResources(JSONToCheckForResources.getJSONObject(i).getJSONArray("MDB_CORE_0000000727"), identifiedResources);
+                    }
+
+                    if(JSONToCheckForResources.getJSONObject(i).has("MDB_CORE_0000000727")) {
+                        // has editable label in named graph
+
+                        identifiedResources = getIdentifiedResources(JSONToCheckForResources.getJSONObject(i).getJSONArray("MDB_CORE_0000000727"), true, identifiedResources);
+
+                    }
+
+                    if(JSONToCheckForResources.getJSONObject(i).has("BFO_0000051")) {
+                        // has part
+
+                        identifiedResources = getIdentifiedResources(JSONToCheckForResources.getJSONObject(i).getJSONArray("BFO_0000051"), false, identifiedResources);
+
+                    }
 
                 } else {
 
@@ -502,6 +526,13 @@ public class OutputGenerator {
                         // input label value defines keyword resource
 
                         objectToInsert.put("keywordLabel", JSONToCheckForResources.getJSONObject(i).getString("MDB_UIAP_0000000523"));
+
+                    }
+
+                    if (JSONToCheckForResources.getJSONObject(i).has("MDB_UIAP_0000000581")) {
+                        // input definition value defines keyword resource
+
+                        objectToInsert.put("keywordDefinition", JSONToCheckForResources.getJSONObject(i).getString("MDB_UIAP_0000000581"));
 
                     }
 
@@ -525,13 +556,26 @@ public class OutputGenerator {
 
                     identifiedResources.put(objectToInsert);
 
-                }
+                    }
 
-                // remove internal information from output
-                JSONToCheckForResources.getJSONObject(i).remove("MDB_UIAP_0000000278");
-                JSONToCheckForResources.getJSONObject(i).remove("MDB_UIAP_0000000523");
-                JSONToCheckForResources.getJSONObject(i).remove("classID");
-                JSONToCheckForResources.getJSONObject(i).remove("individualID");
+                    if(JSONToCheckForResources.getJSONObject(i).has("MDB_DATASCHEME_0000002740")
+                            && !JSONToCheckForResources.getJSONObject(i).has("MDB_CORE_0000000727")) {
+                        // has label input MDB entry component
+
+                        JSONToCheckForResources.getJSONObject(i).remove("MDB_DATASCHEME_0000002740");
+
+                    }
+
+                    if (deleteSomeKeys) {
+
+                        // remove internal information from output
+                        JSONToCheckForResources.getJSONObject(i).remove("MDB_UIAP_0000000278");
+                        JSONToCheckForResources.getJSONObject(i).remove("MDB_UIAP_0000000523");
+                        JSONToCheckForResources.getJSONObject(i).remove("MDB_UIAP_0000000581");
+                        JSONToCheckForResources.getJSONObject(i).remove("classID");
+                        JSONToCheckForResources.getJSONObject(i).remove("individualID");
+
+                    }
 
             } else {
                 // delete URIs of hidden components
@@ -539,8 +583,6 @@ public class OutputGenerator {
                 JSONToCheckForResources.remove(i);
 
             }
-
-
 
         }
 
@@ -600,7 +642,7 @@ public class OutputGenerator {
 
         System.out.println("before identifiedResources");
 
-        JSONArray identifiedResources = getIdentifiedResources(outputDataJSON, new JSONArray());
+        JSONArray identifiedResources = getIdentifiedResources(outputDataJSON, true, new JSONArray());
 
         System.out.println("identifiedResources: " + identifiedResources);
 
@@ -699,7 +741,7 @@ public class OutputGenerator {
      */
     public void getOutputJSONObject(String root, JSONObject jsonInputObject, JSONArray outputDataJSON) {
 
-        JSONArray identifiedResources = getIdentifiedResources(outputDataJSON, new JSONArray());
+        JSONArray identifiedResources = getIdentifiedResources(outputDataJSON, true, new JSONArray());
 
         //System.out.println("identifiedResources: " + identifiedResources);
 
@@ -826,6 +868,8 @@ public class OutputGenerator {
                 // input value/resource defines keyword resource
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000523" :
                 // input label value defines keyword resource
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000581" :
+                // input definition value defines keyword resource
 
                 if (currStatement.getObject().isLiteral()) {
                     // todo remove this then case when the switch to page object is no longer missing
@@ -892,15 +936,14 @@ public class OutputGenerator {
                 // has user/GUI input [value_B] (data property)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000462" :
                 // has user/GUI input [value_C] (data property)
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088" :
+                // has visible label 1
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000287" :
                 // has visible label 2
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000417" :
                 // new row [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000018" :
                 // tooltip text
-            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000201" :
-                // label 1
-                // todo maybe this property MDB_UIAP_0000000201 must switch with MDB_GUI_0000000088 in the future
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204" :
                 // hidden [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000220" :
@@ -1258,6 +1301,8 @@ public class OutputGenerator {
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000040" :
                 // has MDB entry component
+            case "http://purl.obolibrary.org/obo/BFO_0000051" :
+                // has part
 
                 currComponentObject.append(currStatement.getPredicate().getLocalName(), currStatement.getObject().asResource().toString());
 
@@ -1289,7 +1334,11 @@ public class OutputGenerator {
                 // MDB entry component of
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000418" :
                 // has MDB CSS class
-            case "http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme#MDB_DATASCHEME_0000002740":
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000555" :
+                // belongs to radio button group
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme#MDB_DATASCHEME_0000002429" :
+                // belongs to partonomy view
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme#MDB_DATASCHEME_0000002740" :
                 // has label input MDB entry component
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000019" :
                 // has GUI input type
@@ -1299,6 +1348,8 @@ public class OutputGenerator {
                 // input value/resource defines keyword resource
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000523" :
                 //input label value defines keyword resource
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000581" :
+                // input definition value defines keyword resource
 
                 if (currStatement.getObject().isLiteral()) {
                     // todo remove this then case when the switch to page object is no longer missing
@@ -1321,24 +1372,37 @@ public class OutputGenerator {
 
                 currStatement = ResourceFactory.createStatement(ResourceFactory.createResource(resourceSubject), currStatement.getPredicate(), currStatement.getObject());
 
-                String currObject = currStatement.getObject().asLiteral().getValue().toString();
+                if (currStatement.getObject().toString().equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000361")) {
+                    // TODO remove this bridge when the resource MDB_GUI_0000000361 can be interpreted by the middleware
 
-                if (currObject.contains("^^")) {
+                    String currObject = "1";
 
-                    currObject = currObject.substring(0, currObject.indexOf("^^"));
+                    currComponentObject.put(currStatement.getPredicate().getLocalName(), currObject);
+
+                    return entryComponents.append(currStatement.getSubject().toString(), currComponentObject);
+
+                } else {
+
+                    String currObject = currStatement.getObject().asLiteral().getValue().toString();
+
+                    if (currObject.contains("^^")) {
+
+                        currObject = currObject.substring(0, currObject.indexOf("^^"));
+
+                    }
+
+                    currComponentObject.put(currStatement.getPredicate().getLocalName(), currObject);
+
+                    return entryComponents.append(currStatement.getSubject().toString(), currComponentObject);
 
                 }
-
-                currComponentObject.put(currStatement.getPredicate().getLocalName(), currObject);
-
-                return entryComponents.append(currStatement.getSubject().toString(), currComponentObject);
 
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000716" :
                 // has user/GUI input [URI]
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000445" :
                 // has selected resource
-            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000413" :
-                // autocomplete for ontology
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000579" :
+                // hyperlink
 
                 currStatement = ResourceFactory.createStatement(ResourceFactory.createResource(resourceSubject), currStatement.getPredicate(), currStatement.getObject());
 
@@ -1352,17 +1416,20 @@ public class OutputGenerator {
                 // has user/GUI input [value_B] (data property)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000462" :
                 // has user/GUI input [value_C] (data property)
+            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088" :
+                // has visible label 1
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000287" :
-                // has visible label 2
+                // has visible label 2 todo this is deprecated we must identify the positions in the composition where we use this part we use MDB_UIAP_0000000202 instead
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000417" :
                 // new row [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000018" :
                 // tooltip text
-            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000201" :
-                // label 1
-                // todo maybe this property MDB_UIAP_0000000201 must switch with MDB_GUI_0000000088 in the future
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000202" :
+                // label 2
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000204" :
                 // hidden [BOOLEAN]
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000214" :
+                // has Boolean value [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000220" :
                 // with information text
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000260" :
@@ -1375,6 +1442,8 @@ public class OutputGenerator {
                 // has default placeholder value
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000527" :
                 // has partonomy label
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667" :
+                // is active
 
                 currStatement = ResourceFactory.createStatement(ResourceFactory.createResource(resourceSubject), currStatement.getPredicate(), currStatement.getObject());
 
@@ -1445,8 +1514,19 @@ public class OutputGenerator {
 
                 TDBPath tdbPath = new TDBPath(OntologiesPath.mainDirectory);
 
-                String directory = tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503");
-                // MDB_WORKSPACE_DIRECTORY: MDB draft workspace directory
+                String directory;
+
+                if (mdRootElementLabelNG.contains("-p_")) {
+
+                    directory = tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000502");
+                    // MDB_WORKSPACE_DIRECTORY: MDB published workspace directory
+
+                } else {
+
+                    directory = tdbPath.getPathToTDB("http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000503");
+                    // MDB_WORKSPACE_DIRECTORY: MDB draft workspace directory
+
+                }
 
                 String root = connectionToTDB.pullSingleDataFromTDB(directory, sparqlQueryStringRoot, rootResultVar);
 
@@ -1454,21 +1534,26 @@ public class OutputGenerator {
 
                     boolean calculateSubGraph = false;
 
-                    if (jsonInputObject.has("partID")) {
+                    if (jsonInputObject.has("value")) {
 
-                        if (root.contains(jsonInputObject.getString("partID"))) {
+                        if (jsonInputObject.getString("value").equals("show_localID")) {
 
-                            calculateSubGraph = true;
+                            if (currStatement.getSubject().toString().contains((jsonInputObject.getString("localID")))) {
 
-                        }
+                                calculateSubGraph = true;
 
-                    } else if (jsonInputObject.has("localID")) {
-                        // special case if the user click the 'go to description button' from an entry
+                            }
 
-                        if (jsonInputObject.getString("localID").contains("MDB_DATASCHEME_0000002134")) {
-                            // go to description button item
+                        } else if (jsonInputObject.has("localID")) {
+                            // special case if the user click the 'go to description button' from an entry
 
-                            calculateSubGraph = true;
+                            if (jsonInputObject.getString("localID").contains("MDB_DATASCHEME_0000002134")
+                                    // go to description button item
+                                    && currStatement.getSubject().toString().contains("MDB_DATASCHEME_0000002413")) {
+
+                                calculateSubGraph = true;
+
+                            }
 
                         }
 
@@ -1476,7 +1561,7 @@ public class OutputGenerator {
 
                     if (calculateSubGraph) {
 
-                        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory();
+                        MDBJSONObjectFactory mdbjsonObjectFactory = new MDBJSONObjectFactory(this.mongoDBConnection);
 
                         JSONArray ngs = new JSONArray();
 
@@ -1743,9 +1828,53 @@ public class OutputGenerator {
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000279" :
                 // execution step: MDB hyperlink
 
-
                 // calculate MDB_UIAP_0000000019 + MDB_UIAP_0000000278 and return entryComponents
                 return checkAnnotationAnnotationProperties(resourceSubject, currStatement, entryComponents, connectionToTDB);
+
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000413" :
+                // autocomplete for ontology
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000578" :
+                // autocomplete for
+
+                currStatement = ResourceFactory.createStatement(ResourceFactory.createResource(resourceSubject), currStatement.getPredicate(), currStatement.getObject());
+
+                if (entryComponents.has(currStatement.getSubject().toString())) {
+
+                    JSONArray currEntryComponentJSONArray = entryComponents.getJSONArray(currStatement.getSubject().toString());
+
+                    for (int i = 0; i < currEntryComponentJSONArray.length(); i++) {
+
+                        JSONObject currEntryComponentJSONObject = currEntryComponentJSONArray.getJSONObject(i);
+
+                        if (currEntryComponentJSONObject.has(currStatement.getPredicate().getLocalName())) {
+
+                            JSONArray currComponentValueJSON = new JSONArray();
+
+                            if (currEntryComponentJSONObject.get(currStatement.getPredicate().getLocalName()) instanceof JSONArray) {
+
+                                currComponentValueJSON = currEntryComponentJSONObject.getJSONArray(currStatement.getPredicate().getLocalName());
+
+                            } else if (currEntryComponentJSONObject.get(currStatement.getPredicate().getLocalName()) instanceof String) {
+
+                                currComponentValueJSON.put(currEntryComponentJSONObject.getString(currStatement.getPredicate().getLocalName()));
+
+                            }
+
+                            currComponentValueJSON.put(currStatement.getObject().asResource().toString());
+
+                            currEntryComponentJSONObject.put(currStatement.getPredicate().getLocalName(), currComponentValueJSON);
+
+                            return entryComponents;
+
+                        }
+
+                    }
+
+                }
+
+                currComponentObject.put(currStatement.getPredicate().getLocalName(), currStatement.getObject().asResource().toString());
+
+                return entryComponents.append(currStatement.getSubject().toString(), currComponentObject);
 
             case "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" :
 
@@ -2028,6 +2157,47 @@ public class OutputGenerator {
 
                 }
 
+                if (JSONArrayData.getJSONObject(i).getJSONObject(rootURI).has("BFO_0000051")) {
+
+                    childrenOfComponent = JSONArrayData.getJSONObject(i).getJSONObject(rootURI).getJSONArray("BFO_0000051");
+
+                    int numberOfChildren = JSONArrayData.getJSONObject(i).getJSONObject(rootURI).getJSONArray("BFO_0000051").length();
+
+                    if (numberOfChildren >= 0) {
+
+                        JSONArray childrenOfComponentPlaceholder = new JSONArray();
+
+                        for (int j = 0; j < numberOfChildren; j++) {
+
+                            childrenOfComponentPlaceholder.put(j);
+
+                        }
+
+                        JSONArrayData.getJSONObject(i).getJSONObject(rootURI).put("BFO_0000051", childrenOfComponentPlaceholder);
+
+                    }
+
+                    outputTreeDataJSON = putPartonomyComponentInTree(rootURI, JSONArrayData, childrenOfComponent, position, outputTreeDataJSON);
+
+                    if (outputTreeDataJSON.getJSONObject(position - 1).has("BFO_0000051")) {
+
+                        // check if some root children are hidden, if true remove the placeholder from the output tree
+                        JSONArray rootChildren = outputTreeDataJSON.getJSONObject(position - 1).getJSONArray("BFO_0000051");
+
+                        for (int j = (rootChildren.length()-1); j >= 0; j--) {
+
+                            if (!(rootChildren.get(j) instanceof JSONObject)) {
+
+                                rootChildren.remove(j);
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
             }
 
         }
@@ -2291,7 +2461,16 @@ public class OutputGenerator {
 
                             } else {
 
-                                currPosition = Integer.parseInt(JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getString("MDB_GUI_0000000042"));
+                                if (JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getString("MDB_GUI_0000000042").equals("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000361")) {
+                                    // TODO remove this bridge when the resource MDB_GUI_0000000361 can be interpreted by the middleware
+
+                                    currPosition = 1;
+
+                                } else {
+
+                                    currPosition = Integer.parseInt(JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getString("MDB_GUI_0000000042"));
+
+                                }
 
                             }
 
@@ -2319,6 +2498,96 @@ public class OutputGenerator {
                         currOutputTreeDataJSON = putComponentInTree(newComponentURI, JSONArrayData, currChildrenOfComponent, currPosition, currOutputTreeDataJSON);
 
                         outputTreeDataJSON.getJSONObject(position - 1).put("MDB_GUI_0000000040", currOutputTreeDataJSON);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return outputTreeDataJSON;
+
+    }
+
+
+    /**
+     * This method constructs a nested and ordered JSONArray from a flat input JSON Array
+     * @param componentURI contains the URI of the current tree component
+     * @param JSONArrayData contains unordered flat JSONArray
+     * @param childrenOfComponent contains the URIs of the children
+     * @param position contains the position of the component
+     * @param outputTreeDataJSON contains a nested and ordered JSONArray
+     * @return a nested and ordered JSONArray
+     */
+    private JSONArray putPartonomyComponentInTree(String componentURI, JSONArray JSONArrayData,
+                                                  JSONArray childrenOfComponent, int position,
+                                                  JSONArray outputTreeDataJSON) {
+
+        // put the current data in the output tree JSON and remove the data afterwards from the flat JSON
+        for (int i = 0; i < JSONArrayData.length(); i++) {
+
+            if (JSONArrayData.getJSONObject(i).has(componentURI)) {
+
+                outputTreeDataJSON.put(position - 1, JSONArrayData.getJSONObject(i).getJSONObject(componentURI));
+
+            }
+
+        }
+
+        if (childrenOfComponent.length() > 0) {
+
+            for (int i = 0; i < childrenOfComponent.length(); i++) {
+
+                if (childrenOfComponent.get(i) instanceof String) {
+
+                    String newComponentURI = childrenOfComponent.getString(i);
+
+                    int currPosition = -1;
+
+                    JSONArray currChildrenOfComponent = new JSONArray();
+
+                    boolean hidden = false;
+
+                    for (int j = 0; j < JSONArrayData.length(); j++) {
+
+                        if (JSONArrayData.getJSONObject(j).has(newComponentURI)) {
+
+                            if (!JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).has("MDB_GUI_0000000042")) {
+
+                                System.out.println("Error: the following component has no position: " + newComponentURI);
+
+                            }  else {
+
+                                currPosition = Integer.parseInt(JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getString("MDB_GUI_0000000042"));
+
+                            }
+
+                            if (JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).has("BFO_0000051")) {
+
+                                currChildrenOfComponent = JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getJSONArray("BFO_0000051");
+
+                            }
+
+                            if (JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).has("MDB_UIAP_0000000204")) {
+
+                                hidden = Boolean.parseBoolean(JSONArrayData.getJSONObject(j).getJSONObject(newComponentURI).getString("MDB_UIAP_0000000204"));
+
+                            }
+
+                        }
+
+                    }
+
+                    if (!hidden) {
+
+                        // it is important to clone the current JSONArray
+                        JSONArray currOutputTreeDataJSON = new JSONArray(outputTreeDataJSON.getJSONObject(position - 1).getJSONArray("BFO_0000051").toString());
+
+                        currOutputTreeDataJSON = putPartonomyComponentInTree(newComponentURI, JSONArrayData, currChildrenOfComponent, currPosition, currOutputTreeDataJSON);
+
+                        outputTreeDataJSON.getJSONObject(position - 1).put("BFO_0000051", currOutputTreeDataJSON);
 
                     }
 
@@ -2467,8 +2736,6 @@ public class OutputGenerator {
                 // has associated instance resource [input_A]
             case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000036" :
                 // MDB entry composition of
-            case "http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000088" :
-                // has visible label 1 ---> redundant
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000010" :
                 // execution step: save/delete triple statement(s)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000038" :
@@ -2479,8 +2746,12 @@ public class OutputGenerator {
                 // property
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000042" :
                 // subject
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000048" :
+                // mandatory entry component   [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000077" :
                 // load from/save to/update in named graph
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000078" :
+                // named graph belongs to workspace
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000079" :
                 // execution step
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000097" :
@@ -2489,12 +2760,18 @@ public class OutputGenerator {
                 // else:
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000095" :
                 // execution step: if-then-else statement
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000100" :
+                // execution step: copy and save triple statement(s)
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000103" :
+                // copy from named graph (of class)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000104" :
                 // update with resource/value
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000105" :
                 // execution step: update triple statement(s)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000118" :
                 // input restricted to individuals of [input_A]
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000135" :
+                // delete triple statement [BOOLEAN]
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000167" :
                 // requirement for triggering a MDB workflow action
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000175" :
@@ -2505,12 +2782,18 @@ public class OutputGenerator {
                 // subsequent input through GUI module
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000199" :
                 // position
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000201" :
+                // label 1 ---> redundant
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000205" :
+                // has target MDB entry component
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000219" :
                 // execution step: trigger MDB workflow action
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000230" :
                 // subject (this entry's specific individual of)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000236" :
                 // wait for execution [BOOLEAN]
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000239" :
+                // go to execution step
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000261" :
                 // switch to page
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000266" :
@@ -2541,14 +2824,26 @@ public class OutputGenerator {
                 // has IF input value
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000284" :
                 // has IF operation
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000285" :
+                // has IF target value
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000289" :
+                // execution step: triggers user input
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000330" :
                 // execution step: close module
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000331" :
                 // close module [BOOLEAN]
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000332" :
+                // execution step: search MDB
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000340" :
+                // search target defines keyword
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000381" :
                 // 'user input' keyword defined by input
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000393" :
+                // load from/save to/update in named graph (this entry's specific individual of)
             case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000434" :
                 // required input if not hidden [BOOLEAN]
+            case "http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000439" :
+                // execution step: define variables
             case "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" :
             case "http://www.w3.org/2000/01/rdf-schema#label" :
             case "http://www.w3.org/2000/01/rdf-schema#subClassOf" :

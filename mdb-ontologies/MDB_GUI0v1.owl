@@ -126,6 +126,121 @@
     
 
 
+    <!-- http://purl.obolibrary.org/obo/RO_0002225 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002225">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x develops from part of y if and only if there exists some z such that x develops from z and z is part of y</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002226 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002226">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x develops_in y if x is located in y whilst x is developing</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002254 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002254">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has developmental contribution from y iff x has some part z such that z develops from y
+
+example of usage: Mammalian thymus has developmental contribution from some pharyngeal pouch 3; Mammalian thymus has developmental contribution from some pharyngeal pouch 4 [Kardong]</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002255 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002255">
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002256 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002256">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">t1 induced_by t2 if there is a process of developmental induction (GO:0031128) with t1 and t2 as interacting participants. t2 causes t1 to change its fate from a precursor anatomical structure type T to T&apos;, where T&apos; develops_from T
+
+alternative term: &apos;induced by&apos;</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002257 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002257">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">Inverse of developmentally induced by -&gt; 
+
+developmentally induced by: &quot;t1 induced_by t2 if there is a process of developmental induction (GO:0031128) with t1 and t2 as interacting participants. t2 causes t1 to change its fate from a precursor anatomical structure type T to T&apos;, where T&apos; develops_from T&quot;</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002384 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002384">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has developmental potential involving y iff x is capable of a developmental process with output y. y may be the successor of x, or may be a different structure in the vicinity (as for example in the case of developmental induction).</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002385 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002385">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has potential to developmentrally contribute to y iff x developmentally contributes to y or x is capable of developmentally contributing to y</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002386 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002386">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has potential to developmentally induce y iff x developmentally induces y or x is capable of developmentally inducing y</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002387 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002387">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has the potential to develop into y iff x develops into y or if x is capable of developing into y</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002388 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002388">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">x has potential to directly develop into y iff x directly develops into y or x is capable of directly developing into y</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/RO_0002476 -->
+
+    <rdf:Description rdf:about="&obi;RO_0002476">
+        <mdbuiap:MDB_UIAP_0000000018 rdf:datatype="&rdfs;Literal">c is a child nucleus of d if and only if c and d are both nuclei and parts of cells c&apos; and d&apos;, where c&apos; is derived from d&apos; by mitosis and the genetic material in c is a copy of the generic material in d
+
+example of usage: ABal nucleus child nucleus of ABa nucleus (in C elegans)</mdbuiap:MDB_UIAP_0000000018>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000570"/>
+    </rdf:Description>
+    
+
+
     <!-- http://purl.org/dc/terms/hasVersion -->
 
     <owl:ObjectProperty rdf:about="&dcterms;hasVersion"/>
@@ -468,6 +583,59 @@ As a consequence, the individual of the class &apos;crosslink representation pan
     
 
 
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000548 -->
+
+    <owl:ObjectProperty rdf:about="&mdbgui;MDB_GUI_0000000548">
+        <rdfs:label rdf:datatype="&xsd;string">has delete button</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000548</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a MDB entry component that functions as a button for deleting all information relating to this resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000056"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000555 -->
+
+    <owl:ObjectProperty rdf:about="&mdbgui;MDB_GUI_0000000555">
+        <rdfs:label rdf:datatype="&xsd;string">belongs to radio button group</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000555</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies to which GUI radio button group this radio button MDB entry component belongs to.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000056"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000568 -->
+
+    <owl:ObjectProperty rdf:about="&mdbgui;MDB_GUI_0000000568">
+        <rdfs:label rdf:datatype="&xsd;string">has dynamic representation of part</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000568</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the part resource of the part that must be represented dynamically. This information is used by the application for identifying the current label of the part, the definition of the underlying class affilitation for its tooltiptext and the mechanism for its hyperlink action. The respective information lies in the &apos;morphological description partonomy named graph&apos; of the entry.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000056"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000569 -->
+
+    <owl:ObjectProperty rdf:about="&mdbgui;MDB_GUI_0000000569">
+        <rdfs:label rdf:datatype="&xsd;string">spatio-structural relationships select</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000569</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000056"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000570 -->
+
+    <owl:ObjectProperty rdf:about="&mdbgui;MDB_GUI_0000000570">
+        <rdfs:label rdf:datatype="&xsd;string">developmental relations select</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000570</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000056"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -634,11 +802,11 @@ As a consequence, the individual of the class &apos;crosslink representation pan
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000359 -->
 
     <owl:DatatypeProperty rdf:about="&mdbgui;MDB_GUI_0000000359">
-        <rdfs:label rdf:datatype="&xsd;string">has maximum position of child entry components</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">1has maximum position of child entry components</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000359</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies the maximum position (in the order: from left to right and top to bottom) of the direct child MDB entry components of this parent component.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000469"/>
         <rdfs:domain rdf:resource="&mdbgui;MDB_GUI_0000000047"/>
-        <rdfs:subPropertyOf rdf:resource="&mdbgui;MDB_GUI_0000000095"/>
         <rdfs:range rdf:resource="&xsd;int"/>
     </owl:DatatypeProperty>
     
@@ -1356,7 +1524,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000063 -->
 
     <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000063">
-        <rdfs:label>GUI component data stream type</rdfs:label>
+        <rdfs:label>GUI data stream type</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000041"/>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000063</oboInOwl:id>
     </owl:Class>
@@ -1757,10 +1925,191 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     
 
 
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000549 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000549">
+        <rdfs:label rdf:datatype="&xsd;string">GUI category view</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000041"/>
+        <obi:IAO_0000115 xml:lang="en">A category view defines a specific category of information which is used to link named graphs that contain respective information to the category view through the annotation property &apos;has respective information in named graph of class&apos;.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000549</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000550 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000550">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;shape&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000550</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000551 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000551">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;basic measurements&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000551</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000552 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000552">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;parthood&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000552</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000553 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000553">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;composition&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000553</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000554 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000554">
+        <rdfs:label rdf:datatype="&xsd;string">GUI radio button group</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000041"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000554</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000556 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000556">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;spatio-structural relationships&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000556</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000571 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000571">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;developmental relations&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000571</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000572 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000572">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;physical properties and measurements&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000572</oboInOwl:id>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000573 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_GUI_0000000573">
+        <rdfs:label rdf:datatype="&xsd;string">category view &apos;functions&apos;</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000549"/>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000573</oboInOwl:id>
+    </owl:Class>
+    
+
+
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_MDB_GUI_0000000051 -->
 
     <owl:Class rdf:about="&mdbgui;MDB_MDB_GUI_0000000051">
         <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000048"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000542 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000542">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000543 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000543">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000544 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000544">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000545 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000545">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000546 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000546">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000547 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000547">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000548 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000548">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000549 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000549">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000550 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000550">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000551 -->
+
+    <owl:Class rdf:about="&mdbgui;MDB_UIAP_0000000551">
+        <rdfs:subClassOf rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
     </owl:Class>
     
 
@@ -1851,6 +2200,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000077">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: float</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a real number as a value.</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000077</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -1860,7 +2210,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
 
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000078">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
-        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: Geo coordinate</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: geo-coordinate decimal latitude</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000078</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -1871,6 +2221,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000079">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: positive integer</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please use only natural numbers (positive integer) as an input (i.e. the numbers 1, 2, 3, 4, ...).</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000079</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -2615,13 +2966,13 @@ When a MDB entry component is added to an entry composition, it must be placed w
     
 
 
-    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000170 -->
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000170__MDB_UIAP_0000000530 -->
 
-    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000170">
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000170__MDB_UIAP_0000000530">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this MDB workflow action</rdfs:label>
-        <oboInOwl:id xml:lang="en">MDB_GUI_0000000170</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">This belongs to the list of keyword resources that must be dereferencable for every action triggered by a user (and for the accompanying tracking-procedures). It must unambiguosly refer to the triggered MDB workflow action.</obi:IAO_0000115>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified MDB workflow action</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000170__MDB_UIAP_0000000530</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resources that has been identified based on the annotation &apos;identified MDB workflow action&apos; that has been used in some earlier execution step of this or a previous workflow action. If several execution steps of this or a previous workflow action have used this annotation, the keyword refers to the last usage.</obi:IAO_0000115>
     </owl:NamedIndividual>
     
 
@@ -2642,6 +2993,7 @@ When a MDB entry component is added to an entry composition, it must be placed w
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000172">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000063"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: boolean</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a Boolean value (i.e. &apos;true&apos; or &apos;false&apos;).</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000172</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -4555,6 +4907,7 @@ In this context, &apos;unconnected&apos; means that respective individuals are n
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000341">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000063"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: click</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Sorry, but the only valid input is a &apos;click&apos;.</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000341</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -4664,6 +5017,7 @@ In this context, &apos;unconnected&apos; means that respective individuals are n
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000353">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000063"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: phone number</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a phone number.</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000353</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -4674,6 +5028,7 @@ In this context, &apos;unconnected&apos; means that respective individuals are n
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000354">
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000065"/>
         <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: MDB password</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Sorry, but this is not a valid password.</mdbuiap:MDB_UIAP_0000000388>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000354</oboInOwl:id>
     </owl:NamedIndividual>
     
@@ -4735,8 +5090,8 @@ In this context, &apos;unconnected&apos; means that respective individuals are n
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000362 -->
 
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000362">
-        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: max position -1</rdfs:label>
+        <rdf:type rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1KEYWORD: max position -1</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000362</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This keyword refers to the current value of the data property &apos;has maximum position of child entry components&apos; of the MDB entry component through which this component has been added and subtracts &apos;1&apos; from it.</obi:IAO_0000115>
     </owl:NamedIndividual>
@@ -5837,10 +6192,7 @@ Side note: An instance resource associated to a child entry component takes prec
         <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource being described with this description form composition. It is a resource from one of the &apos;morphological description
 partonomy named graph&apos;s of this MDB entry ID.
 
-Resource can be identified through SPARQL Query:
-S:?    
-P:&apos;has description form in named graph&apos;
-O: morphological description form composition named graph (=named graph, where this composition is stored)</obi:IAO_0000115>
+The resource to which this keyword refers can be identified through the partID (partID is the local part of the wanted resource)</obi:IAO_0000115>
     </owl:NamedIndividual>
     
 
@@ -6334,7 +6686,1049 @@ E.g., if negated &apos;chaeta&apos; is part of &apos;head&apos; in the partonomy
         <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
         <rdfs:label rdf:datatype="&xsd;string">KEYWORD: calculate position in partonomy</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000515</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">This keyword requires to calculate the currently highest position X among all children of the partonomy element that is currently in focus. X must then be increased by one (X+1) to receive the numerical value to which this keyword refers to.</obi:IAO_0000115>
+        <obi:IAO_0000115 xml:lang="en">This keyword requires to calculate the currently highest position X among all children of the partonomy element that is currently in focus. X must then be increased by one (X+1) to receive the numerical value to which this keyword refers to. The partonomy element currently in focus can be specified using the annotation property &apos;parent required for &apos;KEYWORD: calculate position in partonomy&apos;&apos;.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000516 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000516">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000343"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI__IF_OPERATION: ALL null</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000516</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This GUI IF operation checks whether the keyword resources specified in accompanying &apos;has IF input value&apos; annotation(s) are known to the application. In case they are ALL not known, the IF statement is true (and the &apos;then:&apos; statement must be processed). If at least one of them is known to the application, the IF statement is false (and the &apos;else:&apos; statement must be processed).</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000517 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000517">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000343"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI__IF_OPERATION: SOME null</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000517</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This GUI IF operation checks whether the keyword resources specified in accompanying &apos;has IF input value&apos; annotation(s) are known to the application. In case at least one (=SOME) is not known, the IF statement is true (and the &apos;then:&apos; statement must be processed). If all of them are known to the application, the IF statement is false (and the &apos;else:&apos; statement must be processed).</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000518 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000518">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: check known keywords</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000518</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword triggers a search in the middleware for all known keywords in this transition.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000519 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000519">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: geo-coordinate decimal longitude</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000519</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000520 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000520">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000065"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: GeoJSON string</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a GeoJSON compliant string.</mdbuiap:MDB_UIAP_0000000388>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000520</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000521__MDB_UIAP_0000000572 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000521__MDB_UIAP_0000000572">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_55]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000521__MDB_UIAP_0000000572</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_55]&apos;.
+
+The object of this triple statement represents the generated resource [input_55].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000522__MDB_UIAP_0000000571 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000522__MDB_UIAP_0000000571">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_56]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000522__MDB_UIAP_0000000571</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_56]&apos;.
+
+The object of this triple statement represents the generated resource [input_56].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000523__MDB_UIAP_0000000569 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000523__MDB_UIAP_0000000569">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_57]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000523__MDB_UIAP_0000000569</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_57]&apos;.
+
+The object of this triple statement represents the generated resource [input_57].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000524__MDB_UIAP_0000000570 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000524__MDB_UIAP_0000000570">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_58]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000524__MDB_UIAP_0000000570</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_58]&apos;.
+
+The object of this triple statement represents the generated resource [input_58].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000525__MDB_UIAP_0000000568 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000525__MDB_UIAP_0000000568">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_59]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000525__MDB_UIAP_0000000568</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_59]&apos;.
+
+The object of this triple statement represents the generated resource [input_59].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000526__MDB_UIAP_0000000567 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000526__MDB_UIAP_0000000567">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_60]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000526__MDB_UIAP_0000000567</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_60]&apos;.
+
+The object of this triple statement represents the generated resource [input_60].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000527__MDB_UIAP_0000000566 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000527__MDB_UIAP_0000000566">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_61]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000527__MDB_UIAP_0000000566</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_61]&apos;.
+
+The object of this triple statement represents the generated resource [input_61].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000528__MDB_UIAP_0000000565 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000528__MDB_UIAP_0000000565">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_62]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000528__MDB_UIAP_0000000565</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_62]&apos;.
+
+The object of this triple statement represents the generated resource [input_62].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000529__MDB_UIAP_0000000564 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000529__MDB_UIAP_0000000564">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_63]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000529__MDB_UIAP_0000000564</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_63]&apos;.
+
+The object of this triple statement represents the generated resource [input_63].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000530__MDB_UIAP_0000000562 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000530__MDB_UIAP_0000000562">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_64]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000530__MDB_UIAP_0000000562</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_64]&apos;.
+
+The object of this triple statement represents the generated resource [input_64].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000531__MDB_UIAP_0000000563 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000531__MDB_UIAP_0000000563">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_65]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000531__MDB_UIAP_0000000563</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_65]&apos;.
+
+The object of this triple statement represents the generated resource [input_65].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000532__MDB_UIAP_0000000561 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000532__MDB_UIAP_0000000561">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_66]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000532__MDB_UIAP_0000000561</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_66]&apos;.
+
+The object of this triple statement represents the generated resource [input_66].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000533__MDB_UIAP_0000000560 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000533__MDB_UIAP_0000000560">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_67]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000533__MDB_UIAP_0000000560</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_67]&apos;.
+
+The object of this triple statement represents the generated resource [input_67].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000534__MDB_UIAP_0000000559 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000534__MDB_UIAP_0000000559">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_68]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000534__MDB_UIAP_0000000559</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_68]&apos;.
+
+The object of this triple statement represents the generated resource [input_68].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000535__MDB_UIAP_0000000558 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000535__MDB_UIAP_0000000558">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_69]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000535__MDB_UIAP_0000000558</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_69]&apos;.
+
+The object of this triple statement represents the generated resource [input_69].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000536__MDB_UIAP_0000000557 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000536__MDB_UIAP_0000000557">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: generated resource [input_70]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000536__MDB_UIAP_0000000557</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been generated based on the annotation &apos;generate resource of class [input_70]&apos;.
+
+The object of this triple statement represents the generated resource [input_70].</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000537__MDB_UIAP_0000000575 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000537__MDB_UIAP_0000000575">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_A]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000537__MDB_UIAP_0000000575</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_A]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000538__MDB_UIAP_0000000576 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000538__MDB_UIAP_0000000576">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_B]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000538__MDB_UIAP_0000000576</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_B]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000539__MDB_UIAP_0000000577 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000539__MDB_UIAP_0000000577">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_C]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000539__MDB_UIAP_0000000577</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_C]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000540__MDB_UIAP_0000000118 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000540__MDB_UIAP_0000000118">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: user/GUI input [input_A__definition]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000540__MDB_UIAP_0000000118</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the definition of the resource specified by &apos;KEYWORD: user/GUI input [input_A]&apos;.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000541__MDB_UIAP_0000000580 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000541__MDB_UIAP_0000000580">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated instance resource [input_named-graph]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000541__MDB_UIAP_0000000580</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource specified by the annotation property &apos;has associated instance resource [input_named-graph]&apos; that links it to an entry component. The resource is linked to an entry component and with it implicitely also to all its child components using this object property. This way, the resource is held available for the case that it must be referred to in some other context.
+
+Therefore, if the current entry component has no associated resource, one must trace the composition-tree upward, and check the sequence of parent components whether one of them has a resource associated. The first associated resource found when applying this procedure is the resource to which this keyword refers to.
+
+
+Side note: An instance resource associated to a child entry component takes precedence over any instance resource associated to one of its parent components!</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000542 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000542">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: use active tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000542</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000543 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000543">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: find workspace</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000543</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000544 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000544">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: find named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000544</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000545 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000545">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: find root element</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000545</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000546 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000546">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: new selected part</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000546</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000547 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000547">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000492"/>
+        <rdfs:label rdf:datatype="&xsd;string">group of scattered anatomical entities</rdfs:label>
+        <dcterms:description rdf:datatype="&rdfs;Literal">A group of anatomical entities which together do not form a self-connected anatomical entity (an entity b is self-connected if and only if: given any two points in b, a continuous line can be traced in b which connects these points).</dcterms:description>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">Group of scattered anatomical entities: a group of anatomical entities which together do not form a self-connected anatomical entity. 
+
+An entity is self-connected if and only if: given any two points in the entity, a continuous line can be traced in the entity which connects these points.</mdbuiap:MDB_UIAP_0000000018>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000547</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000557 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000557">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this MDB entry&apos;s list of parts</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000557</oboInOwl:id>
+        <oboInOwl:id xml:lang="en">This keyword refers to the list of resources that are the parts described for this MDB morphological description entry.</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000558 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000558">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: integer percentage (0-100%)</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a percentage value using an integer between 0 and 100.</mdbuiap:MDB_UIAP_0000000388>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000558</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000559 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000559">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: float percentage (0-100%)</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a percentage value between 0 and 100.</mdbuiap:MDB_UIAP_0000000388>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000559</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000560 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000560">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000068"/>
+        <rdfs:label rdf:datatype="&xsd;string">GUI_COMPONENT_INPUT_TYPE: float pH</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000388 rdf:datatype="&rdfs;Literal">Please provide a value between 0 and 14.</mdbuiap:MDB_UIAP_0000000388>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000560</oboInOwl:id>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000561 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000561">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this part&apos;s URI</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000561</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword resource refers to the URI of the part that is currently in focus.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000562 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000562">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this part&apos;s label</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000562</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword resource refers to the label of the part that is currently in focus.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000563 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000563">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this part&apos;s definition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000563</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword resource refers to the definition of the class to which the part belongs to that is currently in focus.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000564 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000564">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_J]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000564</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been identified based on the annotation &apos;copied resource (of class) to be identified [input_J]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000565 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000565">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_K]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000565</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been identified based on the annotation &apos;copied resource (of class) to be identified [input_K]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000566 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000566">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_L]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000566</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been identified based on the annotation &apos;copied resource (of class) to be identified [input_L]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000567 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000567">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_M]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000567</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource that has been identified based on the annotation &apos;copied resource (of class) to be identified [input_M]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000574__MDB_UIAP_0000000614 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000574__MDB_UIAP_0000000614">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_D]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000574__MDB_UIAP_0000000614</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_D]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000575__MDB_UIAP_0000000613 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000575__MDB_UIAP_0000000613">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_E]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000575__MDB_UIAP_0000000613</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_E]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000576__MDB_UIAP_0000000612 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000576__MDB_UIAP_0000000612">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_F]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000576__MDB_UIAP_0000000612</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_F]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000577__MDB_UIAP_0000000611 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000577__MDB_UIAP_0000000611">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_G]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000577__MDB_UIAP_0000000611</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_G]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000578__MDB_UIAP_0000000610 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000578__MDB_UIAP_0000000610">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_H]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000578__MDB_UIAP_0000000610</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_H]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000579__MDB_UIAP_0000000609 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000579__MDB_UIAP_0000000609">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_I]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000579__MDB_UIAP_0000000609</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_I]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000580__MDB_UIAP_0000000608 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000580__MDB_UIAP_0000000608">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_J]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000580__MDB_UIAP_0000000608</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_J]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000581 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000581">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: use hash-map list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000581</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword specifies that the hash-map list used in an accompanying &apos;named graph&apos;-related annotation property must be used for identifying the classes of named graphs of which all individual named graphs of this entry must be refered to.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000582__MDB_UIAP_0000000627 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000582__MDB_UIAP_0000000627">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_K]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000582__MDB_UIAP_0000000627</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_K]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000583__MDB_UIAP_0000000626 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000583__MDB_UIAP_0000000626">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_L]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000583__MDB_UIAP_0000000626</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_L]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000584__MDB_UIAP_0000000625 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000584__MDB_UIAP_0000000625">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_M]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000584__MDB_UIAP_0000000625</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_M]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000585__MDB_UIAP_0000000624 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000585__MDB_UIAP_0000000624">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_N]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000585__MDB_UIAP_0000000624</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_N]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000586__MDB_UIAP_0000000623 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000586__MDB_UIAP_0000000623">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_O]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000586__MDB_UIAP_0000000623</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_O]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000587__MDB_UIAP_0000000622 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000587__MDB_UIAP_0000000622">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_P]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000587__MDB_UIAP_0000000622</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_P]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000588__MDB_UIAP_0000000621 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000588__MDB_UIAP_0000000621">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_Q]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000588__MDB_UIAP_0000000621</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_Q]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000589__MDB_UIAP_0000000620 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000589__MDB_UIAP_0000000620">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_R]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000589__MDB_UIAP_0000000620</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_R]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000590__MDB_UIAP_0000000619 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000590__MDB_UIAP_0000000619">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_S]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000590__MDB_UIAP_0000000619</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_S]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000591__MDB_UIAP_0000000618 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000591__MDB_UIAP_0000000618">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: associated &apos;list of URIs named graph&apos; [input_T]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000591__MDB_UIAP_0000000618</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to a particular named graph that contains a list of URIs which has been specified by the annotation property &apos;has associated &apos;list of URIs named graph&apos; [input_T]&apos;. 
+
+Whenever the keyword is used in an execution step as placeholder for a resource, all resources (URIs) contained in the specified named graph must be processed consecutively before proceeding with the next execution step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000592 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000592">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: position +1</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000592</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the current value of the data property &apos;has position in MDB entry component&apos; of this MDB entry component and adds &apos;1&apos; to it.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000593 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000593">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_16]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000593</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_16]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000594 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000594">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_17]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000594</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_17]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000595 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000595">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_18]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000595</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_18]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000596 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000596">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_19]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000596</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_19]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000597 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000597">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_20]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000597</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_20]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000598 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000598">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_21]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000598</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_21]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000599 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000599">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_22]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000599</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_22]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000600 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000600">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_23]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000600</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_23]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000601 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000601">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_24]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000601</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_24]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000602 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000602">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_25]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000602</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_25]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000603 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000603">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: mapping of ontology namespaces to IDspaces</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_AGENT</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_AP</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_CORE</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_DATASCHEME</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_ENTRY</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_EQCL</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_GUI</mdbuiap:MDB_UIAP_0000000641>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000603</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_GUI_COMPONENT</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_SPECIMEN</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_TAXONOMY</mdbuiap:MDB_UIAP_0000000641>
+        <mdbuiap:MDB_UIAP_0000000641 xml:lang="en">MDB_UIAP</mdbuiap:MDB_UIAP_0000000641>
+        <obi:IAO_0000115 xml:lang="en">This keyword resource provides the mapping between ontology IDspaces and their corresponding namespaces.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_AP</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBAnnotationProperty"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_GUI_COMPONENT</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/GUIComponent"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_EQCL</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/CrossOntologyEquivalentClass"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_GUI</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDB_GUI"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_SPECIMEN</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBSpecimen"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_ENTRY</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBEntry"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_CORE</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBCore"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_TAXONOMY</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBTaxonomy"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_AGENT</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBAgent"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_DATASCHEME</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBDataScheme"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedTarget xml:lang="en">MDB_UIAP</owl:annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000642 rdf:resource="http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty"/>
+        <owl:annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000641"/>
+        <owl:annotatedSource rdf:resource="&mdbgui;MDB_GUI_0000000603"/>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000604 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000604">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: this MDB entry&apos;s workspace</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000604</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword resource dereferences the workspace URI of the MDB entry ID currently in focus.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000605 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000605">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label xml:lang="de">KEYWORD: this MDB entry version number</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000605</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This belongs to the list of keyword resources that must be dereferencable for every action triggered by a user (and for the accompanying tracking-procedures). It must unambiguosly refer to the version number part of the MDB entry ID of the entry that is currently &apos;in focus&apos;.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000606 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000606">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_26]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000606</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_26]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000607 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000607">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_27]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000607</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_27]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000608 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000608">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_28]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000608</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_28]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000609 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000609">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_29]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000609</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_29]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000610 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000610">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: identified resource(s) [input_30]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000610</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the resource(s) that has been identified based on the annotation &apos;resource(s) to be identified [input_30]&apos; that has been used in some earlier execution step within this action. If several execution steps of this action have used this annotation, the keyword refers to the last usage. If more than one resource has been identified based on this annotation, execute this step for each identified resource before continuing with the next executions step.</obi:IAO_0000115>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000611 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_GUI_0000000611">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: position -1</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000611</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the current value of the data property &apos;has position in MDB entry component&apos; of this MDB entry component and subtracts &apos;1&apos; from it.</obi:IAO_0000115>
     </owl:NamedIndividual>
     
 
@@ -6342,6 +7736,86 @@ E.g., if negated &apos;chaeta&apos; is part of &apos;head&apos; in the partonomy
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_MDB_GUI_0000000051 -->
 
     <owl:NamedIndividual rdf:about="&mdbgui;MDB_MDB_GUI_0000000051"/>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000542 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000542">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000543 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000543">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000544 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000544">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000545 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000545">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000546 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000546">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000547 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000547">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000548 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000548">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000549 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000549">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000550 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000550">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_UIAP_0000000551 -->
+
+    <owl:NamedIndividual rdf:about="&mdbgui;MDB_UIAP_0000000551">
+        <rdf:type rdf:resource="&mdbgui;MDB_GUI_0000000113"/>
+    </owl:NamedIndividual>
     
 
 
@@ -6353,10 +7827,40 @@ E.g., if negated &apos;chaeta&apos; is part of &apos;head&apos; in the partonomy
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000549">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_18]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000549</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_18]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000548">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_17]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000548</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_17]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000547">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_16]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000547</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_16]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000546">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_15]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000546</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_15]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
     <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000340">
         <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_5]</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000340</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_5]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000545">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_14]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000545</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_14]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000544">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_13]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000544</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_13]&apos; specifies the input-information.</obi:IAO_0000115>
     </rdf:Description>
     <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000096">
         <rdfs:label rdf:datatype="&xsd;string">has visible title</rdfs:label>
@@ -6369,25 +7873,45 @@ E.g., if negated &apos;chaeta&apos; is part of &apos;head&apos; in the partonomy
         <rdfs:label rdf:datatype="&xsd;string">data property  [GUI component]</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000051</oboInOwl:id>
     </rdf:Description>
-    <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000305">
-        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_2]</rdfs:label>
-        <oboInOwl:id xml:lang="en">MDB_GUI_0000000305</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_2]&apos; specifies the input-information.</obi:IAO_0000115>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000543">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_12]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000543</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_12]&apos; specifies the input-information.</obi:IAO_0000115>
     </rdf:Description>
-    <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000338">
-        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_3]</rdfs:label>
-        <oboInOwl:id xml:lang="en">MDB_GUI_0000000338</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_3]&apos; specifies the input-information.</obi:IAO_0000115>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000542">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_11]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000542</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_11]&apos; specifies the input-information.</obi:IAO_0000115>
     </rdf:Description>
     <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000503">
         <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_9]</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000503</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_9]&apos; specifies the input-information.</obi:IAO_0000115>
     </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000338">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_3]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000338</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_3]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000551">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_20]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000551</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_20]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000305">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_2]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_GUI_0000000305</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_2]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
     <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000339">
         <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_4]</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_GUI_0000000339</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_4]&apos; specifies the input-information.</obi:IAO_0000115>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbgui;MDB_UIAP_0000000550">
+        <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_19]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000550</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This keyword refers to the information/resource for which the annotation &apos;input of type [info-input_19]&apos; specifies the input-information.</obi:IAO_0000115>
     </rdf:Description>
     <rdf:Description rdf:about="&mdbgui;MDB_GUI_0000000501">
         <rdfs:label rdf:datatype="&xsd;string">KEYWORD: input of type [info-input_7]</rdfs:label>

@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 29.04.15.
- * Last modified by Roman Baum on 04.07.17.
+ * Last modified by Roman Baum on 28.02.17.
  */
 
 package mdb.packages;
@@ -69,11 +69,21 @@ public class MDBResourceFactory {
 
             String currKey = infoInputKeys.next();
 
-            abbreviationExist = findAbbreviation(currKey, pathToOntologies, connectionToTDB);
+            String potentialResource = infoInput.getString(currKey);
 
-            if (abbreviationExist) {
+            MDBURLEncoder mdbLEncoderSomeValue = new MDBURLEncoder();
 
-                mdbType = getAbbreviation(currKey, pathToOntologies, connectionToTDB);
+            UrlValidator urlValidatorSomeValue = new UrlValidator();
+
+            if (urlValidatorSomeValue.isValid(mdbLEncoderSomeValue.encodeUrl(potentialResource, "UTF-8"))) {
+
+                abbreviationExist = findAbbreviation(potentialResource, pathToOntologies, connectionToTDB);
+
+                if (abbreviationExist) {
+
+                    mdbType = getAbbreviation(potentialResource, pathToOntologies, connectionToTDB);
+
+                }
 
             }
 
@@ -221,7 +231,7 @@ public class MDBResourceFactory {
 
                     String currFirstVersionNo = versionsFromTDB.getString(i).substring(versionsFromTDB.getString(i).lastIndexOf("-"));
 
-                    currFirstVersionNo = currFirstVersionNo.substring(0, currFirstVersionNo.indexOf("_"));
+                    currFirstVersionNo = currFirstVersionNo.substring(currFirstVersionNo.indexOf("_") + 1, currFirstVersionNo.lastIndexOf("_"));
 
                     if (maxFirstVersionNumber < Integer.parseInt(currFirstVersionNo)) {
 

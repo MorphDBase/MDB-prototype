@@ -65,7 +65,7 @@
                         'first_name' : document.getElementById("inputFirstName").value,
                         'last_name' : document.getElementById("inputLastName").value,
                         'mdb_type' : document.getElementById("inputMDBType").value,
-                        'dataset' : "/home/path/to/tdb/mdb_core_workspace/" }));
+                        'dataset' : "/home/YOUR_HOME_DIR/tdb/mdb_core_workspace/" }));
 
             document.getElementById("outputMessage").value = "";
             document.getElementById("outputTime").value = "";
@@ -82,7 +82,7 @@
                             'mdb_status_transition' : "test_status_transition",
                             'input_data' :
                             {'datasets' : [
-                                {'dataset' : "/home/path/to/tdb/mdb_core_workspace/", // getJSONObject(i).getString("dataset")
+                                {'dataset' : "/home/YOUR_HOME_DIR/tdb/mdb_core_workspace/", // getJSONObject(i).getString("dataset")
 
                                     'ngs' : [{  'ng' : "http://example.com/uris", // getJSONObject(i).getJSONArray("NG_URIs").getJSONObject(j).getString("NG_URI")
                                                 'triples': [

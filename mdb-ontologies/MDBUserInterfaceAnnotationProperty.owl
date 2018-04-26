@@ -319,6 +319,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000019</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This annotation property specifies the type of GUI input required for triggering the execution step specified in &apos;execution step triggered&apos; annotation property.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000274"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
     </AnnotationProperty>
     
 
@@ -1021,6 +1022,8 @@ This triple statement must be added to the named graph specified in another anno
 
 Together with information about the MDB entry type and the workspace, the directory can be located in the MDB triple store for saving or loading the triple statement(s).</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
     </AnnotationProperty>
     
 
@@ -1040,6 +1043,8 @@ name of named graph: MDBEntryID_[ngc]
 
 This annotation can also be used to assigned a specific workspace to a given named graph individual or named graph class. If a named graph class has more than one workspace assigned, its individuals can belong to either or both of the assigned workspaces.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
     </AnnotationProperty>
     
 
@@ -1313,6 +1318,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000101</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies a particular resource or value that must be changed in all the named graphs that are specified in accompanying annotations.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000404"/>
     </AnnotationProperty>
     
 
@@ -1337,6 +1343,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
 
 Other annotations specify the named graph to which the triple statements in memory must be written and whether some resources must be updated before writing them to this named graph.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
     </AnnotationProperty>
     
 
@@ -1348,6 +1355,7 @@ Other annotations specify the named graph to which the triple statements in memo
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000104</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies the particular resource or value with which the to-be-changed resource/value is replaced. Which resources/values must be changed is specified in accompanying annotations.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000404"/>
     </AnnotationProperty>
     
 
@@ -1388,6 +1396,8 @@ Only one keyword resource is used and must be dereferenced depending on the anno
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000107</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies the workspace from which the triple statements are copied. The named graphs of which the content is copied are specified in another annotation.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
     </AnnotationProperty>
     
 
@@ -1419,10 +1429,10 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000110 -->
 
     <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000110">
-        <rdfs:label rdf:datatype="&xsd;string">delete named graph (of class)</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">1delete named graph (of class)</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000110</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies the named graphs (or their &apos;named graph&apos; classes) to be deleted. The MDB core ID or MDB entry ID to which they belong and from which workspace they must be deleted is specified in accompanying annotations.</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;deprecated"/>
     </AnnotationProperty>
     
 
@@ -2610,6 +2620,7 @@ In case more than one requirement is specified, the relation between the require
 
 The keyword resource &apos;KEYWORD: identified resource(s) [input_X]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
     </AnnotationProperty>
     
 
@@ -2834,7 +2845,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
         <obi:IAO_0000115 xml:lang="en">This annotation specifies a MDB entry ID that takes the function of the MDB entry currently in focus for the ongoing action. In other words, the keyword resource &apos;this MDB entry ID&apos; and all its associated keyword resources will refer to the specified MDB entry ID and its associated resources, just as if the action had been triggered with the specified MDB entry ID in focus. This change in focus to the specified MDB entry ID holds in all subsequent execution steps of this action, until another &apos;set new focus on MDB entry ID&apos; annotation changes the focus again.
 
 If used within an execution step, this annotation is executed first before any other annotations of this execution step can be executed.</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000593"/>
     </AnnotationProperty>
     
 
@@ -3422,10 +3433,11 @@ Each newly generated individual resource is associated with a corresponding keyw
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000234 -->
 
     <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000234">
-        <rdfs:label rdf:datatype="&xsd;string">update with existing individual of</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">update with (this entry&apos;s specific individual of)</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000234</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">Specifies the class of the particular resource with which the to-be-changed resource/value is replaced. Which resources/values must be changed is specified in accompanying annotations.</obi:IAO_0000115>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;update with resource/value&apos;, with the difference that the range is an individual of the specified class that refers to the MDB entry ID that is currently in focus (the one to which the keyword &apos;KEYWORD: this MDB entry ID&apos; refers to). Contrary to the annotation &apos;update with resource/value&apos;, this annotation has no values as ranges.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000404"/>
     </AnnotationProperty>
     
 
@@ -4661,7 +4673,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000332">
         <rdfs:label rdf:datatype="&xsd;string">execution step: search MDB</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000332</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">This annotation triggers a search of the MDB database for the existence of a specific resource. Further annotations specify what is being searched and specify criteria that narrow in the search space</obi:IAO_0000115>
+        <obi:IAO_0000115 xml:lang="en">This annotation triggers a search of the MDB database for the existence of a specific resource. Further annotations specify what is being searched and specify criteria that narrow in the search space.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
     </AnnotationProperty>
     
@@ -4742,6 +4754,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
 
 The default value is &apos;false&apos;.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000554"/>
     </AnnotationProperty>
     
 
@@ -4753,6 +4766,7 @@ The default value is &apos;false&apos;.</obi:IAO_0000115>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000340</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies the keyword under which the search target result is referenced. The search target is specified through the keyword resource &apos;KEYWORD: to be identified search target&apos;.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000554"/>
     </AnnotationProperty>
     
 
@@ -5361,6 +5375,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000392</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Specifies a subclass of the class named graph, the individual of which is the named graph from which a triple statement is loaded or to which it is saved or in which triple statements must be updated. The range is an individual of the specified class that has been copied in a previous execution step within this workflow action.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
     </AnnotationProperty>
     
 
@@ -5370,8 +5385,10 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000393">
         <rdfs:label rdf:datatype="&xsd;string">load from/save to/update in named graph (this entry&apos;s specific individual of)</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000393</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;load from/save to/update in named graph (individual of)&apos;, with the difference that the range is an individual of the specified class that refers to the MDB entry ID that is currently in focus.</obi:IAO_0000115>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;load from/save to/update in named graph&apos;, with the difference that the range is an individual of the specified class that refers to the MDB entry ID that is currently in focus.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
     </AnnotationProperty>
     
 
@@ -5386,7 +5403,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
 This specified focus holds in all subsequent execution steps of this action, until another &apos;set new focus on MDB entry ID&apos; annotation changes the focus again.
 
 If used within an execution step, this annotation is executed first before any other annotations of this execution step can be executed.</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000593"/>
     </AnnotationProperty>
     
 
@@ -5500,7 +5517,7 @@ default value: &apos;false&apos;</obi:IAO_0000115>
     <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000404">
         <rdfs:label rdf:datatype="&xsd;string">execution step: update URIs for individuals</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000404</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">Specifies through respective annotations within this annotation all information required for changing the URI of a specific resource in all triple statements of a specified named graph.
+        <obi:IAO_0000115 xml:lang="en">Specifies through respective annotations within this annotation all information required for changing the URI of a specific resource in all triple statements of all specified named graphs.
 
 Like any other &apos;execution step&apos; annotation, the string part is used for providing a number, occassionally accompanied by a character. The number and character indicate in which sequence the information should be processed: from small to large, from A to Z. All annotations with the same number belong together. The numbers are also used for indicating alternative input (see &apos;alternative to triple statement(s)&apos; annotation).</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
@@ -5515,6 +5532,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000405</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;to be updated resource/value&apos;, with the difference that the range is an individual of the specified class.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000404"/>
     </AnnotationProperty>
     
 
@@ -5538,7 +5556,7 @@ Like any other &apos;execution step&apos; annotation, the string part is used fo
         <obi:IAO_0000115 xml:lang="en">This annotation specifies a MDB entry ID that takes the function of the MDB entry currently in focus for this execution step only. In other words, the keyword resource &apos;this MDB entry ID&apos; and all its associated keyword resources will refer to the specified MDB entry ID and its associated resources, just as if the action had been triggered with the specified MDB entry ID in focus. This change in focus to the specified MDB entry ID is restricted to this execution step and will return to the former focus when the execution step has been executed.
 
 If used within an execution step, this annotation is executed first before any other annotations of this execution step can be executed.</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000593"/>
     </AnnotationProperty>
     
 
@@ -6472,6 +6490,7 @@ The keyword resource &apos;KEYWORD: associated instance resource [input_N]&apos;
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000481</oboInOwl:id>
         <oboInOwl:id xml:lang="en">Specifies through the keyword resource &apos;KEYWORD: subject&apos;, &apos;KEYWORD: object&apos;, &apos;KEYWORD: property&apos; or &apos;KEYWORD: named graph&apos; as its object, what element of the triple statement to be search is the target of this search.</oboInOwl:id>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000554"/>
     </AnnotationProperty>
     
 
@@ -7156,6 +7175,1902 @@ default value: &apos;false&apos;</oboInOwl:id>
         <oboInOwl:id xml:lang="en">MDB_UIAP_0000000528</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This annotation property specifies an element from the partonomy of a MDB morphological description entry, which should be selected in the interface to which the application switches. The range of this property is an individual of the specified class that refers to the MDB entry ID that is currently in focus (the one to which the keyword &apos;KEYWORD: this MDB entry ID&apos; refers to).</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000279"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000529 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000529">
+        <rdfs:label rdf:datatype="&xsd;string">use keywords from composition  [BOOLEAN]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000529</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies whether subsequent execution steps must consider keyword values from other MDB entry components of this composition.
+
+The default value is &apos;false&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000274"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000530 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000530">
+        <rdfs:label rdf:datatype="&xsd;string">identified MDB workflow action</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000530</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some MDB workflow action that must be referred to in a subsequent execution step or tracking procedure.
+
+
+
+The keyword resource &apos;KEYWORD: identified MDB workflow action&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000531 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000531">
+        <rdfs:label rdf:datatype="&xsd;string">parent required for &apos;KEYWORD: calculate position in partonomy&apos;</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000531</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation specifies the parent to which an element of the partonomy is added or deleted from. This information is required for specifying the value associated to the keyword &apos;KEYWORD: calculate position in partonomy&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000532 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000532">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_20]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000532</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_20]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000533 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000533">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_19]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000533</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_19]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000534 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000534">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_18]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000534</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_18]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000535 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000535">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_17]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000535</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_17]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000536 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000536">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_16]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000536</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_16]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000537 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000537">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_15]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000537</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_15]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000538 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000538">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_14]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000538</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_14]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000539 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000539">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_13]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000539</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_13]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000540 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000540">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_12]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000540</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_12]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000541 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000541">
+        <rdfs:label rdf:datatype="&xsd;string">input of type [info-input_11]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000541</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies some information that is important for an input (e.g. the type of entry that will be newly created when pushing the &apos;create new entry&apos; button).
+
+
+
+The keyword resource &apos;KEYWORD: input of type [info-input_11]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000221"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000542 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000542">
+        <rdfs:label rdf:datatype="&xsd;string">visible only to MDB user</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000542</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies to which MDB user this MDB entry component is visible. To all other users the MDB entry component is hidden.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000543 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000543">
+        <rdfs:label rdf:datatype="&xsd;string">browse ontology with focus on class</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000543</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the class that must be in focus when the user starts to browse for selecting a resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000289"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000544 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000544">
+        <rdfs:label rdf:datatype="&xsd;string">execution step: delete part of composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000544</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies through annotations within this annotation a particular MDB entry component. All triple statements that have this MDB entry component or one of its children MDB entry components as a subject or an object must be deleted from the specified named graph and workspace.
+
+Like any other &apos;execution step&apos; annotation, the string part is used for providing a number, occassionally accompanied by a character. The number and character indicate in which sequence the information should be processed: from small to large, from A to Z. All annotations with the same number belong together. The numbers are also used for indicating alternative input (see &apos;alternative to triple statement(s)&apos; annotation).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000545 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000545">
+        <rdfs:label rdf:datatype="&xsd;string">delete MDB entry component with all of its children</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000545</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a particular MDB entry component. All triple statements that have this MDB entry component or one of its children MDB entry components as a subject or an object must be deleted from the named graph and workspace that are specified in accompanying annotations.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000544"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000546 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000546">
+        <rdfs:label rdf:datatype="&xsd;string">has widget specification</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000546</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property is used for defining input and output specifications for a MDB entry component that contains a specific widget. This annotation property is used as a wrapper in combination with accompanying annotation properties.
+
+Like the &apos;execution step&apos; annotations, the string part is used for providing a number, occassionally accompanied by a character. The number and character indicate in which sequence the information should be processed: from small to large, from A to Z. All annotations with the same number belong together. The numbers are also used for indicating alternative input (see &apos;alternative to triple statement(s)&apos; annotation).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000547 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000547">
+        <rdfs:label rdf:datatype="&xsd;string">module output used in execution step</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000547</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the execution step in which the input is used. In combination with the annotation property &apos;module output used in MDB entry component&apos;, the execution step can be specified, to which the application should go to.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000548 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000548">
+        <rdfs:label rdf:datatype="&xsd;string">processes input from MDB entry component</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000548</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a MDB entry component, which provides input that is processed by the widget/module. Additional annotation properties specify the input type that is provided by this MDB entry component and the keyword resource through which the input is communicated.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000549 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000549">
+        <rdfs:label rdf:datatype="&xsd;string">module output used in MDB entry component</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000549</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the MDB entry component to which the output from the GUI module belongs to. This annotation property is accompanied by the annotation property &apos;has module output type&apos; that specifies the specific output type of the module that is used as input in the specified MDB entry component, as well as the annotation &apos;module output used in execution step&apos; that specifies the execution step of this MDB entry component that must be triggered.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000550 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000550">
+        <rdfs:label rdf:datatype="&xsd;string">has module GUI output type</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000550</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the type of GUI output from a module that is further specified in accompanying annotation properties.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000551 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000551">
+        <rdfs:label rdf:datatype="&xsd;string">output value/resource defines keyword resource</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000551</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific keyword resource, to which the output value/resource must be associated. As a consequence, if in a subsequent step this keyword resource is referenced, it is a placeholder for this output value/resource, which must be used in this subsequent step instead of the keyword resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000552 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000552">
+        <rdfs:label rdf:datatype="&xsd;string">processes input value/resource from keyword resource</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000552</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a keyword resource that has the input value/resource associated.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000553 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000553">
+        <rdfs:label rdf:datatype="&xsd;string">output label value defines keyword resource</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000553</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific keyword resource, to which the output label value must be associated. As a consequence, if in a subsequent step this keyword resource is referenced, it is a placeholder for this output label value, which must be used in this subsequent step instead of the keyword resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000546"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000554 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000554">
+        <rdfs:label rdf:datatype="&xsd;string">execution step: search in ontology</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000554</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation triggers a search in a partilular ontology specified through accompanying annotations. The search targets for the existence of a specific resource. Further annotations specify what is being searched and specify criteria that narrow in the search space</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000555 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000555">
+        <rdfs:label rdf:datatype="&xsd;string">search in target ontology</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000555</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a particular ontology that must be searched in.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000554"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000556 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000556">
+        <rdfs:label rdf:datatype="&xsd;string">search target is instance  [BOOLEAN]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000556</oboInOwl:id>
+        <oboInOwl:id xml:lang="en">The value &apos;true&apos; indicates that the respective search targets at a resource that is an individual and not a class.
+
+The default value is &apos;false&apos;.</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000554"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000557 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000557">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_70]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">70</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000557</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_70]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000558 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000558">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_69]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">69</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000558</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_69]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000559 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000559">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_68]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">68</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000559</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_68]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000560 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000560">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_67]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">67</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000560</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_67]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000561 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000561">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_66]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">66</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000561</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_66]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000562 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000562">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_64]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">64</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000562</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_64]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000563 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000563">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_65]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">65</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000563</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_65]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000564 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000564">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_63]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">63</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000564</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_63]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000565 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000565">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_62]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">62</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000565</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_62]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000566 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000566">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_61]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">61</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000566</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_61]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000567 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000567">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_60]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">60</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000567</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_60]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000568 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000568">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_59]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">59</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000568</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_59]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000569 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000569">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_57]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">57</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000569</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_57]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000570 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000570">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_58]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">58</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000570</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_58]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000571 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000571">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_56]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">56</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000571</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_56]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000572 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000572">
+        <rdfs:label rdf:datatype="&xsd;string">generate resource of class [input_55]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000465 rdf:datatype="&xsd;int">55</mdbuiap:MDB_UIAP_0000000465>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000572</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation is restricted for describing MDB tracking-procedures. Specifies the class for the resource that must be generated. This implicitely requires the generation of the following triple statement:
+
+resource  rdf:type  class
+
+This triple statement must be added to the named graph specified in another annotation.
+
+
+The keyword resource &apos;KEYWORD: generated resource [input_55]&apos; refers to the resource generated based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000113"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000573 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000573">
+        <rdfs:label rdf:datatype="&xsd;string">is general application page  [BOOLEAN]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000573</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a static page within the application that is not entry/input-data specific.
+
+The default value is &apos;false&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000279"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000574 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000574">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000574</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_X]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000000"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000575 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000575">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_A]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000575</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_A]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000576 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000576">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_B]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000576</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_B]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000577 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000577">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_C]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000577</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_C]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000578 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000578">
+        <rdfs:label rdf:datatype="&xsd;string">autocomplete for</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000578</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a resource that provides information about the ontology to be searched and possibly also a subclass-restriction for that search.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000274"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000579 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000579">
+        <rdfs:label rdf:datatype="&xsd;string">hyperlink</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000579</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a hyperlink to this resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000580 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000580">
+        <rdfs:label rdf:datatype="&xsd;string">has associated instance resource [input_named-graph]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000580</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies an instance resource of a named graph that is linked to this instance of an entry component class. This resource is linked to this entry component and with it implicitely also to all its child components using this object property. This way, the resource is held available for the case it must be referred to in some other context. 
+
+
+
+The keyword resource &apos;KEYWORD: associated instance resource [input_named-graph]&apos; refers to the input based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000466"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000581 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000581">
+        <rdfs:label rdf:datatype="&xsd;string">input definition value defines keyword resource</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000581</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific keyword resource, to which the input definition value must be associated. As a consequence, if in a subsequent step this keyword resource is referenced, it is a placeholder for this input definition value, which must be used in this subsequent step instead of the keyword resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000274"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000582 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000582">
+        <rdfs:label rdf:datatype="&xsd;string">use tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000582</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a tab from the interface that is used in a later &apos;execution step: MDB hyperlink&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000509"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000583 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000583">
+        <rdfs:label rdf:datatype="&xsd;string">update composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000583</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a MDB widget, the composition of which must be updated. The update is specified in previous execution step(s): specifications and allocations for MDB hyperlink in a page/overlay.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000279"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000584 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000584">
+        <rdfs:label rdf:datatype="&xsd;string">has respective information in named graph of class</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000584</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a named graph class that contains information of the category that corresponds to this category view.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000585"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000585 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000585">
+        <rdfs:label rdf:datatype="&xsd;string">category view annotation</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000585</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000586 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000586">
+        <rdfs:label rdf:datatype="&xsd;string">contains information belonging to category view</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000586</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a category view to which the information contained in this named graph belongs to.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000585"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000587 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000587">
+        <rdfs:label rdf:datatype="&xsd;string">is general application item  [BOOLEAN]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000587</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a static item within the application that is not entry/input-data specific.
+
+The default value is &apos;false&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000588 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000588">
+        <rdfs:label rdf:datatype="&xsd;string">multiple-hits-search  [BOOLEAN]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000588</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The value &apos;true&apos; indicates that the respective search may yield more than one hit.
+
+The default value is &apos;false&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000589 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000589">
+        <rdfs:label rdf:datatype="&xsd;string">search target saved to &apos;list of URIs named graph&apos; keyword</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000589</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property triggers that the resource(s) identified through the search (in case &apos;multiple-hits-search [BOOLEAN]=&apos;true&apos;, this can be more than one resource) will be stored into an internal hash map that is identified through the specified keyword resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000590 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000590">
+        <rdfs:label rdf:datatype="&xsd;string">object (all individuals of class)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000590</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;object&apos;, with the difference that the range is any individual of the specified class.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000591 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000591">
+        <rdfs:label rdf:datatype="&xsd;string">subject (all individuals of class)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000591</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;subject&apos;, with the difference that the range is any individual of the specified class.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000593 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000593">
+        <rdfs:label rdf:datatype="&xsd;string">set focus</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000593</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000594 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000594">
+        <rdfs:label rdf:datatype="&xsd;string">set new focus on part</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000594</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation specifies a resource of a part from the partonomy of a MDB description entry that takes the function of the part currently in focus for this execution step only. 
+
+If used within an execution step, this annotation is executed first before any other annotations of this execution step can be executed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000593"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000595 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000595">
+        <rdfs:label rdf:datatype="&xsd;string">copied resource (of class) to be identified [input_J]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000595</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. The resource belongs to the copied resources.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_J]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000596 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000596">
+        <rdfs:label rdf:datatype="&xsd;string">copied resource (of class) to be identified [input_M]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000596</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. The resource belongs to the copied resources.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_M]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000597 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000597">
+        <rdfs:label rdf:datatype="&xsd;string">copied resource (of class) to be identified [input_L]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000597</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. The resource belongs to the copied resources.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_L]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000598 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000598">
+        <rdfs:label rdf:datatype="&xsd;string">copied resource (of class) to be identified [input_K]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000598</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. The resource belongs to the copied resources.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_K]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000599 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000599">
+        <rdfs:label rdf:datatype="&xsd;string">trigger &apos;click&apos; before part/parent-composition is deleted  [BOOLEAN]</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">If &apos;true&apos;, this annotation property specifies that a &apos;click&apos; event must be triggered for this MDB entry component before its corresponding part/parent-composition is deleted.
+
+default value: &apos;false&apos;</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000599</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000600 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000600">
+        <rdfs:label rdf:datatype="&xsd;string">has partonomy definition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000600</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This specifies the content of a definition of the type of entity that the respective part belongs to. The respective triple is saved to the morphological description partonomy named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000193"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000601 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000601">
+        <rdfs:label rdf:datatype="&xsd;string">updated composition [BOOLEAN]</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">If &apos;true&apos;, the composition specified in an accompanying triple statement must be updated after the execution process is terminated.
+
+default value: &apos;false&apos;</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000601</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000544"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000602 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000602">
+        <rdfs:label rdf:datatype="&xsd;string">named graph contained in GUI widget</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000602</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a particular GUI widget that contains this composition.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000603 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000603">
+        <rdfs:label rdf:datatype="&xsd;string">change version ID to status</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000603</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the new entry status of the entry for which the resources are generated.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000232"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000604 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000604">
+        <rdfs:label rdf:datatype="&xsd;string">execution step: copy named graphs</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000604</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies through annotations within this annotation the named graphs to be copied, from which workspace they must be copied and to which namespace their URIs must be changed.
+
+Like any other &apos;execution step&apos; annotation, the string part is used for providing a number, occassionally accompanied by a character. The number and character indicate in which sequence the information should be processed: from small to large, from A to Z. All annotations with the same number belong together. The numbers are also used for indicating alternative input (see &apos;alternative to triple statement(s)&apos; annotation).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000605 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000605">
+        <rdfs:label rdf:datatype="&xsd;string">update URIs of and in named graphs using namespace of entry ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000605</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the entry ID from which the namespace must be taken for updating the URIs of and in the copied named graphs.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000606 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000606">
+        <rdfs:label rdf:datatype="&xsd;string">update all URIs that share namespace with</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000606</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a particular resource. All URIs of and in the copied named graphs that share the same namespace as the here specified resource must be updated with the new namespace specified in another accompanying annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000607 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000607">
+        <rdfs:label rdf:datatype="&xsd;string">do not update URI of</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000607</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a resource of which the URI must NOT be updated.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000608 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000608">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_J]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000608</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_J]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000609 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000609">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_I]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000609</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_I]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000610 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000610">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_H]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000610</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_H]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000611 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000611">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_G]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000611</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_G]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000612 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000612">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_F]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000612</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_F]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000613 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000613">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_E]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000613</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_E]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000614 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000614">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_D]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000614</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_D]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000615 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000615">
+        <rdfs:label rdf:datatype="&xsd;string">use only results based on namespace for</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000615</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a MDB entry status. Only the results of the search of which the URIs match the here specified status will be considered and assign to the target keyword. If several of these annotation properties are used in the same execution step, all the therein specified stati must be considered.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000616 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000616">
+        <rdfs:label rdf:datatype="&xsd;string">load from/save to/update in all named graphs  (this entry&apos;s specific individual of) of this keyword list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000616</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;load from/save to/update in named graph (this entry&apos;s specific individual of)&apos;, with the difference that the range is a list of named graph classes from which the individuals that refer to the MDB entry ID that is currently in focus must be inferred.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000617 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000617">
+        <rdfs:label rdf:datatype="&xsd;string">load from/save to/update in multiple named graphs (this entry&apos;s specific individuals of)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000617</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;load from/save to/update in named graph (individual of)&apos;, with the difference that the range refers to all individuals of the specified class that refer to the MDB entry ID that is currently in focus.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000618 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000618">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_T]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000618</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_T]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000619 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000619">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_S]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000619</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_S]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000620 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000620">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_R]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000620</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_R]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000621 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000621">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_Q]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000621</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_Q]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000622 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000622">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_P]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000622</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_P]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000623 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000623">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_O]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000623</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_O]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000624 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000624">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_N]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000624</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_N]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000625 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000625">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_M]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000625</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_M]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000626 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000626">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_L]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000626</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_L]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000627 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000627">
+        <rdfs:label rdf:datatype="&xsd;string">has associated &apos;list of URIs named graph&apos; [input_K]</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000400 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000400>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000627</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies the instance of a particular named graph in which a set of URIs is listed.
+
+A particular keyword resource &apos;KEYWORD: associated &apos;list of URIs named graph [input_K]&apos; refers to the list or URIs contained in the indicated named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000574"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000628 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000628">
+        <rdfs:label rdf:datatype="&xsd;string">load from/save to/update in named graphs of this keyword list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000628</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;load from/save to/update in named graph&apos;, with the difference that the range is a list of named graph individuals.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000066"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000108"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000629 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000629">
+        <rdfs:label rdf:datatype="&xsd;string">execution step: get DOI</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000629</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property triggers a procedure with which the entry that is going to be published will receive its DOI.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000630 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000630">
+        <rdfs:label rdf:datatype="&xsd;string">DOI defines keyword resource</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000630</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific keyword resource, to which the DOI that has been received during this execution step must be associated. As a consequence, if in a subsequent step this keyword resource is referenced, it is a placeholder for this DOI, which must be used in this subsequent step instead of the keyword resource.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000629"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000631 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000631">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_16]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000631</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_16]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000632 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000632">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_17]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000632</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_17]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000633 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000633">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_18]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000633</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_18]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000634 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000634">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_19]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000634</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_19]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000635 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000635">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_20]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000635</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_20]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000636 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000636">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_21]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000636</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_21]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000637 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000637">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_22]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000637</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_22]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000638 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000638">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_23]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000638</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_23]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000639 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000639">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_24]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000639</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_24]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000640 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000640">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_25]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000640</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_25]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000641 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000641">
+        <rdfs:label rdf:datatype="&xsd;string">has ontology IDspace</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000641</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the IDspace.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000643"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000642 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000642">
+        <rdfs:label rdf:datatype="&xsd;string">has ontology namespace</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000642</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property maps the namespace to this ontology IDspace.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000643"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000643 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000643">
+        <rdfs:label rdf:datatype="&xsd;string">IDspace mapping annotations</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000643</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000644 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000644">
+        <rdfs:label rdf:datatype="&xsd;string">use ontology IDspace mapping</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000644</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a keyword resource that contains the mapping between ontology IDspaces and their corresponding namespaces</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000645 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000645">
+        <rdfs:label rdf:datatype="&xsd;string">save new URIs to workspace</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000645</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a particular workspace to which the newly generated URIs must be stored.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000646 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000646">
+        <rdfs:label rdf:datatype="&xsd;string">save new URIs to named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000646</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a named graph to which all newly created URIs must be stored to with their type specification.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000647 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000647">
+        <rdfs:label rdf:datatype="&xsd;string">update with (copied individual of)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000647</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;update with resource/value&apos;, with the difference that the range is an individual of the specified class that has been copied in a previous execution step within this workflow action.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000648 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000648">
+        <rdfs:label rdf:datatype="&xsd;string">execution step: copy part of composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000648</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies through annotations within this annotation a particular MDB entry component. All triple statements that have this MDB entry component or one of its children MDB entry components as a subject or an object must be copied from the specified named graph and workspace and saved to the other specified named graph and workspace.
+
+Like any other &apos;execution step&apos; annotation, the string part is used for providing a number, occassionally accompanied by a character. The number and character indicate in which sequence the information should be processed: from small to large, from A to Z. All annotations with the same number belong together. The numbers are also used for indicating alternative input (see &apos;alternative to triple statement(s)&apos; annotation).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000079"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000649 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000649">
+        <rdfs:label rdf:datatype="&xsd;string">copy MDB entry component with all of its children</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000649</oboInOwl:id>
+        <oboInOwl:id xml:lang="en">Specifies a particular MDB entry component. All triple statements that have this MDB entry component or one of its children MDB entry components as a subject or an object must be copied from the named graph and workspace that are specified in accompanying annotations and saved to another named graph and workspace.</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000650 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000650">
+        <rdfs:label rdf:datatype="&xsd;string">update URIs using namespace of entry ID</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000650</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the entry ID from which the namespace must be taken for updating the URIs.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000100"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000604"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000648"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000651 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000651">
+        <rdfs:label rdf:datatype="&xsd;string">subject list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000651</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;subject&apos;, with the difference that the range is a list of individual resources.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000652 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000652">
+        <rdfs:label rdf:datatype="&xsd;string">object list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000652</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;object&apos;, with the difference that the range is a list of individual resources.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000653 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000653">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_26]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000653</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_26]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000654 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000654">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_27]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000654</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_27]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000655 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000655">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_28]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000655</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_28]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000656 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000656">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_29]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000656</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_29]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000657 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000657">
+        <rdfs:label rdf:datatype="&xsd;string">resource(s) to be identified [input_30]</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000657</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies either directly the resource to be identified or indirectly the class of the resource that must be identified. Which resource(s) should be identify is further narrowed in by specifying a triple statement in which the resource is used. If more than one resource is identified based on this triple statement, all execution steps that refer to the identified resource(s) through the respective keyword resource must be conducted for each identified resource.
+
+
+The keyword resource &apos;KEYWORD: identified resource(s) [input_30]&apos; refers to the resource identified based on this annotation.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000168"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000658 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000658">
+        <rdfs:label rdf:datatype="&xsd;string">subject (unique individual of)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000658</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;subject&apos;, with the difference that the range is an individual of the specified class that is the only individual of that class in the named graph that is specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000659 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000659">
+        <rdfs:label rdf:datatype="&xsd;string">object (unique individual of)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000659</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;object&apos;, with the difference that the range is an individual of the specified class that is the only individual of that class in the named graph that is specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000660 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000660">
+        <rdfs:label rdf:datatype="&xsd;string">update with (unique individual of)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000660</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Same as the annotation &apos;update with resource/value&apos;, with the difference that the range is an individual of the specified class that is the only individual of that class in the named graph that is specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000105"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000404"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000661 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000661">
+        <rdfs:label rdf:datatype="&xsd;string">add resource to list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000661</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a list to which a resource must be added that has been specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000662 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000662">
+        <rdfs:label rdf:datatype="&xsd;string">resource to be added to a list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000662</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific resource that must be added to a list of resources. The list-resource is specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000663 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000663">
+        <rdfs:label rdf:datatype="&xsd;string">with active metadata target</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000663</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000509"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000664 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000664">
+        <rdfs:label rdf:datatype="&xsd;string">with active metadata tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000664</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000509"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000665 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000665">
+        <rdfs:label rdf:datatype="&xsd;string">with active core target</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000665</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000509"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000666 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000666">
+        <rdfs:label rdf:datatype="&xsd;string">with active core tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000666</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000509"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000667 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000667">
+        <rdfs:label rdf:datatype="&xsd;string">is active</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000667</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000029"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000668 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000668">
+        <rdfs:label rdf:datatype="&xsd;string">object (all numerical values higher than)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000668</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property is used in combination with other annotation properties that specify the &apos;subject&apos; and &apos;property&apos; of a triple statement to be searched. It specifies a specific numerical value and only triple statements with an object value higher than the here specified value are valid search hits.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000669 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000669">
+        <rdfs:label rdf:datatype="&xsd;string">delete resource from list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000669</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a list frpm which a resource must be deleted that has been specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000670 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000670">
+        <rdfs:label rdf:datatype="&xsd;string">resource to be deleted from a list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000670</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies a specific resource that must be deleted from a list of resources. The list-resource is specified in an accompanying triple statement.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000439"/>
+    </AnnotationProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBUserInterfaceAnnotationProperty#MDB_UIAP_0000000671 -->
+
+    <AnnotationProperty rdf:about="&mdbuiap;MDB_UIAP_0000000671">
+        <rdfs:label rdf:datatype="&xsd;string">search restricted to entry URI (except for terminal counter value)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_UIAP_0000000671</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies an entry ID. The result of the search that is specified in accompanying annotation properties is restricted to resources that share the same URI as the here specified entry ID, with the exception that their last value may differ (i.e. the counter value that follows the last &quot;_&quot;).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbuiap;MDB_UIAP_0000000332"/>
     </AnnotationProperty>
 </rdf:RDF>
 

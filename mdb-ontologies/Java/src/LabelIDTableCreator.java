@@ -1,6 +1,6 @@
 /**
  * Created by Roman Baum on 30.11.16.
- * Last modified by Roman Baum on 30.11.16.
+ * Last modified by Roman Baum on 01.03.18.
  */
 
 import org.apache.jena.arq.querybuilder.SelectBuilder;
@@ -22,7 +22,7 @@ public class LabelIDTableCreator {
     public static void main(String[] args)  {
 
         // enter the file you want to search
-        String pathToOntologyFile = "GUIComponent.owl";
+        String pathToOntologyFile = "MDBCore0v1.owl";
 
         // hide the not important log information
         LogCtl.setCmdLogging();
@@ -52,6 +52,9 @@ public class LabelIDTableCreator {
             selectBuilder
                     .addFilter(
                             "regex(str(" + o + "), \"http://www.w3.org/2002/07/owl#Class\" ) || " +
+                                    "regex(str(" + o + "), \"http://www.w3.org/2002/07/owl#ObjectProperty\" ) || " +
+                                    "regex(str(" + o + "), \"http://www.w3.org/2002/07/owl#DatatypeProperty\" ) || " +
+                                    "regex(str(" + o + "), \"http://www.w3.org/2002/07/owl#AnnotationProperty\" ) || " +
                                     "regex(str(" + o + "), \"http://www.w3.org/2002/07/owl#NamedIndividual\" ) ");
 
         } catch (ParseException e) {
@@ -79,6 +82,8 @@ public class LabelIDTableCreator {
 
             // read input file
             RDFDataMgr.read(m, pathToOntologyFile);
+
+            System.out.println("ontology file = " + pathToOntologyFile + "\n\n\n");
 
             QueryExecution qExec = QueryExecutionFactory.create(query , m);
 

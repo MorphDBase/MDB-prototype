@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 02.11.15.
- * Last modified by Roman Baum on 22.06.17.
+ * Last modified by Roman Baum on 27.09.17.
  */
 
 package mdb.mongodb;
@@ -66,6 +66,15 @@ public class MongoDBConnection {
         }
 
         return false;
+    }
+
+    /**
+     * This method close the connection of a mongo db client.
+     */
+    public void closeConnection() {
+
+        this.mongoClient.close();
+
     }
 
     /**
@@ -692,7 +701,7 @@ public class MongoDBConnection {
      * @param jsonToFindData contains JSON data to find a corresponding JSONObject from the mongoDB
      * @return an JSONObject for a specific input key
      */
-    public JSONObject pullDataFromMongoDB(JSONObject jsonToFindData) {
+    public JSONObject pullDataFromMongoDBWithLocalID(JSONObject jsonToFindData) {
 
         // get the database from the mongodb
         MongoDatabase database = this.mongoClient.getDatabase("mdb-prototyp");
@@ -725,6 +734,57 @@ public class MongoDBConnection {
 
             }
 
+        }
+
+        return null;
+
+    }
+
+    /**
+     * This method pull the corresponding JSONObject of a partID from the mongoDB.
+     * @param jsonToFindData contains JSON data to find a corresponding JSONObject from the mongoDB
+     * @return an JSONObject for a specific input key
+     */
+    public JSONObject pullDataFromMongoDBWithPartID(JSONObject jsonToFindData) {
+
+        // get the database from the mongodb
+        MongoDatabase database = this.mongoClient.getDatabase("mdb-prototyp");
+
+        // get the collection from the database
+        MongoCollection<Document> mongoCollection = database.getCollection(jsonToFindData.getString("connectSID"));
+
+        for (Document doc : mongoCollection.find()) {
+
+            if (!(jsonToFindData.has("html_form"))) {
+
+                System.out.println("There is no key named 'html_form' in the jsonToFindData");
+
+            }
+
+            // get a JSONObject from the mongoDB and then filter the correct inner JSONArray
+            JSONArray jsonArray = new JSONObject(doc.toJson()).getJSONArray(jsonToFindData.getString("html_form"));
+
+            // find the correct JSONObject from the mongoDB
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject jsonObjectFromMongoDB = jsonArray.getJSONObject(i);
+
+                if (jsonToFindData.has("partID")) {
+
+                    // is the keyword from the mongoDB equals the input keyword return the JSONObject from the mongoDB
+                    if (jsonObjectFromMongoDB.get("localID").equals(jsonToFindData.getString("partID"))) {
+
+                        return jsonObjectFromMongoDB;
+
+                    }
+
+                } else {
+
+                    System.out.println("WARN: There is no partID in Input!");
+
+                }
+
+            }
 
         }
 
@@ -892,8 +952,8 @@ public class MongoDBConnection {
                             mongoDBJSONArray.put(j, valuesInJSON.get(i));
 
                             // finish loops for better runtime
-                            j = mongoDBJSONArray.length();
-                            i = valuesInJSON.length();
+                            /*j = mongoDBJSONArray.length();
+                            i = valuesInJSON.length();*/
 
                         }
 

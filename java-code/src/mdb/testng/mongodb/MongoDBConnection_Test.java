@@ -5,6 +5,7 @@ import com.mongodb.BasicDBObject;
 import mdb.mongodb.MongoDBConnection;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -26,6 +27,13 @@ public class MongoDBConnection_Test {
         Assert.assertTrue(
                 mongoDBConnection.collectionExist("mdb-prototyp", "testng")
         );
+    }
+
+    @AfterClass
+    public void close() {
+
+        this.mongoDBConnection.closeConnection();
+
     }
 
     @Test
@@ -153,13 +161,13 @@ public class MongoDBConnection_Test {
         JSONArray ja = new JSONArray();
         ja.put(jo);
 
-        if (!mongoDBConnection.documentExist("mdb-prototyp", "testng", "testchild", ja)) {
+        if (!mongoDBConnection.documentWithDataExist("mdb-prototyp", "testng", "testchild", ja)) {
 
             mongoDBConnection.insertDataToMongoDB("mdb-prototyp", "testng", "testchild", ja);
 
         }
 
-        Assert.assertTrue(mongoDBConnection.documentExist("mdb-prototyp", "testng", "testchild", ja));
+        Assert.assertTrue(mongoDBConnection.documentWithDataExist("mdb-prototyp", "testng", "testchild", ja));
 
         // create a mongoDB object
         BasicDBObject bo = new BasicDBObject();
@@ -235,7 +243,7 @@ public class MongoDBConnection_Test {
         Assert.assertTrue(mongoDBConnection.findUserByUsername("mdb-prototyp", "testng", "adent"));
 
         String returnObjID = mongoDBConnection.findObjectID ("mdb-prototyp", "testng", "username", "adent");
-        System.out.println("pullDataFromMongoDB - ObjID of \"adent\": " + returnObjID);
+        System.out.println("pullDataFromMongoDBWithLocalID - ObjID of \"adent\": " + returnObjID);
         mongoDBConnection.setId(returnObjID);
 
         // public String insertDataToMongoDB (String db, String collection, String id, String key, String value)
@@ -244,28 +252,28 @@ public class MongoDBConnection_Test {
         returnString = mongoDBConnection.insertDataToMongoDB ("mdb-prototyp", "testng", returnObjID, "lastname", "Dent");
         System.out.println(returnString);
 
-        // public String pullDataFromMongoDB(String db, String collection)
+        // public String pullDataFromMongoDBWithLocalID(String db, String collection)
         returnStringOne = mongoDBConnection.pullDataFromMongoDB("mdb-prototyp", "testng");
-        System.out.println("pullDataFromMongoDB " + returnStringOne);
+        System.out.println("pullDataFromMongoDBWithLocalID " + returnStringOne);
 
-        // public String pullDataFromMongoDB(String db, String collection, String id)
+        // public String pullDataFromMongoDBWithLocalID(String db, String collection, String id)
         returnStringTwo = mongoDBConnection.pullDataFromMongoDB("mdb-prototyp", "testng", returnObjID);
-        System.out.println("pullDataFromMongoDB " + returnStringTwo);
+        System.out.println("pullDataFromMongoDBWithLocalID " + returnStringTwo);
 
         // check if the two object have the same type
         Assert.assertEquals(
                 returnStringOne,
-                returnStringTwo, "Incorrect return type from the method: pullDataFromMongoDB");
+                returnStringTwo, "Incorrect return type from the method: pullDataFromMongoDBWithLocalID");
 
-        // public String pullDataFromMongoDB(String db, String collection, String id)
+        // public String pullDataFromMongoDBWithLocalID(String db, String collection, String id)
         mongoDBConnection.putDataToMongoDB("mdb-prototyp", "testng", "comment", "\'I like the cover,\' he said. \'Don't Panic. It's the first helpful or intelligible thing anybody\'s said to me all day.\'");
         returnStringThree = mongoDBConnection.pullDataFromMongoDB("mdb-prototyp", "testng");
-        System.out.println("pullDataFromMongoDB " + returnStringThree);
+        System.out.println("pullDataFromMongoDBWithLocalID " + returnStringThree);
 
         // check if the two object have the same type
         /*Assert.assertEquals(
                 returnStringOne,
-                returnStringThree, "Incorrect return type from the method: pullDataFromMongoDB");*/
+                returnStringThree, "Incorrect return type from the method: pullDataFromMongoDBWithLocalID");*/
 
 
         String connectSID, htmlForm, localID, classID, individualID, keyword, newChild;
@@ -294,7 +302,7 @@ public class MongoDBConnection_Test {
         JSONArray inputJA = new JSONArray();
         inputJA.put(inputJO);
 
-        if (!mongoDBConnection.documentExist("mdb-prototyp", connectSID, newChild, inputJA)) {
+        if (!mongoDBConnection.documentWithDataExist("mdb-prototyp", connectSID, newChild, inputJA)) {
             mongoDBConnection.insertDataToMongoDB("mdb-prototyp", connectSID, newChild, inputJA);
         }
 
@@ -303,27 +311,27 @@ public class MongoDBConnection_Test {
         searchJO.put("html_form", htmlForm);
         searchJO.put("localID", localID);
 
-        // public JSONObject pullDataFromMongoDB(JSONObject jsonToFindData)
+        // public JSONObject pullDataFromMongoDBWithLocalID(JSONObject jsonToFindData)
         JSONArray returnJA = mongoDBConnection.pullListFromMongoDB(searchJO);
 
         // check if the object have the correct type
         Assert.assertEquals(
                 inputJA.getClass(),
-                returnJA.getClass(), "Incorrect return type from the method: pullDataFromMongoDB");
+                returnJA.getClass(), "Incorrect return type from the method: pullDataFromMongoDBWithLocalID");
 
 
-        // public JSONObject pullDataFromMongoDB(JSONObject jsonToFindData)
-        JSONObject returnJO = mongoDBConnection.pullDataFromMongoDB(searchJO);
+        // public JSONObject pullDataFromMongoDBWithLocalID(JSONObject jsonToFindData)
+        JSONObject returnJO = mongoDBConnection.pullDataFromMongoDBWithLocalID(searchJO);
 
         // check if the objects are equal
         Assert.assertEquals(
                 inputJO.toString(),
-                returnJO.toString(), "Incorrect return from the method: pullDataFromMongoDB");
+                returnJO.toString(), "Incorrect return from the method: pullDataFromMongoDBWithLocalID");
 
         // check if the object have the correct type
         Assert.assertEquals(
                 inputJO.getClass(),
-                returnJO.getClass(), "Incorrect return type from the method: pullDataFromMongoDB");
+                returnJO.getClass(), "Incorrect return type from the method: pullDataFromMongoDBWithLocalID");
 
         mongoDBConnection.dropCollection("mdb-prototyp", connectSID);
     }

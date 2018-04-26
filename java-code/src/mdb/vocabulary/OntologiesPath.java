@@ -9,7 +9,7 @@ package mdb.vocabulary;
  */
 public class OntologiesPath {
 
-    public static final String mainDirectory = "/home/path/to/tdb/";
+    public static final String mainDirectory = "/home/YOUR_HOME_DIR/tdb/";
 
     public static final String pathToOntology = mainDirectory + "MDB_ontology_workspace/";
 

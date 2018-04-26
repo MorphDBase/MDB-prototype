@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 24.03.15.
- * Last modified by Roman Baum on 19.09.17.
+ * Last modified by Roman Baum on 19.12.17.
  */
 
 import mdb.mongodb.MongoDBConnection;
@@ -89,15 +89,17 @@ public class TestSocket {
         System.out.println("jsonInputObject = " + jsonInputObject);
         System.out.println();
 
+        MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
+
         // get the SPARQL-Query from the JSON object
         String inputTypeString = jsonInputObject.getString("type");
 
-        OperationManager operationManager = new OperationManager();
+        OperationManager operationManager = new OperationManager(mongoDBConnection);
 
         // create new connectionToTDB
         JenaIOTDBFactory connectionToTDB = new JenaIOTDBFactory();
 
-        MDBOverlayHandler mdbOverlayHandler = new MDBOverlayHandler();
+        MDBOverlayHandler mdbOverlayHandler = new MDBOverlayHandler(mongoDBConnection);
 
         switch (inputTypeString) {
 
@@ -198,44 +200,11 @@ public class TestSocket {
 
                 System.out.println("query time= " + queryTime);
 
-                // create a new JSON object
-
                 // fill output data
-                jsonOutputObject.put("html_form", jsonInputObject.getString("html_form"));
+                transferInputKeysToOutput(jsonInputObject,jsonOutputObject);
 
-                if (jsonInputObject.has("mdbueid")) {
-
-                    jsonOutputObject.put("mdbueid", jsonInputObject.getString("mdbueid"));
-
-                }
-
-                if (jsonInputObject.has("mdbueid_uri")) {
-
-                    jsonOutputObject.put("mdbueid_uri", jsonInputObject.getString("mdbueid_uri"));
-
-                }
-
-                if (jsonInputObject.has("partID")) {
-
-                    jsonOutputObject.put("partID", jsonInputObject.getString("partID"));
-
-                }
-
-                if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411")) {
-                    // KEYWORD: known resource A
-
-                    jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411"));
-
-                }
-
-                if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412")) {
-                    // KEYWORD: known resource B
-
-                    jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412"));
-
-                }
-
-                jsonOutputObject.put("connectSID", jsonInputObject.getString("connectSID"));
+                // todo remove this if cookies works correct
+                initializeMongoDB(jsonOutputObject, mongoDBConnection);
 
                 System.out.println("jsonOutputObject: " + jsonOutputObject);
 
@@ -261,52 +230,17 @@ public class TestSocket {
 
                 System.out.println("query time= " + queryTime);
 
-                // create a new JSON object
-
                 // fill output data
-                jsonOutputObject.put("html_form", jsonInputObject.getString("html_form"));
+                transferInputKeysToOutput(jsonInputObject, jsonOutputObject);
 
-                if (jsonInputObject.has("mdbueid")) {
+                // todo remove this if cookies works correct and uncomment the code below instead
+                initializeMongoDB(jsonOutputObject, mongoDBConnection);
 
-                    jsonOutputObject.put("mdbueid", jsonInputObject.getString("mdbueid"));
+                /*if (jsonOutputObject.getString("html_form").equals("Ontologies/GUIComponent#GUI_COMPONENT_0000000175")) {
 
-                }
+                    initializeMongoDB(jsonOutputObject, mongoDBConnection);
 
-                if (jsonInputObject.has("mdbueid_uri")) {
-
-                    jsonOutputObject.put("mdbueid_uri", jsonInputObject.getString("mdbueid_uri"));
-
-                }
-
-                if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411")) {
-                    // KEYWORD: known resource A
-
-                    jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411"));
-
-                }
-
-                if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412")) {
-                    // KEYWORD: known resource B
-
-                    jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412"));
-
-                }
-
-                if (jsonInputObject.has("partID")) {
-
-                    jsonOutputObject.put("partID", jsonInputObject.getString("partID"));
-
-                }
-
-                jsonOutputObject.put("connectSID", jsonInputObject.getString("connectSID"));
-
-                System.out.println("jsonOutputObject: " + jsonOutputObject);
-
-                if (jsonOutputObject.getString("html_form").equals("Ontologies/GUIComponent#GUI_COMPONENT_0000000175")) {
-
-                    initializeMongoDB(jsonOutputObject);
-
-                }
+                }*/
 
                 boolean createNewEntry = false;
 
@@ -368,6 +302,8 @@ public class TestSocket {
                 // send output to javascript
                 session.getAsyncRemote().sendText(jsonOutputString);
 
+                System.out.println("jsonOutputObject: " + jsonOutputObject);
+
                 if (jsonOutputObject.has("load_overlay")) {
 
                     if (jsonOutputObject.getString("load_overlay").contains("http://www.morphdbase.de/resource/dummy-overlay")) {
@@ -412,6 +348,32 @@ public class TestSocket {
 
                 break;
 
+            case "check_uri" :
+
+                // calculate the start date
+                executionStart = System.currentTimeMillis();
+
+                jsonOutputObject = operationManager.checkURI(jsonInputObject, connectionToTDB);
+
+                // calculate the query time
+                queryTime = System.currentTimeMillis() - executionStart;
+
+                System.out.println("query time= " + queryTime);
+
+                transferInputKeysToOutput(jsonInputObject, jsonOutputObject);
+
+                // todo remove this if cookies works correct
+                initializeMongoDB(jsonOutputObject, mongoDBConnection);
+
+                // convert the JSON object to a string
+                jsonOutputString = jsonOutputObject.toString();
+
+                // send output to javascript
+                session.getAsyncRemote().sendText(jsonOutputString);
+
+
+                break;
+
             case "generate_doc" :
 
                 // calculate the start date
@@ -427,13 +389,45 @@ public class TestSocket {
                 // fill output data
                 jsonOutputObject.put("connectSID", jsonInputObject.getString("connectSID"));
 
-                System.out.println("jsonOutputObject: " + jsonOutputObject);
+                // todo remove this if cookies works correct
+                initializeMongoDB(jsonOutputObject, mongoDBConnection);
 
                 // convert the JSON object to a string
                 jsonOutputString = jsonOutputObject.toString();
 
                 // send output to javascript
                 session.getAsyncRemote().sendText(jsonOutputString);
+
+                System.out.println("jsonOutputObject: " + jsonOutputObject);
+
+                break;
+
+            case "list_entries" :
+
+                // calculate the start date
+                executionStart = System.currentTimeMillis();
+
+                jsonOutputObject = operationManager.checkInputForListEntry(jsonInputObject, connectionToTDB);
+
+                // calculate the query time
+                queryTime = System.currentTimeMillis() - executionStart;
+
+                System.out.println("query time= " + queryTime);
+
+                transferInputKeysToOutput(jsonInputObject, jsonOutputObject);
+
+                // todo remove this if cookies works correct
+                initializeMongoDB(jsonOutputObject, mongoDBConnection);
+
+                jsonOutputObject.put("load_page_localID", "list_entries"); // todo this is a dummy bridge
+
+                // convert the JSON object to a string
+                jsonOutputString = jsonOutputObject.toString();
+
+                // send output to javascript
+                session.getAsyncRemote().sendText(jsonOutputString);
+
+                System.out.println("jsonOutputObject: " + jsonOutputObject);
 
                 break;
 
@@ -453,12 +447,58 @@ public class TestSocket {
 
         }
 
-
-
+        mongoDBConnection.closeConnection();
 
     }
 
-    private void initializeMongoDB (JSONObject jsonOutputObject) {
+    private JSONObject transferInputKeysToOutput(JSONObject jsonInputObject,JSONObject jsonOutputObject) {
+
+        // fill output data
+        if (jsonInputObject.has("html_form")) {
+
+            jsonOutputObject.put("html_form", jsonInputObject.getString("html_form"));
+
+        }
+
+        if (jsonInputObject.has("mdbueid")) {
+
+            jsonOutputObject.put("mdbueid", jsonInputObject.getString("mdbueid"));
+
+        }
+
+        if (jsonInputObject.has("mdbueid_uri")) {
+
+            jsonOutputObject.put("mdbueid_uri", jsonInputObject.getString("mdbueid_uri"));
+
+        }
+
+        if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411")) {
+            // KEYWORD: known resource A
+
+            jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000411"));
+
+        }
+
+        if (jsonInputObject.has("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412")) {
+            // KEYWORD: known resource B
+
+            jsonOutputObject.put("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412", jsonInputObject.getString("http://www.morphdbase.de/Ontologies/MDB/MDB_GUI#MDB_GUI_0000000412"));
+
+        }
+
+        if (jsonInputObject.has("partID") && !jsonOutputObject.has("partID")) {
+
+            jsonOutputObject.put("partID", jsonInputObject.getString("partID"));
+
+        }
+
+        jsonOutputObject.put("connectSID", jsonInputObject.getString("connectSID"));
+
+        return jsonOutputObject;
+
+    }
+
+    private void initializeMongoDB (JSONObject jsonOutputObject, MongoDBConnection mongoDBConnection) {
 
         String mongoDBKey = "MY_DUMMY_ADMIN_0000000001";
 
@@ -472,7 +512,7 @@ public class TestSocket {
 
         identifiedResources.put(morphologicalDescriptionJSON);
 
-        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject);
+        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject, mongoDBConnection);
 
         mongoDBKey = "MY_DUMMY_DESCRIPTION_0000000001";
 
@@ -486,7 +526,7 @@ public class TestSocket {
 
         identifiedResources.put(morphologicalDescriptionJSON);
 
-        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject);
+        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject, mongoDBConnection);
 
         mongoDBKey = "MY_DUMMY_LOGOUT_0000000001";
 
@@ -500,7 +540,7 @@ public class TestSocket {
 
         identifiedResources.put(morphologicalDescriptionJSON);
 
-        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject);
+        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject, mongoDBConnection);
 
         mongoDBKey = "MY_DUMMY_MDB_0000000001";
 
@@ -514,7 +554,7 @@ public class TestSocket {
 
         identifiedResources.put(morphologicalDescriptionJSON);
 
-        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject);
+        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject, mongoDBConnection);
 
         mongoDBKey = "MY_DUMMY_SPECIMEN_0000000001";
 
@@ -528,13 +568,11 @@ public class TestSocket {
 
         identifiedResources.put(morphologicalDescriptionJSON);
 
-        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject);
+        generateDummiesForPrototyp(mongoDBKey,  identifiedResources, jsonOutputObject, mongoDBConnection);
 
     }
 
-    private void generateDummiesForPrototyp (String mongoDBKey, JSONArray identifiedResources, JSONObject jsonOutputObject) {
-
-        MongoDBConnection mongoDBConnection = new MongoDBConnection("localhost", 27017);
+    private void generateDummiesForPrototyp (String mongoDBKey, JSONArray identifiedResources, JSONObject jsonOutputObject, MongoDBConnection mongoDBConnection) {
 
         if (mongoDBConnection.collectionExist("mdb-prototyp", "sessions")) {
 

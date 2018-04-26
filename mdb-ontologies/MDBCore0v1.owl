@@ -1127,7 +1127,7 @@ A version number of this resource can be provided using the data property pav:ve
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000214">
         <rdfs:label rdf:datatype="&xsd;string">is change log of</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000214</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">Specifies a MDB core ID of which this is the change log.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a MDB core ID of which this is the change log.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000093"/>
         <rdfs:domain rdf:resource="&mdbcore;MDB_CORE_0000000168"/>
         <inverseOf rdf:resource="&mdbcore;MDB_CORE_0000000213"/>
@@ -1950,10 +1950,10 @@ A version number of this resource can be provided using the data property pav:ve
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000480 -->
 
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000480">
-        <rdfs:label rdf:datatype="&xsd;string">revision created by</rdfs:label>
-        <oboInOwl:id xml:lang="en">An agent primary responsible for making the revision of an already published resource.</oboInOwl:id>
+        <rdfs:label rdf:datatype="&xsd;string">1revision created by</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">An agent primary responsible for making the revision of an already published resource.</obi:IAO_0000115>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000480</oboInOwl:id>
-        <rdfs:subPropertyOf rdf:resource="http://purl.org/pav/createdBy"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000468"/>
     </ObjectProperty>
     
 
@@ -2199,7 +2199,7 @@ A version number of this resource can be provided using the data property pav:ve
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000646">
         <rdfs:label rdf:datatype="&xsd;string">during MDB session</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000646</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">Specifies a MDB session during which this has been established.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a MDB session during which this has been established.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
     </ObjectProperty>
     
@@ -2221,7 +2221,7 @@ A version number of this resource can be provided using the data property pav:ve
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000650">
         <rdfs:label rdf:datatype="&xsd;string">composition template contained in named graph</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000650</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">Specifies a MDB named graph that contains this composition template.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a MDB named graph that contains this composition template.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
         <rdfs:range rdf:resource="&mdbcore;MDB_CORE_0000000355"/>
         <inverseOf rdf:resource="&mdbcore;MDB_CORE_0000000651"/>
@@ -2235,7 +2235,7 @@ A version number of this resource can be provided using the data property pav:ve
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000651">
         <rdfs:label rdf:datatype="&xsd;string">named graph contains composition template</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000651</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">Specifies a composition template that is contained in this MDB named graph.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">Specifies a composition template that is contained in this MDB named graph.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
         <rdfs:domain rdf:resource="&mdbcore;MDB_CORE_0000000355"/>
         <rdfs:range rdf:resource="&mdbgui;MDB_GUI_0000000001"/>
@@ -2347,7 +2347,7 @@ A version number of this resource can be provided using the data property pav:ve
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000700 -->
 
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000700">
-        <rdfs:label rdf:datatype="&xsd;string">has free text description annotation in named graph</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">has free text annotation in named graph</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000700</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This property relates a resource to a named graph of the type &apos;morphological description free text annotation named graph&apos;.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000698"/>
@@ -2426,7 +2426,7 @@ A version number of this resource can be provided using the data property pav:ve
     <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000708">
         <rdfs:label rdf:datatype="&xsd;string">has relevant info in crosslink</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000708</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">This property relates a part from a given partonomy of this MDB morphological description entry to a resource of the class &apos;media referenced in morphological description crosslink&apos;.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a part from a given partonomy of this MDB morphological description entry to a resource of the class &apos;media referenced in morphological description crosslink&apos;.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
     </ObjectProperty>
     
@@ -2472,6 +2472,281 @@ A version number of this resource can be provided using the data property pav:ve
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000727</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This property relates a resource to a named graph of the type &apos;morphological description editable label named graph&apos;.</obi:IAO_0000115>
         <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000698"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000757 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000757">
+        <rdfs:label rdf:datatype="&xsd;string">named graph blocked for all but MDB user</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000757</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property specifies a particular MDB user who has the right to access the data contained in this named graph. All other users and machines cannot access the data contained in this named graph.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000761 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000761">
+        <rdfs:label rdf:datatype="&xsd;string">has collector specifications in named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000761</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a resource to a named graph of the type &apos;collector specifications named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000763"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000762 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000762">
+        <rdfs:label rdf:datatype="&xsd;string">has site description in named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000762</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a resource to a named graph of the type &apos;site description named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000763"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000763 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000763">
+        <rdfs:label rdf:datatype="&xsd;string">MDB specimen entry ID to named graph relation</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000763</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000374"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000765 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000765">
+        <rdfs:label rdf:datatype="&xsd;string">has MDB user entry ID named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000765</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a MDB user entry ID to a named graph of the type &apos;MDB user entry ID named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000431"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000775 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000775">
+        <rdfs:label rdf:datatype="&xsd;string">has go to entry button in named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000775</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a resource to a named graph of the type &apos;morphological description go to entry button named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000698"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000781 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000781">
+        <rdfs:label rdf:datatype="&xsd;string">is URI of &apos;list of URIs named graph&apos;</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000781</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property specifies a particular named graph in which the resource is listed through a triple that uses this object property.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000250"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000834 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000834">
+        <rdfs:label rdf:datatype="&xsd;string">has MDB core ID named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000834</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a MDB core ID or a MDB entry ID to a named graph of the type &apos;MDB core ID named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000429"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000430"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000837 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000837">
+        <rdfs:label rdf:datatype="&xsd;string">associated entry list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000837</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies one of the entry list named graphs, in which this core entry type can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000838 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000838">
+        <rdfs:label rdf:datatype="&xsd;string">associated entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000838</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the entry type list named graph, in which this core entry is listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000839 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000839">
+        <rdfs:label rdf:datatype="&xsd;string">associated published entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000839</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the published entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000840 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000840">
+        <rdfs:label rdf:datatype="&xsd;string">associated current published entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000840</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the current published entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000841 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000841">
+        <rdfs:label rdf:datatype="&xsd;string">associated draft entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000841</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the draft entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000842 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000842">
+        <rdfs:label rdf:datatype="&xsd;string">associated current draft entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000842</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the current draft entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000843 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000843">
+        <rdfs:label rdf:datatype="&xsd;string">associated deleted entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000843</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the deleted entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000844 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000844">
+        <rdfs:label rdf:datatype="&xsd;string">associated recycle bin entry type list named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000844</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This annotation property specifies the recycle bin entry type list named graph, in which entry versions of this core ID can potentially be listed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000837"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000848 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000848">
+        <rdfs:label rdf:datatype="&xsd;string">entry views log property</rdfs:label>
+        <obi:IAO_0000115>This object property class comprises several subclasses, all of which are used to track all information about the views and which tabs are currently active for a given user and their current session. This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user and will be deleted with the user logging out.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000848</oboInOwl:id>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000141"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000849 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000849">
+        <rdfs:label rdf:datatype="&xsd;string">tracks view of entry</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000849</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property is used to track within the &quot;user-specific entry views log named graph&quot; resource of a currently logged-in user the entries that this user viewed.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000850 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000850">
+        <rdfs:label rdf:datatype="&xsd;string">tracks currently viewed entry</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000850</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property is used to track within the &quot;user-specific entry views log named graph&quot; resource of a currently logged-in user the entry that this user is currently viewing (or the last visited entry).</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000851 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000851">
+        <rdfs:label rdf:datatype="&xsd;string">has active core tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000851</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property is used to track the currently active core tab (access rights, published versions, draft versions, deleted versions) of one of the entries that a currently logged-in user has already viewed. This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000852 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000852">
+        <rdfs:label rdf:datatype="&xsd;string">has active metadata tab</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000852</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property is used to track the currently active metadata tab (e.g. acknowledgements, provenance) of one of the entries that a currently logged-in user has already viewed. This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000853 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000853">
+        <rdfs:label rdf:datatype="&xsd;string">core tab has (version) view</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000853</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property is used to track the currently active entry version tab for a core tab (access rights, published versions, draft versions, deleted versions) of one of the entries that a currently logged-in user has already viewed. In case the currently active core tab is the access rights tab, this property points to the Core Entry ID. This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000854 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000854">
+        <rdfs:label rdf:datatype="&xsd;string">has user-specific views log named graph</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000854</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This property relates a MDB user entry ID to a named graph of the type &apos;user-specific views log named graph&apos;.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000431"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000855 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000855">
+        <rdfs:label rdf:datatype="&xsd;string">has active metadata target</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000855</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property specifies the MDB entry component that is currently set to &apos;active&apos; according to the currently active metadata tab.  This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000856 -->
+
+    <ObjectProperty rdf:about="&mdbcore;MDB_CORE_0000000856">
+        <rdfs:label rdf:datatype="&xsd;string">has active core target</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000856</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">This object property specifies the MDB entry component that is currently set to &apos;active&apos; according to the currently active core tab.  This information is stored in the &quot;user-specific entry views log named graph&quot; resource of this currently logged-in user.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000848"/>
     </ObjectProperty>
     
 
@@ -2833,12 +3108,12 @@ ID_DX.n.d    new entry state d=d+1</mdbuiap:MDB_UIAP_0000000011>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000479 -->
 
     <DatatypeProperty rdf:about="&mdbcore;MDB_CORE_0000000479">
-        <rdfs:label rdf:datatype="&xsd;string">date revision issued</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">1date revision issued</rdfs:label>
         <obi:IAO_0000115 xml:lang="en">Date of formal issuance (e.g., publication) of the revised resource.
 
 This is the publication date of a revised resource.</obi:IAO_0000115>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000479</oboInOwl:id>
-        <rdfs:subPropertyOf rdf:resource="&dcterms;issued"/>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000469"/>
     </DatatypeProperty>
     
 
@@ -2848,8 +3123,8 @@ This is the publication date of a revised resource.</obi:IAO_0000115>
     <DatatypeProperty rdf:about="&mdbcore;MDB_CORE_0000000481">
         <rdfs:label rdf:datatype="&xsd;string">revision created on</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000481</oboInOwl:id>
-        <obi:IAO_0000115 xml:lang="en">The date of creation of the revised resource.</obi:IAO_0000115>
-        <rdfs:subPropertyOf rdf:resource="http://purl.org/pav/createdOn"/>
+        <obi:IAO_0000115 xml:lang="en">The date on which a new revision version has been created for this MDB core ID.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="&mdbcore;MDB_CORE_0000000133"/>
     </DatatypeProperty>
     
 
@@ -3051,6 +3326,17 @@ This is the publication date of a revised resource.</obi:IAO_0000115>
     
 
 
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000832 -->
+
+    <DatatypeProperty rdf:about="&mdbcore;MDB_CORE_0000000832">
+        <rdfs:label rdf:datatype="&xsd;string">last contributed on</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000832</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The date on which the agent in context has contributed the last time to this entry.</obi:IAO_0000115>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/pav/contributedOn"/>
+    </DatatypeProperty>
+    
+
+
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBEntry#MDB_ENTRY_0000000026 -->
 
     <rdf:Description rdf:about="&mdbentry;MDB_ENTRY_0000000026">
@@ -3227,7 +3513,7 @@ user URI: &apos;http://www.morphdbase.de/resource/abcdefgh#MDB_AGENT_0000000009&
     <Class rdf:about="&mdbcore;MDB_CORE_0000000033">
         <rdfs:label rdf:datatype="&xsd;string">methods ontology</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
-        <oboInOwl:id xml:lang="de">MDB_CORE_0000000033</oboInOwl:id>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000033</oboInOwl:id>
     </Class>
     
 
@@ -3237,7 +3523,7 @@ user URI: &apos;http://www.morphdbase.de/resource/abcdefgh#MDB_AGENT_0000000009&
     <Class rdf:about="&mdbcore;MDB_CORE_0000000034">
         <rdfs:label rdf:datatype="&xsd;string">anatomy ontology</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
-        <oboInOwl:id xml:lang="de">MDB_CORE_0000000034</oboInOwl:id>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000034</oboInOwl:id>
     </Class>
     
 
@@ -3690,21 +3976,13 @@ user URI: &apos;http://www.morphdbase.de/resource/abcdefgh#MDB_AGENT_0000000009&
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000122</oboInOwl:id>
     </Class>
     <Axiom>
-        <annotatedTarget>2C WITH EXECUTION OF STATUS TRANSITION</annotatedTarget>
-        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://purl.org/spar/pso/isAcquiredAsConsequenceOf"/>
-        <annotatedSource rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
-        <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
-        <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000160"/>
-    </Axiom>
-    <Axiom>
-        <mdbuiap:MDB_UIAP_0000000011>The subject of the triple statement refers to the instance of &apos;time interval&apos; that is linked to the instance of &apos;MDB entry status in time&apos; that refers to the MDB entry BEFORE its transition to the new MDB entry status is executed.</mdbuiap:MDB_UIAP_0000000011>
-        <annotatedTarget xml:lang="en">1A BEFORE STATUS TRANSITION IS EXECUTED</annotatedTarget>
+        <annotatedTarget>2D WITH EXECUTION OF STATUS TRANSITION</annotatedTarget>
         <annotatedSource rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
         <annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
         <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000111"/>
-        <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000159"/>
-        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalEndDate"/>
+        <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
+        <mdbuiap:MDB_UIAP_0000000045 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#TimeInterval"/>
+        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalStartDate"/>
     </Axiom>
     <Axiom>
         <annotatedTarget>2A WITH EXECUTION OF STATUS TRANSITION</annotatedTarget>
@@ -3716,13 +3994,21 @@ user URI: &apos;http://www.morphdbase.de/resource/abcdefgh#MDB_AGENT_0000000009&
         <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
     </Axiom>
     <Axiom>
-        <mdbuiap:MDB_UIAP_0000000011>The subject of the triple statement refers to the instance of &apos;MDB entry status in time&apos; that refers to the MDB entry BEFORE its transition to the new MDB entry status is executed.</mdbuiap:MDB_UIAP_0000000011>
-        <annotatedTarget>1B BEFORE STATUS TRANSITION IS EXECUTED</annotatedTarget>
-        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://purl.org/spar/pso/isLostAsConsequenceOf"/>
+        <annotatedTarget>2C WITH EXECUTION OF STATUS TRANSITION</annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://purl.org/spar/pso/isAcquiredAsConsequenceOf"/>
         <annotatedSource rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
         <annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
         <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
         <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000160"/>
+    </Axiom>
+    <Axiom>
+        <annotatedTarget xml:lang="en">1A BEFORE STATUS TRANSITION IS EXECUTED</annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000011>The subject of the triple statement refers to the instance of &apos;time interval&apos; that is linked to the instance of &apos;MDB entry status in time&apos; that refers to the MDB entry BEFORE its transition to the new MDB entry status is executed.</mdbuiap:MDB_UIAP_0000000011>
+        <annotatedSource rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
+        <annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
+        <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000111"/>
+        <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000159"/>
+        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalEndDate"/>
     </Axiom>
     <Axiom>
         <mdbuiap:MDB_UIAP_0000000040>same object as in the triple statement with the respective status transition as its subject:
@@ -3736,13 +4022,13 @@ object: MDB entry status</mdbuiap:MDB_UIAP_0000000040>
         <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
     </Axiom>
     <Axiom>
-        <annotatedTarget>2D WITH EXECUTION OF STATUS TRANSITION</annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000011>The subject of the triple statement refers to the instance of &apos;MDB entry status in time&apos; that refers to the MDB entry BEFORE its transition to the new MDB entry status is executed.</mdbuiap:MDB_UIAP_0000000011>
+        <annotatedTarget>1B BEFORE STATUS TRANSITION IS EXECUTED</annotatedTarget>
+        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://purl.org/spar/pso/isLostAsConsequenceOf"/>
         <annotatedSource rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
         <annotatedProperty rdf:resource="&mdbuiap;MDB_UIAP_0000000010"/>
-        <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000111"/>
         <mdbuiap:MDB_UIAP_0000000042 rdf:resource="&mdbgui;MDB_GUI_0000000158"/>
-        <mdbuiap:MDB_UIAP_0000000045 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#TimeInterval"/>
-        <mdbuiap:MDB_UIAP_0000000041 rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalStartDate"/>
+        <mdbuiap:MDB_UIAP_0000000040 rdf:resource="&mdbgui;MDB_GUI_0000000160"/>
     </Axiom>
     
 
@@ -4221,7 +4507,7 @@ To which type of MDB entry a particular named graph class belongs can be inferre
         <rdfs:label rdf:datatype="&xsd;string">MDB project ID</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000361"/>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000365</oboInOwl:id>
-        <oboInOwl:id xml:lang="en">The ID of a MDB project entry.</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The ID of a MDB project entry.</obi:IAO_0000115>
     </Class>
     
 
@@ -5274,7 +5560,7 @@ user URI: &apos;www.morphdbase.de/resource/abcdefgh&apos;</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000680 -->
 
     <Class rdf:about="&mdbcore;MDB_CORE_0000000680">
-        <rdfs:label rdf:datatype="&xsd;string">location and environment ontology</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">location ontology</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000680</oboInOwl:id>
     </Class>
@@ -5432,7 +5718,7 @@ A given MDB morphological description entry can possess several individual &apos
 
     <Class rdf:about="&mdbcore;MDB_CORE_0000000719">
         <rdfs:label rdf:datatype="&xsd;string">morphological description root element editable label named graph</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000728"/>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000689"/>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000719</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">The &apos;morphological description root element editable label&apos; named graph contains the composition that allows the editing of the label of the root element of the partonomy in a morphological description entry.</obi:IAO_0000115>
         <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
@@ -5445,7 +5731,7 @@ A given MDB morphological description entry can possess several individual &apos
 
     <Class rdf:about="&mdbcore;MDB_CORE_0000000721">
         <rdfs:label rdf:datatype="&xsd;string">1has part named graph</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000721</oboInOwl:id>
     </Class>
     
@@ -5482,7 +5768,7 @@ A given MDB morphological description entry can possess several individual &apos
 
     <Class rdf:about="&mdbcore;MDB_CORE_0000000726">
         <rdfs:label rdf:datatype="&xsd;string">root element parthood named graph</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000722"/>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000726</oboInOwl:id>
         <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
         <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
@@ -5499,6 +5785,460 @@ A given MDB morphological description entry can possess several individual &apos
         <obi:IAO_0000115 xml:lang="en">The &apos;morphological description editable label&apos; named graph contains the composition that allows the editing of the label of the respective element of the partonomy in a morphological description entry. Each element of the partonomy has its own &apos;morphological description editable label named graph&apos;.</obi:IAO_0000115>
         <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
         <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000729 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000729">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry list named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000355"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000729</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The named graphs that contain the MDB entry IDs and MDB core IDs of a specific type of entry or of entries that share a specific status in their life-cycle.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000732 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000732">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry status list named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000729"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000732</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The named graphs that contain the MDB entry IDs of entries that share a specific status in their life-cycle.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000733 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000733">
+        <rdfs:label rdf:datatype="&xsd;string">MDB entry type list named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000729"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000733</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The named graphs that contain the MDB entry IDs and MDB core IDs of a specific type of entry.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000758 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000758">
+        <rdfs:label rdf:datatype="&xsd;string">MDB specimen entry specific named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000398"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000758</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000759 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000759">
+        <rdfs:label rdf:datatype="&xsd;string">collector specifications named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000758"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000759</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The &apos;collector specifications named graph&apos; contains information that specifies the collectors who participated in a particular specimen collection process. The information contained in this named graph may be subject to access restrictions that are specified by the object property &apos;named graph blocked for all but MDB user&apos;.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000760 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000760">
+        <rdfs:label rdf:datatype="&xsd;string">site description named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000758"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000760</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The &apos;site description named graph&apos; contains information about the description of a particular site. The information contained in this named graph may be subject to access restrictions that are specified by the object property &apos;named graph blocked for all but MDB user&apos;.</obi:IAO_0000115>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000767 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000767">
+        <rdfs:label rdf:datatype="&xsd;string">chemical ontology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000767</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000772 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000772">
+        <rdfs:label rdf:datatype="&xsd;string">environment ontology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000772</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000774 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000774">
+        <rdfs:label rdf:datatype="&xsd;string">morphological description go to entry button named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000689"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000774</oboInOwl:id>
+        <obi:IAO_0000115 xml:lang="en">The &apos;morphological description go to entry button&apos; named graph contains the button with which a user can switch from the description interface to the entry page of the MDB morphological description entry.</obi:IAO_0000115>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000780 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000780">
+        <rdfs:label rdf:datatype="&xsd;string">list of URIs named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000355"/>
+        <obi:IAO_0000115 xml:lang="en">A named graph that contains a list of URI that are stored for later reference.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000780</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000782 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000782">
+        <rdfs:label rdf:datatype="&xsd;string">text-searchable (subclass of) ontology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000782</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000789 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000789">
+        <rdfs:label rdf:datatype="&xsd;string">unit ontology</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000025"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000789</oboInOwl:id>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000791 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000791">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure general shape named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000791</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000792 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000792">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure volume named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000792</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000793 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000793">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure relative volume named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000793</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000794 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000794">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure relative weight named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000794</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000795 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000795">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure weight named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000795</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000796 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000796">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure constituent parts named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000796</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000798 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000798">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure composition named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000798</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000799 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000799">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure spatio-structural relationships named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000799</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000801 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000801">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure position-orientation named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000801</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000802 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000802">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure minimum distance to named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000802</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000805 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000805">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure developmental relation named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000805</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000807 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000807">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure mass density named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000807</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000808 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000808">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure viscosity named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000808</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000809 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000809">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure osmotic concentration named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000809</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000810 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000810">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure pH named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000810</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000811 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000811">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure salinity named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000811</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000812 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000812">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure electrical conductivity named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000812</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000813 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000813">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure heat conductivity named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000813</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000814 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000814">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure pressure named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000814</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000815 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000815">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure scalar physical property named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000815</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000816 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000816">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure non-scalar physical property named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000816</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000817 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000817">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure aggregate state named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000817</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000818 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000818">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure configuration named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000818</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000819 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000819">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure flexibility named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000819</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000820 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000820">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure hardness named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000820</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000823 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000823">
+        <rdfs:label rdf:datatype="&xsd;string">anatomical structure function named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000693"/>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000823</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000226"/>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000229"/>
+    </Class>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000847 -->
+
+    <Class rdf:about="&mdbcore;MDB_CORE_0000000847">
+        <rdfs:label rdf:datatype="&xsd;string">user-specific entry views log named graph</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mdbcore;MDB_CORE_0000000426"/>
+        <obi:IAO_0000115 xml:lang="en">A named graph that contains all information about the views and which tabs are currently active for a given user and their current session. An individual of this named graph class is being generated with each log-in of a given user and deleted with all its contents when they log out.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000847</oboInOwl:id>
     </Class>
     
 
@@ -5795,30 +6535,6 @@ It should be used when you want to talk about time as an object having some char
     <NamedIndividual rdf:about="http://www.morphdbase.de">
         <rdf:type rdf:resource="&mdbagent;MDB_AGENT_0000000003"/>
         <rdfs:label rdf:datatype="&xsd;string">Morph·D·Base</rdfs:label>
-    </NamedIndividual>
-    
-
-
-    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#GUI_COMPONENT_0000000156 -->
-
-    <NamedIndividual rdf:about="&mdbcore;GUI_COMPONENT_0000000156">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000589"/>
-        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default organization crosslink-info composition template</rdfs:label>
-        <obi:IAO_0000115 xml:lang="en">A named graph that contains the default composition for the crosslink representation of a person.</obi:IAO_0000115>
-        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000156</oboInOwl:id>
-        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
-    </NamedIndividual>
-    
-
-
-    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#GUI_COMPONENT_0000000157 -->
-
-    <NamedIndividual rdf:about="&mdbcore;GUI_COMPONENT_0000000157">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000589"/>
-        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default person crosslink-info composition template</rdfs:label>
-        <obi:IAO_0000115 xml:lang="en">A named graph that contains the default composition for the crosslink representation of an organization.</obi:IAO_0000115>
-        <oboInOwl:id xml:lang="en">GUI_COMPONENT_0000000157</oboInOwl:id>
-        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
     </NamedIndividual>
     
 
@@ -6517,9 +7233,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
         <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000130"/>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
-        <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000195"/>
-        <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000202"/>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000202"/>
+        <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000202"/>
         <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000203"/>
     </NamedIndividual>
     
@@ -6545,8 +7260,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000117 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000117">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_ENTRY_STATUS_BASIC: current revision draft</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_ENTRY_STATUS_BASIC: current revision draft</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000117</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
@@ -6578,7 +7293,7 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000124 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000124">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
         <rdfs:label xml:lang="de">1MDB_BASIC_STATUS_TRANSITION: specify required information</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000124</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000114"/>
@@ -6603,13 +7318,11 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000126">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: delete (revision) draft</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: delete draft</rdfs:label>
         <mdbcore:MDB_CORE_0000000197 rdf:datatype="&xsd;boolean">true</mdbcore:MDB_CORE_0000000197>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000126</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
-        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000199"/>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000202"/>
-        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000205"/>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000470"/>
     </NamedIndividual>
     
@@ -6663,8 +7376,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000131 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000131">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: create new version</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: create new version</rdfs:label>
         <mdbcore:MDB_CORE_0000000198 rdf:datatype="&xsd;boolean">true</mdbcore:MDB_CORE_0000000198>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000131</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
@@ -6687,9 +7400,10 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000146">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label rdf:datatype="&xsd;string">CC BY: Creative Commons Attribution</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">CC BY</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY: Creative Commons Attribution
+This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000146</oboInOwl:id>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.</mdbuiap:MDB_UIAP_0000000018>
         <obi:IAO_0000115 xml:lang="en">This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.</obi:IAO_0000115>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
@@ -6702,9 +7416,10 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000147">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label rdf:datatype="&xsd;string">CC BY-SA: Creative Commons Attribution-ShareAlike</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">CC BY-SA</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY-SA: Creative Commons Attribution-ShareAlike
+This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000147</oboInOwl:id>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.</mdbuiap:MDB_UIAP_0000000018>
         <obi:IAO_0000115 xml:lang="en">This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.</obi:IAO_0000115>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/"/>
@@ -6717,10 +7432,11 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000148">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label rdf:datatype="&xsd;string">CC BY-ND: Creative Commons Attribution-NoDerivs</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">CC BY-ND</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY-ND: Creative Commons Attribution-NoDerivs
+This license allows for redistribution, commercial and non-commercial, as long as it is passed along unchanged and in whole, with credit to you.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000148</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This license allows for redistribution, commercial and non-commercial, as long as it is passed along unchanged and in whole, with credit to you.</obi:IAO_0000115>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license allows for redistribution, commercial and non-commercial, as long as it is passed along unchanged and in whole, with credit to you.</mdbuiap:MDB_UIAP_0000000018>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by-nd/4.0/"/>
         <rdfs:isDefinedBy rdf:resource="http://creativecommons.org/licenses/by-nd/4.0/legalcode"/>
@@ -6732,10 +7448,11 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000149">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label rdf:datatype="&xsd;string">CC BY-NC: Creative Commons Attribution-NoCommercial</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">CC BY-NC</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY-NC: Creative Commons Attribution-NoCommercial
+This license lets others remix, tweak, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000149</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This license lets others remix, tweak, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.</obi:IAO_0000115>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license lets others remix, tweak, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.</mdbuiap:MDB_UIAP_0000000018>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by-nc/4.0/"/>
         <rdfs:isDefinedBy rdf:resource="http://creativecommons.org/licenses/by-nc/4.0/legalcode"/>
@@ -6747,10 +7464,11 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000150">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label rdf:datatype="&xsd;string">CC BY-NC-SA: Creative Commons Attribution-NonCommercial-ShareAlike</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">CC BY-NC-SA</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY-NC-SA: Creative Commons Attribution-NonCommercial-ShareAlike
+This license lets others remix, tweak, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000150</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This license lets others remix, tweak, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.</obi:IAO_0000115>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license lets others remix, tweak, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.</mdbuiap:MDB_UIAP_0000000018>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/"/>
         <rdfs:isDefinedBy rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"/>
@@ -6762,10 +7480,11 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000151">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000145"/>
-        <rdfs:label xml:lang="de">CC BY-NC-ND: Creative Commons Attribution-NonCommercial-NoDerivs</rdfs:label>
+        <rdfs:label xml:lang="de">CC BY-NC-ND</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">CC BY-NC-ND: Creative Commons Attribution-NonCommercial-NoDerivs
+This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.</mdbuiap:MDB_UIAP_0000000018>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000151</oboInOwl:id>
         <obi:IAO_0000115 xml:lang="en">This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.</obi:IAO_0000115>
-        <mdbuiap:MDB_UIAP_0000000018 xml:lang="en">This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.</mdbuiap:MDB_UIAP_0000000018>
         <versionInfo rdf:resource="http://creativecommons.org/licenses/"/>
         <dcterms:description rdf:resource="http://creativecommons.org/licenses/by-nc-nd/4.0/"/>
         <rdfs:isDefinedBy rdf:resource="http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"/>
@@ -6776,12 +7495,29 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000153 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000153">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: publish new version</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: publish new version</rdfs:label>
         <mdbcore:MDB_CORE_0000000208 rdf:datatype="&xsd;boolean">true</mdbcore:MDB_CORE_0000000208>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000153</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000180 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000180">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_WORKFLOW_ACTION: delete MDB entry component from entry composition of MDB entry ID</rdfs:label>
+        <mdbuiap:MDB_UIAP_0000000135 rdf:datatype="&xsd;boolean">true</mdbuiap:MDB_UIAP_0000000135>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000180</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000013 xml:lang="en">PROBLEM: Not only all triple statements directly relating to the to be deleted MDB entry component must be deleted, but also all triple statements referring to its child MDB entry components AND all triple statements that have been added to their respective named graphs as a consequence of user-interaction with the to be deleted MDB entry components and its child components. Since these vary from MDB entry component to MDB entry component, they cannot be specified beforehand, but must be identified during the execution of this MDB workflow action.</mdbuiap:MDB_UIAP_0000000013>
+        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
+        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
+        <mdbuiap:MDB_UIAP_0000000080 rdf:resource="&mdbcore;MDB_CORE_0000000367"/>
+        <mdbuiap:MDB_UIAP_0000000080 rdf:resource="&mdbcore;MDB_CORE_0000000368"/>
+        <mdbuiap:MDB_UIAP_0000000080 rdf:resource="&mdbcore;MDB_CORE_0000000369"/>
     </NamedIndividual>
     
 
@@ -6856,7 +7592,7 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000195">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
         <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: move draft to recycle bin</rdfs:label>
-        <oboInOwl:id xml:lang="en">MDB_CORE_0000000195</oboInOwl:id>
+        <rdfs:label xml:lang="en">MDB_CORE_0000000195</rdfs:label>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
     </NamedIndividual>
@@ -6878,8 +7614,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000199 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000199">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_ENTRY_STATUS_BASIC: revision draft in recycle bin</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_ENTRY_STATUS_BASIC: revision draft in recycle bin</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000199</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000126"/>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
@@ -6894,8 +7630,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000200 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000200">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: move revision draft to recycle bin</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: move revision draft to recycle bin</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000200</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000199"/>
@@ -6906,8 +7642,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000201 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000201">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: recycle revision draft as new current revision draft</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: recycle revision draft as new current revision draft</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000201</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000199"/>
@@ -6925,7 +7661,6 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
         <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000126"/>
-        <mdbcore:MDB_CORE_0000000120 rdf:resource="&mdbcore;MDB_CORE_0000000204"/>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000470"/>
     </NamedIndividual>
     
@@ -6934,8 +7669,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000203 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000203">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: save current draft</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: save current draft</rdfs:label>
         <mdbcore:MDB_CORE_0000000198 rdf:datatype="&xsd;boolean">true</mdbcore:MDB_CORE_0000000198>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000203</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
@@ -6959,8 +7694,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000205 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000205">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_ENTRY_STATUS_BASIC: saved revision draft version</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_ENTRY_STATUS_BASIC: saved revision draft version</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000205</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
         <mdbcore:MDB_CORE_0000000119 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
@@ -6975,8 +7710,8 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000206 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000206">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: saved revision draft as new current revision draft</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: saved revision draft as new current revision draft</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000206</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000205"/>
@@ -7208,6 +7943,18 @@ In other words, it contains a summary about this MDB entry.</obi:IAO_0000115>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000238</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000252 rdf:resource="&mdbcore;MDB_CORE_0000000220"/>
         <mdbcore:MDB_CORE_0000000252 rdf:resource="&mdbcore;MDB_CORE_0000000254"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000239 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000239">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
+        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: save current draft</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000239</oboInOwl:id>
+        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
+        <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000202"/>
     </NamedIndividual>
     
 
@@ -8428,6 +9175,16 @@ Furthermore, it also contains the named graphs about information referring to pe
     
 
 
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000367 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000367">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000366"/>
+        <rdfs:label rdf:datatype="&xsd;string">TRACKING-PROCEDURE: tracking change-log</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000367</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000368 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000368">
@@ -8572,7 +9329,7 @@ Furthermore, it also contains the named graphs about information referring to pe
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000470">
         <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000113"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_ENTRY_STATUS_BASIC: deleted (revision) draft</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">MDB_ENTRY_STATUS_BASIC: deleted draft</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000470</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000109 rdf:resource="&mdbcore;MDB_CORE_0000000061"/>
         <mdbcore:MDB_CORE_0000000118 rdf:resource="&mdbcore;MDB_CORE_0000000194"/>
@@ -8636,8 +9393,8 @@ Furthermore, it also contains the named graphs about information referring to pe
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000485 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000485">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: change &apos;current published&apos; to &apos;earlier published&apos;</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: change &apos;current published&apos; to &apos;earlier published&apos;</rdfs:label>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000485</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
         <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000484"/>
@@ -9766,16 +10523,6 @@ Furthermore, it also contains the named graphs about information referring to pe
     
 
 
-    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000681 -->
-
-    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000681">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000680"/>
-        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: environmental ontology (ENVO)</rdfs:label>
-        <oboInOwl:id xml:lang="en">MDB_CORE_0000000681</oboInOwl:id>
-    </NamedIndividual>
-    
-
-
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000682 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000682">
@@ -9925,11 +10672,685 @@ Furthermore, it also contains the named graphs about information referring to pe
     
 
 
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000730 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000730">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000733"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB user entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000730</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000731 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000731">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000733"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB user group entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000731</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000734 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000734">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: new MDB user entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000734</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000735 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000735">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: accepted MDB user entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000735</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000736 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000736">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000733"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB media entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000736</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000737 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000737">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000733"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB morphological description entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000737</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000738 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000738">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000733"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB specimen entry list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000738</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000739 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000739">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current draft media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000739</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000740 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000740">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current draft morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000740</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000741 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000741">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current draft specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000741</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000742 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000742">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current published media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000742</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000743 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000743">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current published morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000743</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000744 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000744">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB current published specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000744</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000745 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000745">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB deleted media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000745</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000746 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000746">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB deleted morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000746</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000747 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000747">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB deleted specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000747</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000748 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000748">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB draft media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000748</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000749 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000749">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB draft morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000749</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000750 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000750">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB draft specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000750</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000751 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000751">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB published media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000751</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000752 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000752">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB published morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000752</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000753 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000753">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB published specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000753</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000754 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000754">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB recycle bin media versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000754</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000755 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000755">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB recycle bin morphological description versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000755</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000756 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000756">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000732"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: MDB recycle bin specimen versions list</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000756</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000764 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000764">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default devices used composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000764</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000766 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000766">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default substances used composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000766</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000768 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000768">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000767"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: chemical entities of biological interest (ChEBI)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000768</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000769 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000769">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000767"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: sequence ontology (SO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000769</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000770 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000770">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000767"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: RNA ontology (RnaO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000770</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000771 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000771">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000767"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: protein ontology (PRO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000771</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000773 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000773">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000772"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: environment ontology (EnvO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000773</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000776 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000776">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default MDB morphological description go-to-entry button composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000776</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000777 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000777">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default single added resource composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000777</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000778 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000778">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default measured local condition composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000778</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000779 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000779">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000034"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: uber anatomy ontology (UBERON)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000779</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000783 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000783">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: devices used</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000783</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;OBI_0000968"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000666"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000784 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000784">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: substances used</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000784</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;CHEBI_24431"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000768"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000785 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000785">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: function</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000785</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;BFO_0000034"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000666"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000786 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000786">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default measured scalar quality composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000786</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000787 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000787">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default observed non-scalar quality composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000787</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000788 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000788">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000034"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: phenotypic quality ontology (PATO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000788</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000790 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000790">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000789"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: units of measurement ontology (UO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000790</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000797 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000797">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default add constituents composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000797</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000800 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000800">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default single added resource with own named graph composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000800</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000803 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000803">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default min distance composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000803</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000804 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000804">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default spatio-structural relationships composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000804</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000806 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000806">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default developmental relations composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000806</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000821 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000821">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default non-dated measured scalar quality composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000821</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000822 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000822">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000034"/>
+        <rdfs:label rdf:datatype="&xsd;string">ONTOLOGY: gene ontology (GO)</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000822</oboInOwl:id>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000824 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000824">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default function composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000824</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000825 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000825">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: composition of anatomical entity</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000825</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;PATO_0000025"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000788"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000826 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000826">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1TEXT-SEARCHABLE_ONTOLOGY: function of anatomical entity</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000826</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;BFO_0000034"/>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;GO_0003674"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000666"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000822"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000827 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000827">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: position of anatomical entity</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000827</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;PATO_0000140"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000788"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000828 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000828">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: physical quality</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000828</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;PATO_0001018"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000788"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000829 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000829">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: shape of anatomical entity</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000829</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;PATO_0000052"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000788"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000830 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000830">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: biological process</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000830</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;GO_0008150"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000822"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000831 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000831">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000782"/>
+        <rdfs:label rdf:datatype="&xsd;string">TEXT-SEARCHABLE_ONTOLOGY: unit</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000831</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000294 rdf:resource="&obi;UO_0000000"/>
+        <mdbuiap:MDB_UIAP_0000000413 rdf:resource="&mdbcore;MDB_CORE_0000000790"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000833 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000833">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
+        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: create new version</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000833</oboInOwl:id>
+        <mdbcore:MDB_CORE_0000000121 rdf:resource="&mdbcore;MDB_CORE_0000000115"/>
+        <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000116"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000835 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000835">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: current published navigation element composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000835</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000836 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000836">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000397"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: current draft navigation element composition</rdfs:label>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000836</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000845 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000845">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000589"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default organization crosslink-info composition template</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A named graph that contains the default composition for the crosslink representation of a person.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000845</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_CORE_0000000846 -->
+
+    <NamedIndividual rdf:about="&mdbcore;MDB_CORE_0000000846">
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000589"/>
+        <rdfs:label rdf:datatype="&xsd;string">NAMED_GRAPH: default person crosslink-info composition template</rdfs:label>
+        <obi:IAO_0000115 xml:lang="en">A named graph that contains the default composition for the crosslink representation of an organization.</obi:IAO_0000115>
+        <oboInOwl:id xml:lang="en">MDB_CORE_0000000846</oboInOwl:id>
+        <mdbuiap:MDB_UIAP_0000000078 rdf:resource="&mdbcore;MDB_CORE_0000000633"/>
+    </NamedIndividual>
+    
+
+
     <!-- http://www.morphdbase.de/Ontologies/MDB/MDBCore#MDB_DATASCHEME_0000000203 -->
 
     <NamedIndividual rdf:about="&mdbcore;MDB_DATASCHEME_0000000203">
-        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000122"/>
-        <rdfs:label rdf:datatype="&xsd;string">MDB_BASIC_STATUS_TRANSITION: save current revision draft</rdfs:label>
+        <rdf:type rdf:resource="&mdbcore;MDB_CORE_0000000467"/>
+        <rdfs:label rdf:datatype="&xsd;string">1MDB_BASIC_STATUS_TRANSITION: save current revision draft</rdfs:label>
         <mdbcore:MDB_CORE_0000000198 rdf:datatype="&xsd;boolean">true</mdbcore:MDB_CORE_0000000198>
         <oboInOwl:id xml:lang="en">MDB_CORE_0000000207</oboInOwl:id>
         <mdbcore:MDB_CORE_0000000483 rdf:resource="&mdbcore;MDB_CORE_0000000117"/>
@@ -9985,22 +11406,22 @@ ID_DX.n.d    new entry state d=d+1</mdbuiap:MDB_UIAP_0000000011>
         <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_GUI_0000000058"/>
         <mdbuiap:MDB_UIAP_0000000019 rdf:resource="&mdbgui;MDB_GUI_0000000081"/>
     </rdf:Description>
-    <rdf:Description rdf:about="&mdbentry;MDB_ENTRY_0000000025">
-        <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_MDB_GUI_0000000051"/>
-    </rdf:Description>
     <rdf:Description rdf:about="&mdbagent;MDB_AGENT_0000000026">
         <mdbuiap:MDB_UIAP_0000000021 rdf:resource="&mdbcore;MDB_CORE_0000000033"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mdbentry;MDB_ENTRY_0000000025">
+        <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_MDB_GUI_0000000051"/>
     </rdf:Description>
     <rdf:Description rdf:about="&foaf;workInfoHomepage">
         <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_GUI_0000000058"/>
         <mdbuiap:MDB_UIAP_0000000019 rdf:resource="&mdbgui;MDB_GUI_0000000081"/>
     </rdf:Description>
+    <rdf:Description rdf:about="&foaf;name">
+        <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_MDB_GUI_0000000051"/>
+    </rdf:Description>
     <rdf:Description rdf:about="&foaf;depiction">
         <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_GUI_0000000059"/>
         <mdbuiap:MDB_UIAP_0000000019 rdf:resource="&mdbgui;MDB_GUI_0000000066"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="&foaf;name">
-        <mdbuiap:MDB_UIAP_0000000014 rdf:resource="&mdbgui;MDB_MDB_GUI_0000000051"/>
     </rdf:Description>
 </rdf:RDF>
 

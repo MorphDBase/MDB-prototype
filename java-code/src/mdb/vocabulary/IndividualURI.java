@@ -1,6 +1,6 @@
 /*
  * Created by Roman Baum on 28.05.15.
- * Last modified by Roman Baum on 27.01.17.
+ * Last modified by Roman Baum on 23.02.18.
  */
 
 package mdb.vocabulary;
@@ -12,10 +12,8 @@ import mdb.packages.querybuilder.SPARQLFilter;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.jena.arq.querybuilder.SelectBuilder;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.sparql.expr.ExprAggregator;
-import org.apache.jena.sparql.expr.ExprVar;
-import org.apache.jena.sparql.expr.aggregate.Aggregator;
-import org.apache.jena.sparql.expr.aggregate.AggregatorFactory;
+import org.apache.jena.vocabulary.RDF;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -90,13 +88,7 @@ public class IndividualURI {
 
             selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
 
-            ExprVar exprVar = new ExprVar("s");
-
-            Aggregator aggregator = AggregatorFactory.createCountExpr(true, exprVar.getExpr());
-
-            ExprAggregator exprAggregator = new ExprAggregator(exprVar.asVar(), aggregator);
-
-            selectBuilder.addVar(exprAggregator.getExpr(), "?count");
+            selectBuilder.addVar("?s");
 
             if (UrlValidator.getInstance().isValid(ng)) {
 
@@ -110,21 +102,35 @@ public class IndividualURI {
 
             String sparqlQueryString = selectBuilder.buildString();
 
-            //System.out.println("sparqlQueryString = " + sparqlQueryString);
+            JSONArray individualsJSONArray = connectionToTDB.pullMultipleDataFromTDB(pathToTDB, sparqlQueryString, "?s");
 
-            String index = connectionToTDB
-                    .pullSingleDataFromTDB(pathToTDB, sparqlQueryString, "?count");
+            int maxValueInTDB = 0;
 
-            index = String.valueOf(Integer.parseInt(index) + 1);
+            for (int i = 0; i < individualsJSONArray.length(); i++) {
+
+                String currValueString = individualsJSONArray.getString(i);
+
+                currValueString = currValueString.substring(currValueString.lastIndexOf("_") + 1);
+
+                if (maxValueInTDB < Integer.parseInt(currValueString)) {
+
+                    maxValueInTDB = Integer.parseInt(currValueString);
+
+                }
+
+            }
+
+            String newIndex = String.valueOf(maxValueInTDB + 1);
 
             // concatenate the individual uri namespace and the local identifier of the class
-            return individualURIWithoutNumber + "_" + index;
+            return individualURIWithoutNumber + "_" + newIndex;
 
         }
 
         return "-1";
 
     }
+
 
     /**
      * This method creates a common individual URI considering an unknown namespace in the tdb.
@@ -157,22 +163,11 @@ public class IndividualURI {
 
             selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
 
-            selectWhereBuilder.addWhere("?s", "?p","?o");
+            selectWhereBuilder.addWhere("?s", RDF.type, "<" + currClass + ">");
 
             FilterBuilder filterBuilder = new FilterBuilder();
 
-            ArrayList<ArrayList<String>> filterItems = new ArrayList<>();
-
-            filterItems = filterBuilder.addItems(filterItems, "?p", "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
-            filterItems = filterBuilder.addItems(filterItems, "?o", "<" + currClass + ">");
-
             SPARQLFilter sparqlFilter = new SPARQLFilter();
-
-            ArrayList<String> filter = sparqlFilter.getINFilter(filterItems);
-
-            selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
-
-            filterItems.clear();
 
             // create an array list to collect the filter parts
             ArrayList<String> filterCollection= new ArrayList<>();
@@ -181,7 +176,7 @@ public class IndividualURI {
             filterCollection.add(individualURIWithoutNumber);
 
             // generate a filter string
-            filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
+            ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
 
             selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
 
@@ -219,5 +214,118 @@ public class IndividualURI {
 
     }
 
+
+    /**
+     * The methods pulls multiple individuals for a corresponding class.
+     * @param currClass contains an arbitrary input class
+     * @param pathToTDB contains the path to the jena tdb
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return an JSONArray which contains URIs of individuals
+     */
+    public JSONArray getIndividualURISForAClass(String currClass, String pathToTDB, JenaIOTDBFactory connectionToTDB) {
+
+        if (UrlValidator.getInstance().isValid(currClass)) {
+
+            String individualURIWithoutNumber = this.uri + "#" + ResourceFactory.createResource(currClass).getLocalName();
+
+            SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+            selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+            selectWhereBuilder.addWhere("?s", RDF.type, "<" + currClass + ">");
+
+            FilterBuilder filterBuilder = new FilterBuilder();
+
+            SPARQLFilter sparqlFilter = new SPARQLFilter();
+
+            // create an array list to collect the filter parts
+            ArrayList<String> filterCollection= new ArrayList<>();
+
+            // add a part to the collection
+            filterCollection.add(individualURIWithoutNumber);
+
+            // generate a filter string
+            ArrayList<String> filter = sparqlFilter.getRegexSTRFilter("?s", filterCollection);
+
+            selectWhereBuilder = filterBuilder.addFilter(selectWhereBuilder, filter);
+
+            // create main query structure
+
+            SelectBuilder selectBuilder = new SelectBuilder();
+
+            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+            selectBuilder.addVar("?s");
+
+            selectBuilder.addGraph("?g", selectWhereBuilder);
+
+            String sparqlQueryString = selectBuilder.buildString();
+
+            return connectionToTDB.pullMultipleDataFromTDB(pathToTDB, sparqlQueryString, "?s");
+
+        }
+
+        return null;
+
+    }
+
+
+    /**
+     * This method get a specific individual URI for future calculation from the jena tdb
+     * @param currClass contains an arbitrary input class
+     * @param localPartID contains an arbitrary input partID
+     * @param pathToTDB contains the path to the jena tdb
+     * @param connectionToTDB contains a JenaIOTDBFactory object
+     * @return an individual URI
+     */
+    public String getThisURIForAnIndividualWithPartID(String currClass, String localPartID, String pathToTDB, JenaIOTDBFactory connectionToTDB) {
+
+        if (UrlValidator.getInstance().isValid(currClass)) {
+
+            String partID = this.uri + "#" + localPartID;
+
+            SelectBuilder selectWhereBuilder = new SelectBuilder();
+
+            PrefixesBuilder prefixesBuilder = new PrefixesBuilder();
+
+            selectWhereBuilder = prefixesBuilder.addPrefixes(selectWhereBuilder);
+
+            selectWhereBuilder.addWhere("?s", RDF.type, "<" + currClass + ">");
+
+            selectWhereBuilder.addWhere("<" + partID + ">", "?p", "?s");
+
+            // create main query structure
+
+            SelectBuilder selectBuilder = new SelectBuilder();
+
+            selectBuilder = prefixesBuilder.addPrefixes(selectBuilder);
+
+            selectBuilder.addVar("?s");
+
+            selectBuilder.addGraph("?g", selectWhereBuilder);
+
+            String sparqlQueryString = selectBuilder.buildString();
+
+            String subject = connectionToTDB.pullSingleDataFromTDB(pathToTDB, sparqlQueryString, "?s");
+
+            if (subject.isEmpty()) {
+                // create a new resource
+
+                return getThisURIForAnIndividual(currClass, pathToTDB, connectionToTDB);
+
+            } else {
+                // return known resource from jena tdb
+
+                return subject;
+
+            }
+
+        }
+
+        return "-1";
+
+    }
 
 }
